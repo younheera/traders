@@ -1,1 +1,25 @@
+
+
 일시적으로 이 폴더에 commmit/push 연습
+
+Lombok Annotations Support for VS Code
+
+vscode-author-generator 설치
+
+C:\Users\wheesunglee\.vscode\extensions\edwardhjp.vscode-author-generator-0.2.2\templates
+
+
+/**
+ * @author [author]
+ * @create date [date]
+ * @modify date [date]
+ */
+
+
+
+
+----
+settings.json 추가
+  "author-generator.author": "wheesunglee",
+  "author-generator.updateOnSave": true,
+
