@@ -7,6 +7,7 @@ package com.newus.traders.product;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,10 +20,11 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @GetMapping
     public String showAllProducts() {
         List<Product> productList = productService.getProducts();
 
-        return "";
+        return "productList";
     }
 
 }

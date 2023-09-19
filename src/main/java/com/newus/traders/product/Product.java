@@ -15,9 +15,9 @@ import javax.persistence.Id;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    
+
     // 회원 entity와 연결
     private String seller;
 
@@ -26,7 +26,7 @@ public class Product {
     private String price;
 
     private String description;
-    
+
     private LocalDateTime postedAt;
 
     // 상품 판매 가능 상태
