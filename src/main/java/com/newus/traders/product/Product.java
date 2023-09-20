@@ -19,7 +19,8 @@ public class Product {
     private int id;
 
     // 회원 entity와 연결
-    private String seller;
+    // @ManyToOne
+    // seller;
 
     private String name;
 

@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 public class ProductController {
 
     private final ProductService productService;
@@ -24,7 +24,7 @@ public class ProductController {
     public String showAllProducts() {
         List<Product> productList = productService.getProducts();
 
-        return "productList";
+        return "productList_springboot";
     }
 
 }
