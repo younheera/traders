@@ -11,14 +11,14 @@ function App() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/products">Products</Link>
+          <Link to="/product">ProductList</Link>
         </li>
       </ul>
       <Switch>
         <Route path={["/", "/main"]} exact>
           <Main />
         </Route>
-        <Route path="/products" exact>
+        <Route path="/product" exact>
           <ProductList />
         </Route>
       </Switch>

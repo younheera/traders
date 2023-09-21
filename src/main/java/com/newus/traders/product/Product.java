@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:21:17
- * @modify date 2023-09-19 08:21:17
+ * @modify date 2023-09-20 17:41:36
  */
 package com.newus.traders.product;
 
@@ -12,7 +12,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +33,7 @@ public class Product {
 
     private String name;
 
-    private String price;
+    private Long price;
 
     private String description;
 
@@ -33,6 +42,8 @@ public class Product {
     // 상품 판매 가능 상태
     private ProductStatus status;
 
-    // 거래 위치
+    private double latitude;
+
+    private double longitude;
 
 }
