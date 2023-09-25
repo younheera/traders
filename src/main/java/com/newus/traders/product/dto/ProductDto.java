@@ -4,9 +4,12 @@
  * @modify date 2023-09-20 17:41:18
  */
 
-package com.newus.traders.product;
+package com.newus.traders.product.dto;
 
 import java.time.LocalDateTime;
+
+import com.newus.traders.product.entity.Product;
+import com.newus.traders.product.type.ProductStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

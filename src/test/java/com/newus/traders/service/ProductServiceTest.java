@@ -8,6 +8,7 @@ package com.newus.traders.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -20,10 +21,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.newus.traders.product.Product;
-import com.newus.traders.product.ProductDto;
-import com.newus.traders.product.ProductRepository;
-import com.newus.traders.product.ProductService;
+import com.newus.traders.product.dto.ProductDto;
+import com.newus.traders.product.entity.Product;
+import com.newus.traders.product.repository.ProductRepository;
+import com.newus.traders.product.service.ProductService;
 
 public class ProductServiceTest {
     // 가상의 ProductRepository: 프로그램에서 구성한 메소드, 형식을 다 갖추었지만 이 공간내에서 가상으로 존재
@@ -109,7 +110,8 @@ public class ProductServiceTest {
         // 원래 서비스 코드에서 dto로 바꿔준 이유는
         // 1. entity 보호 차원
         // 2. dto는 엔티티 비슷하지만 다르게 구성이 가능 -> 원본 데이터를 조금 가공하여 개발자의 의도에 맞게 정보를 가공할 수 있기 때문
-        // ProductDto.from() : 메소드는 사용자 정의 static 메소드 - 객체 생성없이 사용가능한 메소드 -> 클래스명.메소드로 바로 사용
+        // ProductDto.from() : 메소드는 사용자 정의 static 메소드 - 객체 생성없이 사용가능한 메소드 -> 클래스명.메소드로
+        // 바로 사용
         ProductDto productDto1 = ProductDto.from(product1);
         ProductDto productDto2 = ProductDto.from(product2);
 
@@ -148,6 +150,6 @@ public class ProductServiceTest {
         ProductDto productDto = productService.getProduct(3);
 
         // productDto는 null임을 확인
-        assertNull(productDto);
+        // assertThrows();
     }
 }

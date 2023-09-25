@@ -3,7 +3,7 @@
  * @create date 2023-09-19 08:21:17
  * @modify date 2023-09-20 17:41:36
  */
-package com.newus.traders.product;
+package com.newus.traders.product.entity;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.newus.traders.product.type.ProductStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
