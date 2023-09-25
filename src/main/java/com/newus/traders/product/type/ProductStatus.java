@@ -1,4 +1,4 @@
-package com.newus.traders.product;
+package com.newus.traders.product.type;
 
 public enum ProductStatus {
     AVAILABLE, SOLD, ONHOLD

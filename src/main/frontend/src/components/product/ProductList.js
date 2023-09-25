@@ -1,24 +1,35 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:19:28
- * @modify date 2023-09-20 14:01:52
+ * @modify date 2023-09-22 14:10:17
  */
-
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 
 const ProductList = () => {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-      .get("/api/product")
+      .get("/api/products")
       .then((res) => setData(res.data))
       .catch((error) => console.log(error));
   }, []);
-
-  return <div>ProductController의 showAllProducts() : {data}</div>;
+  return (
+    <div>
+      <h1>ProductController의 showAllProducts()</h1>
+      <ul>
+        {data.map((product, index) => (
+          <li key={index}>
+            {product.id}/{product.name}
+            <br />
+            <Link to={`/products/${product.id}`}>ProductDetails</Link>{" "}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
-
 export default ProductList;
