@@ -1,7 +1,8 @@
-package com.newus.traders;
+package com.newus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class TradersApplication {
