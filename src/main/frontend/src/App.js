@@ -1,5 +1,4 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import Main from "./components/Main";
 import Login from "./components/login/Login";
@@ -10,15 +9,18 @@ import ProductList from "./components/product/ProductList";
 import GreenPay from "./components/payment/GreenPay";
 import PayRegister from "./components/payment/PayRegister";
 
+
 import Chat1 from "./components/chat/Chat1";
 import ChatList from "./components/chat/ChatList";
 import ChatDetails from "./components/chat/ChatDetails";
+import KakaoMap from "./components/product/Kakaomap";
+import LocationComponent from "./components/product/LocatoinComponent";
 
 function App() {
   return (
     <div>
       <ul>
-         <li>
+        <li>
           <Link to="/">Home</Link>
         </li>
         <li>
@@ -33,12 +35,8 @@ function App() {
           <Link to="/login_sdk">login_sdk</Link>
         </li>
         <li>
-          <Link to='/chat'>chat</Link>
+          <Link to="/kakaomap">KakaoMap</Link>
         </li>
-        <li>
-          <Link to='/chat/list'>chatList</Link>
-        </li> 
-
         <li>
           <Link to="/payment">GreenPay</Link>
         </li>
@@ -58,29 +56,21 @@ function App() {
         <Route path="/products" exact>
           <ProductList />
         </Route>
-        <Route path='/chat' exact>
-          <Chat1/>
-        </Route>
-        <Route path='/chat/list' exact>
-          <ChatList/>
-        </Route>
-
-        <Route path='/chat/roomNum' exact>
-          <ChatDetails/>
-        </Route>
-        
         <Route path="/products/:id" exact>
           <ProductDetails />
         </Route>
+
         <Route path="/login" exact>
           <Login />
         </Route>
         <Route path="/redirect" exact>
           <Redirection />
         </Route>
+
         <Route path="/login_sdk" exact>
           <Login_sdk />
         </Route>
+<<<<<<< Updated upstream
 
         <Route path="/login" exact>
           <Login/>
@@ -92,6 +82,12 @@ function App() {
         
         <Route path={["/", "/main"]} exact><Main /></Route>
         <Route path="/product" exact><ProductList /></Route>
+=======
+        <Route path="/kakaomap" exact>
+          <KakaoMap/>
+          <LocationComponent/>
+        </Route>
+>>>>>>> Stashed changes
         <Route path="/payment" exact><GreenPay/></Route>
         <Route path="/payment/gpay_register" component={PayRegister} />
       </Switch>
