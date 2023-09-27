@@ -2,16 +2,16 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-09-26 10:32:54
- * @modify date 2023-09-26 10:38:54
+ * @modify date 2023-09-27 16:27:49
  * @desc [상품 리스트 페이지에서 근처 상품 보기 버튼을 클릭하면 지도 모달 페이지가 뜨게 한다.]
  */
 
 // 모달 버튼이 있는 페이지
 // ModalTest.jsx
 
-import ModalPage from "./ModalPage";
 import { useState } from "react";
-import styled from 'styled-components'
+import styled from "styled-components";
+import ModalPage from "./ModalPage";
 
 export default function KakaoMap() {
   // 모달을 보여줄지 말지 상태를 관리하는 state를 만들어준다.
@@ -29,13 +29,9 @@ export default function KakaoMap() {
   return (
     <>
       <button onClick={openModal}>모달이에옹</button>
-      {
-        showModal===true?
-        <ModalPage
-        showModal={showModal}
-        closeModal={closeModal}/>
-        :null
-      }
+      {showModal === true ? (
+        <ModalPage showModal={showModal} closeModal={closeModal} />
+      ) : null}
     </>
   );
 }
@@ -64,5 +60,5 @@ const StyledModalBackground = styled.div`
 const StyledModal = styled.div`
   width: 400px;
   height: 400px;
-  background-color:white;
+  background-color: white;
 `;

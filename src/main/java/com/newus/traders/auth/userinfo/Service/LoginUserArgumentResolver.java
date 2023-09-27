@@ -1,4 +1,4 @@
-package com.newus.traders.auth.userinfo.Service;
+package com.newus.traders.auth.userinfo.service;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,7 +9,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.newus.traders.auth.userinfo.DTO.SessionUser;
+import com.newus.traders.auth.userinfo.dto.SessionUser;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.newus.traders.auth.userinfo.DTO;
+package com.newus.traders.auth.userinfo.dto;
 
 import java.util.Map;
 
