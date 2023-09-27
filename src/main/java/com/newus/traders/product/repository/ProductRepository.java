@@ -5,6 +5,7 @@
  */
 package com.newus.traders.product.repository;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.newus.traders.product.entity.Product;
