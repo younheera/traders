@@ -1,4 +1,5 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import Main from "./components/Main";
 import Login from "./components/login/Login";
@@ -7,11 +8,19 @@ import Redirection from "./components/login/Redirection";
 import ProductDetails from "./components/product/ProductDetails";
 import ProductList from "./components/product/ProductList";
 
+import Chat1 from "./components/chat/Chat1";
+import ChatList from "./components/chat/ChatList";
+import ChatDetails from "./components/chat/ChatDetails";
+
+
+
+
+
 function App() {
   return (
     <div>
       <ul>
-        <li>
+         <li>
           <Link to="/">Home</Link>
         </li>
         <li>
@@ -25,6 +34,14 @@ function App() {
         <li>
           <Link to="/login_sdk">login_sdk</Link>
         </li>
+        <li>
+          <Link to='/chat'>chat</Link>
+        </li>
+        <li>
+          <Link to='/chat/list'>chatList</Link>
+        </li> 
+
+    
       </ul>
       <Switch>
         <Route path={["/", "/main"]} exact>
@@ -33,6 +50,20 @@ function App() {
         <Route path="/products" exact>
           <ProductList />
         </Route>
+        <Route path='/chat' exact>
+          <Chat1/>
+        </Route>
+        <Route path='/chat/list' exact>
+          <ChatList/>
+        </Route>
+
+        <Route path='/chat/roomNum' exact>
+          <ChatDetails/>
+        </Route>
+        
+
+
+        
         <Route path="/products/:id" exact>
           <ProductDetails />
         </Route>
