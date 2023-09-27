@@ -45,6 +45,11 @@ function App() {
         <li>
           <Link to="/payment">GreenPay</Link>
         </li>
+        <li>
+          <Link to="/login">login</Link>
+        </li>
+
+
       </ul>
       <Switch>
         <Route path={["/", "/main"]} exact>
@@ -76,6 +81,15 @@ function App() {
         <Route path="/login_sdk" exact>
           <Login_sdk />
         </Route>
+
+        <Route path="/login" exact>
+          <Login/>
+        </Route>
+        
+        <Route path="/redirect" exact>
+          <Redirection/>
+        </Route>
+        
         <Route path={["/", "/main"]} exact><Main /></Route>
         <Route path="/product" exact><ProductList /></Route>
         <Route path="/payment" exact><GreenPay/></Route>
