@@ -1,4 +1,4 @@
-package com.newus.traders.auth.userinfo.Service;
+package com.newus.traders.auth.userinfo.service;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

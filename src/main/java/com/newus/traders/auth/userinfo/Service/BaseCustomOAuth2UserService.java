@@ -1,4 +1,4 @@
-package com.newus.traders.auth.userinfo.Service;
+package com.newus.traders.auth.userinfo.service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
@@ -16,9 +16,8 @@ import org.springframework.stereotype.Service;
 
 import com.newus.traders.auth.BaseAuthUserRepository;
 import com.newus.traders.auth.userinfo.BaseAuthUser;
-import com.newus.traders.auth.userinfo.DTO.OAuthAtrributes;
-import com.newus.traders.auth.userinfo.DTO.SessionUser;
-
+import com.newus.traders.auth.userinfo.dto.OAuthAtrributes;
+import com.newus.traders.auth.userinfo.dto.SessionUser;
 
 import lombok.RequiredArgsConstructor;
 

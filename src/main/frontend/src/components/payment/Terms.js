@@ -1,10 +1,10 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 11:33:31
- * @modify date 2023-09-26 13:14:31
+ * @modify date 2023-09-27 16:27:47
  */
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const initialTermStates = {
   term1: false,
@@ -37,16 +37,22 @@ const Terms = () => {
     setTermStates(updatedTermStates);
 
     // 모든 약관 항목이 선택되었는지 확인
-    const allTermsChecked = Object.values(updatedTermStates).every((value) => value);
+    const allTermsChecked = Object.values(updatedTermStates).every(
+      (value) => value
+    );
     setSelectAllChecked(allTermsChecked);
   };
 
   // 약관 항목 배열
   const terms = [
-    { name: 'term1', label: '그린페이 서비스 약관', link: 'https://www.daangnpay.com/서비스-약관' },
-    { name: 'term2', label: '그린페이 전자금융거래 이용약관', link: '' },
-    { name: 'term3', label: '개인정보 수집 및 이용동의', link: '' },
-    { name: 'term4', label: '개인정보 제3자 제공 동의(그린페이)', link: '' },
+    {
+      name: "term1",
+      label: "그린페이 서비스 약관",
+      link: "https://www.daangnpay.com/서비스-약관",
+    },
+    { name: "term2", label: "그린페이 전자금융거래 이용약관", link: "" },
+    { name: "term3", label: "개인정보 수집 및 이용동의", link: "" },
+    { name: "term4", label: "개인정보 제3자 제공 동의(그린페이)", link: "" },
   ];
 
   return (
@@ -60,14 +66,18 @@ const Terms = () => {
           onChange={toggleSelectAll}
           required
         />
-        &nbsp;&nbsp;약관 모두 동의<br/>
+        &nbsp;&nbsp;약관 모두 동의
+        <br />
       </div>
       <hr className="hr-3" />
       {terms.map((term) => (
         <div key={term.name}>
-          <span style={{ color: 'green', fontWeight: 'bold' }}>[필수]</span>&nbsp;&nbsp;{term.label}&nbsp;
-            <a href={term.link} target='_blank'>상세보기</a>
-          <span style={{ float: 'right' }}>
+          <span style={{ color: "green", fontWeight: "bold" }}>[필수]</span>
+          &nbsp;&nbsp;{term.label}&nbsp;
+          <a href={term.link} target="_blank">
+            상세보기
+          </a>
+          <span style={{ float: "right" }}>
             <input
               type="checkbox"
               className="term-checkbox"
@@ -84,7 +94,8 @@ const Terms = () => {
               onChange={() => handleCheckboxChange(term.name)}
             />
             동의안함
-          </span><br />
+          </span>
+          <br />
         </div>
       ))}
     </form>

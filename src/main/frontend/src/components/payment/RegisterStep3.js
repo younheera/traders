@@ -1,85 +1,106 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 14:00:35
- * @modify date 2023-09-27 14:24:28
+ * @modify date 2023-09-27 16:27:38
  * 그린페이 가입 - 3. 간편비밀번호 설정
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
 
 const RegisterStep3 = ({ onNext }) => {
-    const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
 
-    // 0~9와 총 10개의 문자 배열을 랜덤하게 섞은 배열
-    const [randomCharacters] = useState(shuffleArray(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']));
+  // 0~9와 총 10개의 문자 배열을 랜덤하게 섞은 배열
+  const [randomCharacters] = useState(
+    shuffleArray(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
+  );
 
-    // 숫자 키패드를 3개씩 묶어서 저장
-    const keypadRows = chunkArray(randomCharacters, 3);
+  // 숫자 키패드를 3개씩 묶어서 저장
+  const keypadRows = chunkArray(randomCharacters, 3);
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
-    const handleClearButtonClick = () => {
-        setPassword('');
-    };
+  const handleClearButtonClick = () => {
+    setPassword("");
+  };
 
-    const handleDeleteButtonClick = () => {
-        setPassword(password.slice(0, -1));
-    };
+  const handleDeleteButtonClick = () => {
+    setPassword(password.slice(0, -1));
+  };
 
-    const handleKeypadButtonClick = (character) => {
-        setPassword(password + character);
-    };
+  const handleKeypadButtonClick = (character) => {
+    setPassword(password + character);
+  };
 
-    // 배열을 랜덤하게 섞는 함수
-    function shuffleArray(array) {
-        const shuffledArray = [...array];
-        for (let i = shuffledArray.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-        }
-        return shuffledArray;
-    };
-
-    // 배열을 지정된 크기로 나누는 함수
-    function chunkArray(array, size) {
-        const chunkedArray = [];
-        for (let i = 0; i < array.length; i += size) {
-            chunkedArray.push(array.slice(i, i + size));
-        }
-        return chunkedArray;
-    };
-
-    function setGpayPwd(){
-        {/* payRegister에 보내고 */}
-        onNext()
+  // 배열을 랜덤하게 섞는 함수
+  function shuffleArray(array) {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
     }
+    return shuffledArray;
+  }
 
-    return (
-        <div>
-            <h2>간편비밀번호 설정</h2>
-            페이에 사용할 6자리 비밀번호를 입력해주세요.
-            <br />
-            <input type='text' id='gpayPwd' maxLength={6} size={6} value={password} onChange={handlePasswordChange} />
-        
-            <div id='keypad'>
-                {keypadRows.map((row, rowIndex) => (
-                    <div key={rowIndex}>
-                        {row.map((character) => (
-                            <button key={character} onClick={() => handleKeypadButtonClick(character)}>
-                                {character}
-                            </button>
-                        ))}
-                    </div>
-                ))}
-                <button key={'C'} onClick={handleClearButtonClick}>C</button>
-                <button key={'←'} onClick={handleDeleteButtonClick}>←</button>
-            </div>
-            
-            <button id='setGpayPwd' onClick={()=>setGpayPwd(password)}>확인</button>
-        </div>
-    );
+  // 배열을 지정된 크기로 나누는 함수
+  function chunkArray(array, size) {
+    const chunkedArray = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunkedArray.push(array.slice(i, i + size));
+    }
+    return chunkedArray;
+  }
+
+  function setGpayPwd() {
+    {
+      /* payRegister에 보내고 */
+    }
+    onNext();
+  }
+
+  return (
+    <div>
+      <h2>간편비밀번호 설정</h2>
+      페이에 사용할 6자리 비밀번호를 입력해주세요.
+      <br />
+      <input
+        type="text"
+        id="gpayPwd"
+        maxLength={6}
+        size={6}
+        value={password}
+        onChange={handlePasswordChange}
+      />
+      <div id="keypad">
+        {keypadRows.map((row, rowIndex) => (
+          <div key={rowIndex}>
+            {row.map((character) => (
+              <button
+                key={character}
+                onClick={() => handleKeypadButtonClick(character)}
+              >
+                {character}
+              </button>
+            ))}
+          </div>
+        ))}
+        <button key={"C"} onClick={handleClearButtonClick}>
+          C
+        </button>
+        <button key={"←"} onClick={handleDeleteButtonClick}>
+          ←
+        </button>
+      </div>
+      <button id="setGpayPwd" onClick={() => setGpayPwd(password)}>
+        확인
+      </button>
+    </div>
+  );
 };
 
 export default RegisterStep3;

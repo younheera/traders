@@ -2,23 +2,22 @@
  * @author hyunseul
  * @email [example@mail.com]
  * @create date 2023-09-27 11:00:13
- * @modify date 2023-09-27 14:35:09
+ * @modify date 2023-09-27 16:26:57
  * @desc [description]
  */
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useRef, useState } from 'react';
 import '../../assest/css/ChatStyle.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './Header';
-
-
 
 const ChatDetails = ({ roomNum, username }) => {
   const [messages, setMessages] = useState([]);
   const msgInputRef = useRef(null);
-  
+
   useEffect(() => {
-    const eventSource = new EventSource(`http://localhost:8080/api/chat/roomNum/${roomNum}`);
+    const eventSource = new EventSource(
+      `http://localhost:8080/api/chat/roomNum/${roomNum}`
+    );
 
     eventSource.onmessage = onMessage;
 
@@ -35,7 +34,9 @@ const ChatDetails = ({ roomNum, username }) => {
     return (
       <div className={isSent ? "sent_msg" : "received_withd_msg"}>
         <p>{data.msg}</p>
-        <span className='time_date'>{convertTime} / <b>{data.sender}</b></span>
+        <span className="time_date">
+          {convertTime} / <b>{data.sender}</b>
+        </span>
       </div>
     );
   };
@@ -69,12 +70,15 @@ const ChatDetails = ({ roomNum, username }) => {
       });
 
       if (response.ok) {
-        console.log('메시지 전송 완료');
+        console.log("메시지 전송 완료");
         const newMessage = {
           id: Date.now(),
           sender: username,
           msg: msgInput.value,
-          convertTime: new Date().toLocaleTimeString() + " | " + new Date().toLocaleDateString(),
+          convertTime:
+            new Date().toLocaleTimeString() +
+            " | " +
+            new Date().toLocaleDateString(),
         };
 
         if (username === chat.sender) {
@@ -83,12 +87,12 @@ const ChatDetails = ({ roomNum, username }) => {
           initYourMessage(newMessage);
         }
       } else {
-        console.error('메시지 전송 오류');
+        console.error("메시지 전송 오류");
       }
 
       msgInput.value = "";
     } catch (error) {
-      console.error('메시지 전송 오류:', error);
+      console.error("메시지 전송 오류:", error);
     }
   };
 
@@ -103,18 +107,24 @@ const ChatDetails = ({ roomNum, username }) => {
 
   return (
     <div>
-        {messages.map((data, index) => (
-        <div key={index} className={data.sender === username ? "sent_msg" : "received_withd_msg"}>
-            <p>{data.msg}</p>
-            <span className='time_date'>{data.convertTime} / <b>{data.sender}</b></span>
+      {messages.map((data, index) => (
+        <div
+          key={index}
+          className={
+            data.sender === username ? "sent_msg" : "received_withd_msg"
+          }
+        >
+          <p>{data.msg}</p>
+          <span className="time_date">
+            {data.convertTime} / <b>{data.sender}</b>
+          </span>
         </div>
-        ))}
-        <input type="text" ref={msgInputRef} id="chat-outgoing-msg" />
-        <button id="chat-outgoing-button" onClick={addMessage}>Send</button>
-  </div>
-  
- 
-
+      ))}
+      <input type="text" ref={msgInputRef} id="chat-outgoing-msg" />
+      <button id="chat-outgoing-button" onClick={addMessage}>
+        Send
+      </button>
+    </div>
   );
 };
 

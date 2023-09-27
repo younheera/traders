@@ -18,7 +18,7 @@ import com.newus.traders.auth.jwt.JwtAuthenticationEntryPoint;
 import com.newus.traders.auth.jwt.JwtSecurityConfig;
 import com.newus.traders.auth.jwt.TokenProvider;
 import com.newus.traders.auth.userinfo.BaseAuthRole;
-import com.newus.traders.auth.userinfo.Service.BaseCustomOAuth2UserService;
+import com.newus.traders.auth.userinfo.service.BaseCustomOAuth2UserService;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

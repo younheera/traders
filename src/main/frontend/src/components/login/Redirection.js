@@ -1,21 +1,19 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect } from "react";
 
 const Redirection = () => {
   // 1. 인가 코드 받기
   const code = new URL(window.location.href).searchParams.get("code");
-  
+
   //인가코드 백엔드로 넘기기
-  useEffect(()=>{
+  useEffect(() => {
     axios
-    .get(`http://localhost:8080/api/oauth/kakao?code=${code}`)
-    .then((res)=> {
-      localStorage.setItem('CC_Token',res.headers.aut)
-      localStorage.setItem('RF_Token',refreshToken)
-    })
-    
-  },[]);
+      .get(`http://localhost:8080/api/oauth/kakao?code=${code}`)
+      .then((res) => {
+        localStorage.setItem("CC_Token", res.headers.aut);
+        // localStorage.setItem('RF_Token',refreshToken)
+      });
+  }, []);
 
   // // 2. access Token
   // const getToken = async () => {
@@ -32,7 +30,6 @@ const Redirection = () => {
   //   return response.json();
   // }
 
-  
   // const [token, setToken] = useState("");
 
   // useEffect(() => {
@@ -44,8 +41,6 @@ const Redirection = () => {
   //   }
   // },);
 
-  
-
   // useEffect(() => {
   //   axios.get("/api/auth")
   //   .then(res => token)
@@ -54,12 +49,7 @@ const Redirection = () => {
   // }, [])
 
   // 리액트 컴포넌트 JSX 반환
-  return (
-    <div>
-     login 중입니다..
-    </div>
-  );
-}
+  return <div>login 중입니다..</div>;
+};
 
 export default Redirection;
-

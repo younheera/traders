@@ -2,15 +2,13 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-09-26 10:33:01
- * @modify date 2023-09-26 10:34:15
+ * @modify date 2023-09-27 16:27:54
  * @desc [상품 리스트 페이지에서 근처 상품 보기 버튼을 클릭하면 지도 모달 페이지가 뜨게 한다.]
  */
-import styled from "styled-components";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-
+import styled from "styled-components";
 
 const ModalPage = ({ showModal, closeModal }) => {
-
   return (
     <>
       {showModal ? (
@@ -49,7 +47,6 @@ const StyledModalContainer = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-
 
   .myMap {
     border-radius: 20px;
