@@ -37,6 +37,10 @@ public class ProductDto {
 
     private ProductStatus status;
 
+    private double latitude;
+
+    private double longitude;
+
     // 거래 위치
 
     public static ProductDto from(Product product) {
@@ -47,6 +51,8 @@ public class ProductDto {
                 .description(product.getDescription())
                 .postedAt(product.getPostedAt())
                 .status(product.getStatus())
+                .latitude(product.getLatitude())
+                .longitude(product.getLongitude())
                 .build();
 
     }
