@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.newus.traders.auth.userinfo.DTO.SessionUser;
-import com.newus.traders.auth.userinfo.Service.LoginUser;
+import com.newus.traders.auth.userinfo.dto.SessionUser;
+import com.newus.traders.auth.userinfo.service.LoginUser;
 
 import lombok.RequiredArgsConstructor;
 

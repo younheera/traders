@@ -7,7 +7,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.newus.traders.auth.userinfo.Service.LoginUserArgumentResolver;
+import com.newus.traders.auth.userinfo.service.LoginUserArgumentResolver;
 
 import lombok.RequiredArgsConstructor;
 
