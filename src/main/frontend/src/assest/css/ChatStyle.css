@@ -1,123 +1,63 @@
-/**
- * @author hyunseul
- * @email [example@mail.com]
- * @create date 2023-09-27 14:29:37
- * @modify date 2023-09-27 16:26:47
- * @desc [description]
- */
+/* ChatStyle.css */
 
-body {
-  height: 100%;
-}
-.user {
-  border-bottom: 1px solid #716d6d;
+/* 채팅 메시지 컨테이너 */
+.message-container {
+  max-height: 400px; /* 채팅 창 높이 설정 */
+  overflow-y: auto; /* 스크롤이 필요한 경우 스크롤 표시 */
+  border: 1px solid #ccc; /* 테두리 스타일 설정 */
   padding: 10px;
-  width: 95%;
-}
-.user_data {
-  background-color: #f8f9fa !important;
-  border-top: 5px solid #716d6d;
-  max-height: calc(100vh);
-}
-.profile_name {
-  background-color: #f8f9fa !important;
-  width: 100%;
-  padding: 10px;
-  border-bottom: 5px solid #716d6d;
-}
-.user a:hover {
-  text-decoration: none;
-  color: #212529;
-}
-.user a {
-  color: #212529;
 }
 
-.chat_section {
-  padding-top: 15px;
-}
-.incoming_msg_img {
-  display: inline-block;
-  width: 6%;
-}
-.received_msg {
-  display: inline-block;
-  padding: 0 0 0 10px;
-  vertical-align: top;
-  width: 92%;
-}
-.received_withd_msg p {
-  background: #ebebeb none repeat scroll 0 0;
-  border-radius: 6px;
-  color: #646464;
-  font-size: 14px;
-  margin: 0;
-  padding: 5px 10px 5px 12px;
-  width: 100%;
-}
-.time_date {
-  color: #747474;
-  display: block;
-  font-size: 10px;
-  margin: 8px 0 0;
-}
-.received_withd_msg {
-  width: 57%;
-}
-.mesgs {
-  float: left;
-  padding: 30px 15px 0 25px;
-  width: 60%;
-}
-
-.sent_msg p {
-  background: #050f8f none repeat scroll 0 0;
-  border-radius: 6px;
-  font-size: 14px;
-  margin: 0;
-  color: #fff;
-  padding: 5px 10px 5px 12px;
-  width: 100%;
-}
-.outgoing_msg {
-  overflow: hidden;
-  margin: 26px 0 26px;
-}
+/* 파란색 박스 (사용자가 보낸 메시지) */
 .sent_msg {
-  float: right;
-  width: 60%;
-}
-.input_msg_write input {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: medium none;
-  color: #4c4c4c;
-  font-size: 15px;
-  min-height: 48px;
-  width: 100%;
-  padding: 10px;
+  background: #00a8ff; /* 파란색 배경색 */
+  color: #fff; /* 텍스트 색상 */
+  border-radius: 5px; /* 모서리를 둥글게 */
+  padding: 5px 10px; /* 내용 주위의 여백 */
+  margin: 5px 0; /* 상하 여백 */
+  max-width: 80%; /* 최대 너비 */
+  word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
+  float: right; /* 오른쪽 정렬 (사용자가 보낸 메시지는 오른쪽에 표시됨) */
 }
 
+/* 회색 박스 (상대방이 보낸 메시지) */
+.received_withd_msg {
+  background: #f2f2f2; /* 회색 배경색 */
+  color: #000; /* 텍스트 색상 */
+  border-radius: 5px; /* 모서리를 둥글게 */
+  padding: 5px 10px; /* 내용 주위의 여백 */
+  margin: 5px 0; /* 상하 여백 */
+  max-width: 80%; /* 최대 너비 */
+  word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
+  float: left; /* 왼쪽 정렬 (상대방이 보낸 메시지는 왼쪽에 표시됨) */
+}
+
+/* 메시지 입력 상자와 전송 버튼 */
 .type_msg {
-  border-top: 1px solid #c4c4c4;
-  position: relative;
+  border-top: 1px solid #ccc; /* 상단 경계선 설정 */
+  position: relative; /* 상대적 위치 설정 */
 }
+
+.input_msg_write input {
+  background-color: #fff; /* 입력 상자 배경색 */
+  border: none; /* 테두리 없음 */
+  padding: 15px; /* 입력 상자 내 여백 설정 */
+  width: 80%; /* 입력 상자 너비 설정 */
+  outline-width: 0; /* 포커스 시 파란 테두리 제거 */
+  font-size: 18px; /* 폰트 크기 설정 */
+}
+
 .msg_send_btn {
-  background: #05728f none repeat scroll 0 0;
-  border: medium none;
-  border-radius: 50%;
-  color: #fff;
-  cursor: pointer;
-  font-size: 17px;
-  height: 33px;
-  position: absolute;
-  right: 0;
-  top: 11px;
-  width: 33px;
-}
-.messaging {
-  padding: 0 0 50px 0;
-}
-.msg_history {
-  height: 516px;
-  overflow-y: auto;
+  background: #00a8ff; /* 전송 버튼 배경색 */
+  border: none; /* 테두리 없음 */
+  color: #fff; /* 텍스트 색상 */
+  cursor: pointer; /* 커서를 포인터로 변경 */
+  padding: 10px; /* 버튼 내 여백 설정 */
+  width: 10%; /* 버튼 너비 설정 */
+  border-radius: 50%; /* 버튼을 원 모양으로 만듦 */
+  position: absolute; /* 절대 위치 설정 */
+  right: 15px; /* 오른쪽 여백 설정 */
+  bottom: 12px; /* 아래 여백 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  font-size: 20px; /* 폰트 크기 설정 */
 }

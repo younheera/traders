@@ -5,28 +5,22 @@
  */
 package com.newus.traders.chat.dto;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
 @Data
-@Document(collection = "chat")
 @AllArgsConstructor
 @NoArgsConstructor
+@Document(collection = "chat")
 public class ChatDto {
-
-    @Id
-    private String id;
-    private String msg;
-    private String sender; // 보내는 사람
-    private String receiver; // 받는사람
-    private Integer roomNum; // 방번호
-
-    private LocalDateTime createdAt;
-
+    private String id; // 메시지 고유 식별자 (예: MongoDB ObjectId)
+    private String text; // 메시지 내용
+    private String sender; // 보낸 사람의 사용자명
+    private String roomNum; // 방 번호
+    private LocalDateTime createdAt; // 메시지 생성 시간
 }
