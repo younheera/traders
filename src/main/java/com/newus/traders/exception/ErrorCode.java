@@ -15,8 +15,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    // HttpStatus.NOT_FOUND: 404 에러
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 물품을 찾을 수 없습니다.");
+    PRODUCT_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "해당하는 물품을 찾을 수 없습니다."),
+    PRODUCT_NOT_SAVED(HttpStatus.BAD_REQUEST, "물품을 저장할 수 없습니다"),
+    PRODUCT_NOT_DELETED(HttpStatus.BAD_REQUEST, "물품을 삭제할 수 없습니다"),
+    PRODUCT_NOT_UPDATED(HttpStatus.BAD_REQUEST, "물품을 수정할 수 없습니다"),;
 
     private final HttpStatus httpStatus;
     private final String message;
