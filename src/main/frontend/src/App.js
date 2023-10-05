@@ -5,10 +5,10 @@ import Login from "./components/login/Login";
 import Redirection from "./components/login/Redirection";
 import GreenPay from "./components/payment/GreenPay";
 import PayRegister from "./components/payment/PayRegister";
-import KakaoMap from "./components/product/KakaoMap";
-import LocationComponent from "./components/product/LocationComponent";
+import NearestProductList from "./components/product/NearestProductList";
 import ProductDetails from "./components/product/ProductDetails";
 import ProductList from "./components/product/ProductList";
+import ProductRegistration from "./components/product/ProductRegistration";
 
 function App() {
   return (
@@ -18,20 +18,19 @@ function App() {
           <Link to="/">Home</Link>
         </li>
         <li>
+          <Link to="/products/register">ProductRegistration</Link>
+        </li>
+        <li>
+          <Link to="/products/nearestProducts">NearestProductList</Link>
+        </li>
+        <li>
           <Link to="/products">ProductList</Link>
         </li>
-
         <li>
           <Link to="/login">login</Link>
-        </li>
-        <li>
-          <Link to="/kakaomap">KakaoMap</Link>
         </li>
         <li>
           <Link to="/payment">GreenPay</Link>
-        </li>
-        <li>
-          <Link to="/login">login</Link>
         </li>
       </ul>
 
@@ -42,6 +41,12 @@ function App() {
         <Route path="/products" exact>
           <ProductList />
         </Route>
+        <Route path="/products/nearestProducts" exact>
+          <NearestProductList />
+        </Route>
+        <Route path="/products/register" exact>
+          <ProductRegistration />
+        </Route>
         <Route path="/products/:id" exact>
           <ProductDetails />
         </Route>
@@ -50,10 +55,6 @@ function App() {
         </Route>
         <Route path="/redirect" exact>
           <Redirection />
-        </Route>
-        <Route path="/kakaomap" exact>
-          <KakaoMap />
-          <LocationComponent />
         </Route>
         <Route path="/payment" exact>
           <GreenPay />

@@ -1,31 +1,33 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:21:17
- * @modify date 2023-09-20 17:41:36
+ * @modify date 2023-10-05 10:58:41
  */
 package com.newus.traders.product.entity;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.newus.traders.product.dto.ProductDto;
 import com.newus.traders.product.type.ProductStatus;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,9 +43,7 @@ public class Product {
 
     private String description;
 
-    private LocalDateTime postedAt;
-
-    // 상품 판매 가능 상태
+    @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
     private double latitude;
@@ -51,5 +51,35 @@ public class Product {
     private double longitude;
 
     private String category;
+
+    @CreationTimestamp
+    private Timestamp createdAt;
+
+    @UpdateTimestamp
+    private Timestamp updatedAt;
+
+    @Builder
+    public Product(ProductDto productDto) {
+        this.name = productDto.getName();
+        this.price = productDto.getPrice();
+        this.description = productDto.getDescription();
+        this.status = ProductStatus.AVAILABLE;
+        this.latitude = productDto.getLatitude();
+        this.longitude = productDto.getLongitude();
+        this.category = productDto.getCategory();
+    }
+
+    public void updateProduct(ProductDto productDto) {
+        this.name = productDto.getName();
+        this.price = productDto.getPrice();
+        this.description = productDto.getDescription();
+        this.latitude = productDto.getLatitude();
+        this.longitude = productDto.getLongitude();
+        this.category = productDto.getCategory();
+    }
+
+    public void purchaseProduct() {
+        this.status = ProductStatus.SOLD;
+    }
 
 }
