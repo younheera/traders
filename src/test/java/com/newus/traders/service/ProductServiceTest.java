@@ -25,7 +25,7 @@ import org.mockito.MockitoAnnotations;
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.product.dto.ProductDto;
 import com.newus.traders.product.entity.Product;
-import com.newus.traders.product.form.ProductRegisterForm;
+import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.repository.ProductRepository;
 import com.newus.traders.product.service.ProductService;
 
@@ -37,12 +37,12 @@ public class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
-    ProductRegisterForm form1 = new ProductRegisterForm("product1", 1L, "product no.1", "clothes", 37.49, 127.03);
-    ProductRegisterForm form2 = new ProductRegisterForm("product2", 2L, "product no.2", "shoes", 37.8, 127.06);
-    ProductDto productDto1 = new ProductDto(form1);
-    ProductDto productDto2 = new ProductDto(form2);;
-    Product product1 = new Product(productDto1);
-    Product product2 = new Product(productDto2);
+    ProductForm form1 = new ProductForm("product1", 1L, "product no.1", "clothes", 37.49, 127.03);
+    ProductForm form2 = new ProductForm("product2", 2L, "product no.2", "shoes", 37.8, 127.06);
+    Product product1 = new Product(form1);
+    Product product2 = new Product(form2);
+    ProductDto productDto1 = new ProductDto(product1);
+    ProductDto productDto2 = new ProductDto(product2);
 
     @BeforeEach
     public void setUp() {
@@ -96,7 +96,7 @@ public class ProductServiceTest {
         
         when(productRepository.save(product1)).thenReturn(product1);
         
-        String result = productService.registerProduct(form1);
+        String result = productService.registerProduct(form1, null);
         
         assertEquals("물품 등록을 완료하였습니다.", result);
     }

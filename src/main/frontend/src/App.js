@@ -9,6 +9,7 @@ import NearestProductList from "./components/product/NearestProductList";
 import ProductDetails from "./components/product/ProductDetails";
 import ProductList from "./components/product/ProductList";
 import ProductRegistration from "./components/product/ProductRegistration";
+import ProductUpdate from "./components/product/ProductUpdate";
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
         </Route>
         <Route path="/products/register" exact>
           <ProductRegistration />
+        </Route>
+        <Route path="/products/update/:id" exact>
+          <ProductUpdate />
         </Route>
         <Route path="/products/:id" exact>
           <ProductDetails />

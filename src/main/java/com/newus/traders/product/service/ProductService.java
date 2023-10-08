@@ -1,23 +1,27 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:19:20
- * @modify date 2023-10-05 12:01:24
+ * @modify date 2023-10-06 18:48:22
  */
 package com.newus.traders.product.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
 import com.newus.traders.product.dto.ProductDto;
+import com.newus.traders.product.entity.Image;
 import com.newus.traders.product.entity.Product;
-import com.newus.traders.product.form.ProductRegisterForm;
+import com.newus.traders.product.form.ProductForm;
+import com.newus.traders.product.repository.ImageRepository;
 import com.newus.traders.product.repository.ProductRepository;
-import com.newus.traders.product.type.ProductStatus;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ImageRepository imageRepository;
 
     public List<ProductDto> getAllProducts() {
         List<Product> productList = productRepository.findAll();
@@ -56,41 +61,61 @@ public class ProductService {
         return new ProductDto(product);
     }
 
-    public String registerProduct(ProductRegisterForm productRegisterForm) {
+    public void saveImage(List<MultipartFile> files, Product product) throws Exception {
 
-        ProductDto productDto = new ProductDto(productRegisterForm);
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
 
-        Product product = new Product(productDto);
+        for (MultipartFile file : files) {
+
+            UUID uuid = UUID.randomUUID();
+            String filename = uuid + "_" + file.getOriginalFilename();
+
+            File savedFile = new File(projectPath, filename);
+            file.transferTo(savedFile);
+
+            Image image = new Image(filename);
+            image.setProduct(product);
+
+            imageRepository.save(image);
+        }
+    }
+
+    public String registerProduct(ProductForm productForm, List<MultipartFile> files) {
 
         try {
+            Product product = new Product(productForm);
             productRepository.save(product);
 
-        } catch (RuntimeException exception) {
+            saveImage(files, product);
+
+        } catch (Exception exception) {
             throw new CustomException(ErrorCode.PRODUCT_NOT_SAVED);
         }
 
         return "물품 등록을 완료하였습니다.";
     }
 
-    public String updateProduct(int productId, ProductRegisterForm productRegisterForm) {
+    public String updateProduct(int productId, ProductForm productForm, List<MultipartFile> files) {
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+        // Product product = productRepository.findById(productId)
+        // .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        if (!product.getStatus().equals(ProductStatus.AVAILABLE)) {
-            throw new CustomException(ErrorCode.PRODUCT_NOT_UPDATED);
-        }
+        // if (!product.getStatus().equals(ProductStatus.AVAILABLE)) {
+        // throw new CustomException(ErrorCode.PRODUCT_NOT_UPDATED);
+        // }
 
-        ProductDto productDto = new ProductDto(productRegisterForm);
+        // try {
+        // List<Image> imageList = saveImage(files);
 
-        product.updateProduct(productDto);
+        // ProductDto productDto = new ProductDto(productForm, imageList);
 
-        try {
-            productRepository.save(product);
+        // product.updateProduct(productDto);
 
-        } catch (RuntimeException exception) {
-            throw new CustomException(ErrorCode.PRODUCT_NOT_SAVED);
-        }
+        // productRepository.save(product);
+
+        // } catch (Exception exception) {
+        // throw new CustomException(ErrorCode.PRODUCT_NOT_SAVED);
+        // }
 
         return "물품 수정을 완료하였습니다.";
     }
