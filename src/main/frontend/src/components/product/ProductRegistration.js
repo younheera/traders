@@ -1,51 +1,87 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-30 13:38:26
- * @modify date 2023-10-05 16:21:13
+ * @modify date 2023-10-08 22:08:34
  */
 
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import ImagePreview from "./ImagePreview";
 import KakaoMapModal from "./KakaoMapModal";
 
 const ProductRegistration = () => {
-  const [form, setForm] = useState({
+  const form = new FormData();
+
+  const [data, setData] = useState({
     name: "",
-    price: 0,
+    price: "",
     description: "",
     category: "",
     latitude: 0.0,
     longitude: 0.0,
+    //files: [],
   });
 
-  const { name, price, description } = form;
+  const { name, price, description, category } = data;
+  // const { name, price, description, categor, files } = data;
+  const [files, setFiles] = useState([]);
 
   const changeInput = (evt) => {
-    const { value, name } = evt.target;
+    const { name, value, type } = evt.target;
 
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    if (type === "file") {
+      const selectedFiles = Array.from(evt.target.files);
+
+      setFiles(selectedFiles);
+
+      // setData({
+      //   ...data,
+      //   files: selectedFiles,
+      // });
+    } else {
+      setData({
+        ...data,
+        [name]: value,
+      });
+    }
   };
 
   const handleMapSubmit = (location) => {
-    // 카카오 지도 모달에서 선택한 위치를 받아와서 폼에 업데이트
-    setForm({
-      ...form,
+    setData({
+      ...data,
       latitude: location.lat,
       longitude: location.lng,
     });
   };
 
+  const deleteFile = (indexToDelete) => {
+    const updatedFiles = files.filter((_, index) => index !== indexToDelete);
+    setFiles(updatedFiles);
+    // const updatedFiles = files.filter((_, index) => index !== indexToDelete);
+    // setData({
+    //   ...data,
+    //   files: updatedFiles,
+    // });
+  };
+
   const history = useHistory();
 
-  const submitForm = () => {
+  const submitData = () => {
+    files.forEach((file) => {
+      form.append("files", file);
+    });
+    form.append(
+      "data",
+      new Blob([JSON.stringify(data)], { type: "application/json" })
+    );
     try {
-      console.log(form);
       axios
-        .post("/api/products/register", form)
+        .post("/api/products/register", form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((res) => console.log(res.data));
     } catch (error) {
       if (error.response) {
@@ -88,8 +124,31 @@ const ProductRegistration = () => {
       거래장소 정하기
       <KakaoMapModal onMapSubmit={handleMapSubmit} />
       <br />
+      <label for="files">
+        <div
+          class="btn-upload"
+          style={{
+            border: "1px solid rgb(77,77,77)",
+            width: "150px",
+            height: "30px",
+            borderRadius: "10px",
+          }}
+        >
+          파일 업로드하기
+        </div>
+      </label>
+      <input
+        name="files"
+        id="files"
+        type="file"
+        accept="image/png, image/jpeg"
+        multiple
+        onChange={changeInput}
+        style={{ display: "none" }}
+      />
+      <ImagePreview files={files} deleteFile={deleteFile} />
       <br />
-      <button onClick={submitForm}>상품작성완료</button>
+      <button onClick={submitData}>상품작성완료</button>
     </div>
   );
 };

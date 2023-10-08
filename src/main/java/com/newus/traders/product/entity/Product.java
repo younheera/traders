@@ -1,23 +1,28 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:21:17
- * @modify date 2023-10-05 10:58:41
+ * @modify date 2023-10-06 18:50:37
  */
 package com.newus.traders.product.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.newus.traders.product.dto.ProductDto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.type.ProductStatus;
 
 import lombok.AccessLevel;
@@ -58,24 +63,29 @@ public class Product {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Image> images;
+
     @Builder
-    public Product(ProductDto productDto) {
-        this.name = productDto.getName();
-        this.price = productDto.getPrice();
-        this.description = productDto.getDescription();
+    public Product(ProductForm productForm) {
+        this.name = productForm.getName();
+        this.price = productForm.getPrice();
+        this.description = productForm.getDescription();
         this.status = ProductStatus.AVAILABLE;
-        this.latitude = productDto.getLatitude();
-        this.longitude = productDto.getLongitude();
-        this.category = productDto.getCategory();
+        this.latitude = productForm.getLatitude();
+        this.longitude = productForm.getLongitude();
+        this.category = productForm.getCategory();
+
     }
 
-    public void updateProduct(ProductDto productDto) {
-        this.name = productDto.getName();
-        this.price = productDto.getPrice();
-        this.description = productDto.getDescription();
-        this.latitude = productDto.getLatitude();
-        this.longitude = productDto.getLongitude();
-        this.category = productDto.getCategory();
+    public void updateProduct(ProductForm productForm) {
+        this.name = productForm.getName();
+        this.price = productForm.getPrice();
+        this.description = productForm.getDescription();
+        this.latitude = productForm.getLatitude();
+        this.longitude = productForm.getLongitude();
+        this.category = productForm.getCategory();
     }
 
     public void purchaseProduct() {

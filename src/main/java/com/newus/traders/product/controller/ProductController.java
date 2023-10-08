@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:18:21
- * @modify date 2023-10-05 13:20:07
+ * @modify date 2023-10-06 11:25:16
  */
 package com.newus.traders.product.controller;
 
@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.newus.traders.product.dto.ProductDto;
-import com.newus.traders.product.form.ProductRegisterForm;
+import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -61,16 +62,18 @@ public class ProductController {
     // 나의 판매 상품 목록 보기 구현 필요//
 
     @PostMapping("/products/register")
-    public ResponseEntity<String> registerProduct(@RequestBody ProductRegisterForm productRegisterForm) {
+    public ResponseEntity<String> registerProduct(@RequestPart("data") ProductForm productForm,
+            @RequestPart("files") List<MultipartFile> files) {
 
-        return ResponseEntity.ok(productService.registerProduct(productRegisterForm));
+        return ResponseEntity.ok(productService.registerProduct(productForm, files));
     }
 
     @PutMapping("/products/update/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable("id") Integer id,
-            @RequestBody ProductRegisterForm productRegisterForm) {
+            @RequestPart("data") ProductForm productForm,
+            @RequestPart("files") List<MultipartFile> files) {
 
-        return ResponseEntity.ok(productService.updateProduct(id, productRegisterForm));
+        return ResponseEntity.ok(productService.updateProduct(id, productForm, files));
     }
 
     @DeleteMapping("/products/delete/{id}")

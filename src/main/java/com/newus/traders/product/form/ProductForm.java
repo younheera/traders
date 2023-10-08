@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-04 15:36:47
- * @modify date 2023-10-05 10:25:47
+ * @modify date 2023-10-06 11:25:07
  */
 package com.newus.traders.product.form;
 
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductRegisterForm {
+public class ProductForm {
 
     @NotBlank
     private String name;

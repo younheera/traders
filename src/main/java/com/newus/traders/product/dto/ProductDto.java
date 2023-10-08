@@ -1,15 +1,16 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:30:07
- * @modify date 2023-10-05 12:01:21
+ * @modify date 2023-10-06 18:52:03
  */
 
 package com.newus.traders.product.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.newus.traders.product.entity.Image;
 import com.newus.traders.product.entity.Product;
-import com.newus.traders.product.form.ProductRegisterForm;
 import com.newus.traders.product.type.ProductStatus;
 
 import lombok.AccessLevel;
@@ -42,6 +43,8 @@ public class ProductDto {
 
     private LocalDateTime createdAt;
 
+    private List<Image> images;
+
     @Builder
     public ProductDto(Product product) {
         this.id = product.getId();
@@ -52,15 +55,7 @@ public class ProductDto {
         this.latitude = product.getLatitude();
         this.longitude = product.getLongitude();
         this.category = product.getCategory();
+        this.images = product.getImages();
     }
 
-    public ProductDto(ProductRegisterForm productRegisterForm) {
-        this.name = productRegisterForm.getName();
-        // this.price = Long.parseLong(productRegisterForm.getPrice());
-        this.price = productRegisterForm.getPrice();
-        this.description = productRegisterForm.getDescription();
-        this.latitude = productRegisterForm.getLatitude();
-        this.longitude = productRegisterForm.getLongitude();
-        this.category = productRegisterForm.getCategory();
-    }
 }
