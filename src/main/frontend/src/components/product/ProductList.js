@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:19:28
- * @modify date 2023-09-27 16:27:59
+ * @modify date 2023-10-08 22:08:41
  */
 
 import axios from "axios";
@@ -15,8 +15,19 @@ const ProductList = () => {
     axios
       .get("/api/products")
       .then((res) => setData(res.data))
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.response) {
+          const errorResponse = error.response.data;
+          console.log(errorResponse);
+        }
+      });
   }, []);
+
+  const filterProductStatus = () => {
+    
+    
+  };
+
   return (
     <div>
       <h1>ProductController의 showAllProducts()</h1>
@@ -25,7 +36,7 @@ const ProductList = () => {
           <li key={index}>
             {product.id}/{product.name}
             <br />
-            <Link to={`/products/${product.id}`}>ProductDetails</Link>{" "}
+            <Link to={`/products/${product.id}`}>ProductDetails</Link>
           </li>
         ))}
       </ul>
