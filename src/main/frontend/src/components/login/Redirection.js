@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 
+
+
 const Redirection = () => {
   // 1. 인가 코드 받기
   const code = new URL(window.location.href).searchParams.get("code");
-
   //인가코드 백엔드로 넘기기
   useEffect(() => {
     axios
       .get(`http://localhost:8080/api/oauth/kakao?code=${code}`)
       .then((res) => {
-        localStorage.setItem("CC_Token", res.headers.aut);
+        //localStorage.setItem("CC_Token", res.headers.aut);
         // localStorage.setItem('RF_Token',refreshToken)
       });
   }, []);
