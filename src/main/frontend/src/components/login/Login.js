@@ -1,4 +1,6 @@
 import React from "react";
+import './login.css';
+
 
 const Login = () => {
   const KAKAO_API_KEY = process.env.REACT_APP_REST_API_KEY;
@@ -11,17 +13,20 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>로그인 페이지</h2>
-      <div style={{ backgroundColor: "pink", padding: "1em" }}>
-        <form action="/login" method="post">
-          <input type="text" name="username" />
-          <input type="password" name="password" />
-          <button>로그인</button>
-        </form>
+    <div className="Positioner">
+      <div className="ShadowedBox">
+        <div className="LogoWrapper">
+         <h2>로그인 페이지</h2>
+        </div>
+      <div>
+    
       </div>
-      <button onClick={Kakao}>카카오로 시작하기</button>
+
+        
+
+      <button onClick={Kakao}>카카오로 시작하기</button><br/>
       <button>네이버로 시작하기</button>
+      </div>
     </div>
   );
 };

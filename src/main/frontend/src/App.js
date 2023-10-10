@@ -9,7 +9,13 @@ import NearestProductList from "./components/product/NearestProductList";
 import ProductDetails from "./components/product/ProductDetails";
 import ProductList from "./components/product/ProductList";
 import ProductRegistration from "./components/product/ProductRegistration";
-import ProductUpdate from "./components/product/ProductUpdate";
+// import SignUp, {Input, Signup, useValid} from "./components/login/Signup";
+import Join from "./components/login/Join1";
+import LoginPageTest from "./components/service/LoginPageTest";
+import SignUp from "./components/login/SignUp";
+import {signout} from "./components/service/DemoAPIService"; 
+import { Button } from "@material-ui/core";
+
 
 function App() {
   return (
@@ -28,11 +34,27 @@ function App() {
           <Link to="/products">ProductList</Link>
         </li>
         <li>
-          <Link to="/login">login</Link>
+          <Link to="/login1">login</Link>
         </li>
+
+        {/* <li>
+          <Link to="/join">회원가입</Link>
+        </li> */}
+        <hr/>
+
+        <li>
+          <Link to="/login">로그인테스트</Link>
+        </li>
+        <li>
+          <Link to="/signup">회원가입테스트</Link>
+        </li>
+        <hr/>
+
+
         <li>
           <Link to="/payment">GreenPay</Link>
         </li>
+        <Button onClick={signout}>로그아웃</Button>
       </ul>
 
       <Switch>
@@ -48,22 +70,29 @@ function App() {
         <Route path="/products/register" exact>
           <ProductRegistration />
         </Route>
-        <Route path="/products/update/:id" exact>
-          <ProductUpdate />
-        </Route>
+        
         <Route path="/products/:id" exact>
           <ProductDetails />
         </Route>
-        <Route path="/login" exact>
+        <Route path="/login1" exact>
           <Login />
         </Route>
         <Route path="/redirect" exact>
           <Redirection />
         </Route>
+
+        <Route path="/login" exact>
+          <LoginPageTest/>
+        </Route>
+        <Route path="/signup" exact>
+          <SignUp/>
+        </Route>
+
         <Route path="/payment" exact>
           <GreenPay />
         </Route>
         <Route path="/payment/gpay_register" component={PayRegister} />
+
       </Switch>
     </div>
   );
