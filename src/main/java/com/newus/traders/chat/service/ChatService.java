@@ -6,6 +6,8 @@
 package com.newus.traders.chat.service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -23,13 +25,29 @@ public class ChatService {
 
     private final ChatRepository chatRepository;
 
-    public Flux<ChatDto> getChatMessageByRoomNum(Integer roomNum) {
-        return chatRepository.mFindByRoomNum(roomNum).subscribeOn(Schedulers.boundedElastic());
+    // 채팅방 번호로 채팅 내용 조회
+    public Flux<ChatDto> getChatMessageByRoomNum(String roomNum) {
+        return chatRepository.mFindByRoomNum(roomNum)
+                .subscribeOn(Schedulers.boundedElastic())
+                .onErrorResume(error -> {
+
+                    return Flux.empty();
+                });
     }
 
+    // 메세지 저장
     public Mono<ChatDto> setMsg(ChatDto chat) {
         chat.setCreatedAt(LocalDateTime.now()); // 메세지 생성 시간
         return chatRepository.save(chat); // Object를 리턴하면 자동으로 JSON 변환 (MessageConverter)
     }
 
+    // 채팅방 목록 조회
+    public Flux<String> getChatRoomListBySender(String sender){
+        
+        return chatRepository.findBySenderOrReceiver(sender,sender)
+        .map(ChatDto::getRoomNum)
+        .distinct();
+    }
+
+ 
 }

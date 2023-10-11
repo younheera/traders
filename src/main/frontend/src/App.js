@@ -17,6 +17,10 @@ import {signout} from "./components/service/DemoAPIService";
 import { Button } from "@material-ui/core";
 
 
+import ChatApp from "./components/chat/ChatApp";
+import ChatBox from "./components/chat/ChatBox";
+import ChatList from "./components/chat/ChatList";
+
 function App() {
   return (
     <div>
@@ -54,7 +58,17 @@ function App() {
         <li>
           <Link to="/payment">GreenPay</Link>
         </li>
+<<<<<<< HEAD
+        <li>
+          <Link to="/login">login</Link>
+        </li>
+        <li>
+          <Link to="/chat">chat</Link>
+        </li>
+   
+=======
         <Button onClick={signout}>로그아웃</Button>
+>>>>>>> 67840aa512dca2a253a0b6a248d3e83fd0bcd161
       </ul>
 
       <Switch>
@@ -93,6 +107,25 @@ function App() {
         </Route>
         <Route path="/payment/gpay_register" component={PayRegister} />
 
+<<<<<<< HEAD
+
+        <Route path="/chat" exact>
+          <ChatApp/>
+        </Route>
+      
+        
+      
+        <Route path="/chat/roomNum/:roomNum" component={ChatBox} exact></Route>
+        <Route path="/chat/list" component={ChatList} exact></Route>
+
+
+
+
+
+       
+       
+=======
+>>>>>>> 67840aa512dca2a253a0b6a248d3e83fd0bcd161
       </Switch>
     </div>
   );
