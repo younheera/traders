@@ -1,8 +1,13 @@
+/**
+ * @author hyunseul
+ * @create date 2023-10-11 19:03:18
+ * @modify date 2023-10-11 19:03:20
+ */
+
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Chatprofile from "../../assest/img/Chatprofile.png";
-import ChatBox from "./ChatBox";
+import Chatprofile from "../../assets/img/Chatprofile.png";
 import axios from "axios";
 
 const ChatList = () => {

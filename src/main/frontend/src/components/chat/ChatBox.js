@@ -1,17 +1,16 @@
 /**
  * @author hyunseul
  * @create date 2023-10-04 13:02:02
- * @modify date 2023-10-11 12:14:18
+ * @modify date 2023-10-11 18:53:54
  */
 
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Clock from 'react-live-clock';
-import '../../assest/css/ChatStyle.css'
+import '../../assets/css/ChatStyle.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ChatList from "./ChatList";
-import Chatprofile from "../../assest/img/Chatprofile.png";
+import Chatprofile from "../../assets/img/Chatprofile.png";
 import {AiOutlineCalendar} from 'react-icons/ai';
 import {MdArrowBackIosNew} from 'react-icons/md'
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
@@ -25,8 +24,9 @@ const ChatBox = () => {
   const [message, setMessage] = useState("");
   const eventSourceRef = useRef(null);
   const messageRef = useRef(null);
-
   const history = useHistory();
+  const [isModalOpened, setIsModalOpened] = useState(false);
+
 
   useEffect(() => {
     // 이전 채팅 내용을 서버에서 가져오기
@@ -158,19 +158,25 @@ const handleEnterPress = (e) => {
 };
 
 // 뒤로가기 버튼 클릭 이벤트 함수
-// const handleBackButtonClick = () => {
-//   history.push("/chat/list");
-// }
+ const handleBackButtonClick = () => {
+   history.push("/chat/list");
+ }
+
+const modalClick = () => {
+  setIsModalOpened(true);
+  };
 
 
   return (
     <div className="message">
       <div className="message-container" ref={messageRef}>
       <div>
-        <MdArrowBackIosNew size='20px'/>　
+        <MdArrowBackIosNew size='20px' onClick={handleBackButtonClick}/>　
         <img src={Chatprofile} alt="상품 이미지" value={username}/> 
         　유인나
-        <AiOutlineCalendar className="icon-calendar"size='30px'/>
+        <AiOutlineCalendar className="icon-calendar"size='30px' onClick={modalClick}>
+          
+        </AiOutlineCalendar>
         <hr/>
         
       </div>
