@@ -21,8 +21,7 @@ public interface ChatRepository extends ReactiveMongoRepository<ChatDto, String>
     // // 귓속말 할때 사용
     // @Tailable // 커서 안닫고 계속 유지(실시간 데이터 업데이트)
     // @Query("{ sender : ?0, receiver :?1}") // 서버가 돌아가면 데이터 찾는 쿼리 실행
-    // Flux<Chat> mFindBySender(String sender, String receiver); // Flux(흐름)
-    // response를 유지하면서 데이터 계속 흘려보내기
+    // Flux<Chat> mFindBySender(String sender, String receiver); // Flux(흐름) response를 유지하면서 데이터 계속 흘려보내기
 
     @Tailable
     @Query("{ roomNum: ?0 }")
