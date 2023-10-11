@@ -26,9 +26,11 @@ public class WebConfig implements WebMvcConfigurer{//어노테이션 생성
 	// }
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/*")
-				.allowedOrigins("/*")
+		registry.addMapping("/**")
+				.allowedOrigins("/**")
 				.allowedMethods("GET", "POST", "PUT", "DELETE")
+				.allowedHeaders("*")
+				.allowCredentials(true)
 				.maxAge(3000);
 		
 //		addMapping - CORS를 적용할 url의 패턴을 정의 (/** 로 모든 패턴을 가능하게 함)
