@@ -22,6 +22,7 @@ import com.newus.traders.product.entity.Product;
 import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.repository.ImageRepository;
 import com.newus.traders.product.repository.ProductRepository;
+import com.newus.traders.product.type.ProductStatus;
 
 import lombok.RequiredArgsConstructor;
 
@@ -80,6 +81,12 @@ public class ProductService {
         }
     }
 
+    public void deleteImage(List<Integer> removedFiles) throws Exception {
+
+        removedFiles.stream().forEach(id -> imageRepository.deleteById(id));
+
+    }
+
     public String registerProduct(ProductForm productForm, List<MultipartFile> files) {
 
         try {
@@ -95,27 +102,28 @@ public class ProductService {
         return "물품 등록을 완료하였습니다.";
     }
 
-    public String updateProduct(int productId, ProductForm productForm, List<MultipartFile> files) {
+    public String updateProduct(int productId, ProductForm productForm, List<MultipartFile> newFiles,
+            List<Integer> removedFiles) {
 
-        // Product product = productRepository.findById(productId)
-        // .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        // if (!product.getStatus().equals(ProductStatus.AVAILABLE)) {
-        // throw new CustomException(ErrorCode.PRODUCT_NOT_UPDATED);
-        // }
+        if (!product.getStatus().equals(ProductStatus.AVAILABLE)) {
+            throw new CustomException(ErrorCode.PRODUCT_NOT_UPDATED);
+        }
 
-        // try {
-        // List<Image> imageList = saveImage(files);
+        try {
+            product.updateProduct(productForm);
 
-        // ProductDto productDto = new ProductDto(productForm, imageList);
+            productRepository.save(product);
 
-        // product.updateProduct(productDto);
+            saveImage(newFiles, product);
 
-        // productRepository.save(product);
+            deleteImage(removedFiles);
 
-        // } catch (Exception exception) {
-        // throw new CustomException(ErrorCode.PRODUCT_NOT_SAVED);
-        // }
+        } catch (Exception exception) {
+            throw new CustomException(ErrorCode.PRODUCT_NOT_SAVED);
+        }
 
         return "물품 수정을 완료하였습니다.";
     }

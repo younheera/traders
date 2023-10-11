@@ -67,6 +67,8 @@ public class Product {
     @JsonManagedReference
     private List<Image> images;
 
+    private Long likes;
+
     @Builder
     public Product(ProductForm productForm) {
         this.name = productForm.getName();

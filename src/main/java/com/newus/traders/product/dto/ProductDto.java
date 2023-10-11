@@ -45,6 +45,8 @@ public class ProductDto {
 
     private List<Image> images;
 
+    private Long likes;
+
     @Builder
     public ProductDto(Product product) {
         this.id = product.getId();
@@ -56,6 +58,7 @@ public class ProductDto {
         this.longitude = product.getLongitude();
         this.category = product.getCategory();
         this.images = product.getImages();
+        this.likes = product.getLikes();
     }
 
 }

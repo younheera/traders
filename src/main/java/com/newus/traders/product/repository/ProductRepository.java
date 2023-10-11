@@ -17,4 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "SELECT DISTINCT p.* FROM product p WHERE (6371 * acos(cos(:latitude * (3.141592653589793 / 180)) * cos(p.latitude * (3.141592653589793 / 180)) * cos((:longitude * (3.141592653589793 / 180)) - (p.longitude * (3.141592653589793 / 180))) + sin(:latitude * (3.141592653589793 / 180)) * sin(p.latitude * (3.141592653589793 / 180)))) <= :distance", nativeQuery = true)
     List<Product> findByDistance(@Param("latitude") double latitude, @Param("longitude") double longitude,
             @Param("distance") double distance);
+
+            
 }

@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:18:21
- * @modify date 2023-10-06 11:25:16
+ * @modify date 2023-10-09 14:52:43
  */
 package com.newus.traders.product.controller;
 
@@ -71,9 +71,10 @@ public class ProductController {
     @PutMapping("/products/update/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable("id") Integer id,
             @RequestPart("data") ProductForm productForm,
-            @RequestPart("files") List<MultipartFile> files) {
+            @RequestPart("files") List<MultipartFile> newFiles,
+            @RequestParam("removedFiles") List<Integer> removedFiles) {
 
-        return ResponseEntity.ok(productService.updateProduct(id, productForm, files));
+        return ResponseEntity.ok(productService.updateProduct(id, productForm, newFiles, removedFiles));
     }
 
     @DeleteMapping("/products/delete/{id}")
