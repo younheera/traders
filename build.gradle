@@ -51,12 +51,15 @@ dependencies {
 	implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
 	// javax.xml.bind
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+
 	//spring mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.1'
 	implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 	// <https://mvnrepository.com/artifact/com.google.guava/guava>
 	//compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+
 
 
 
@@ -120,3 +123,4 @@ task copyReactBuildFiles(type: Copy) {
     from "$frontendDir/build"
     into "$projectDir/src/main/resources/static"
 }
+

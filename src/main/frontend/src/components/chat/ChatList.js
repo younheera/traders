@@ -1,52 +1,57 @@
-/**
- * @author hyunseul
- * @email [example@mail.com]
- * @create date 2023-09-26 17:02:33
- * @modify date 2023-09-27 16:26:58
- * @desc [description]
- */
-import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Chatprofile from "../../assest/img/Chatprofile.png";
+import ChatBox from "./ChatBox";
+import axios from "axios";
 
-const ChatList = ({ username }) => {
+const ChatList = () => {
+  const location = useLocation();
+  const username = location.state.enteredUsername;
   const [chatRooms, setChatRooms] = useState([]);
-  // const [username,setUsername] = useState('');
-  const [roomNum, setRoomNum] = useState("");
-  // const [messages,setMessages] = useState([])
+  const history = useHistory();
 
   useEffect(() => {
-    // const usernameInput = prompt("아이디를 입력하세요");
-    // const roomNumInput = prompt("채팅방 번호를 입력하세요");
-    // setUsername(username);
-    // setRoomNum(roomNum);
+    if (username) {
+      fetchData();
+    } else {
+      history.push("/");
+    }
+  }, [username]);
 
-    // 서버에서 채팅방 목록 가져오는 api엔드포인트 요청
-    axios
-      .get(`http://localhost:8080/api/chat/list`)
-      .then((res) => {
-        const chatRoomData = res.data; // 채팅방 목록 데이터
-        setChatRooms(chatRoomData); // 채팅방 목록 상태 업데이트
-      })
-      .catch((error) => {
-        console.error("채팅방 목록을 가져오는데 실패하였습니다.", error);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/chat/list", {
+        params: {
+          sender: username,
+        },
       });
-  }, []);
+
+      const chatData = response.data || [];
+      setChatRooms(chatData);
+      console.log("채팅방 요청 성공", chatData);
+    } catch (error) {
+      console.error("채팅방 목록을 불러오는 데 실패했습니다.", error);
+    }
+  };
 
   return (
     <div>
-      <h2>채팅방 목록</h2>
-      <ul>
-        {chatRooms.map((roomNum, index) => (
-          <li key={index}>
-            <span>방번호: {roomNum}</span>
-            <br />
-            <Link to={`/chat/${roomNum}`}>ChatDetails</Link>
-            {""}
-          </li>
-        ))}
-      </ul>
+      {username && chatRooms.length > 0 && (
+        <div>
+          <h3>채팅방 목록</h3>
+          <ul>
+            {chatRooms.map((roomNum) => (
+              <li key={roomNum}>
+                <img src={Chatprofile} alt="상품 이미지" />
+                <button onClick={() => history.push(`/chat/roomNum/${roomNum}`)}>
+                  채팅방 {roomNum}으로 입장
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

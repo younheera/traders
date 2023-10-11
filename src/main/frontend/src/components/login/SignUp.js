@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useCallback, useState} from "react";
 import {
   Button,
   TextField,
@@ -29,6 +29,16 @@ const schema = yup.object().shape({
   email: yup
     .string()
     .email('이메일 형식이 적합하지 않습니다.')
+    /* 이메일중복체크 */
+    .test('unique-email','이미 사용중인 이메일 입니다.',async function(value){
+      if(value) {
+        const response = await fetch(`http://localhost:8080/api/auth/signup/emailCheck?email=${value}`);
+        if(!response.ok){
+          throw new yup.ValidationError('이미 사용중인 이메일 입니다',value,'email');
+        }
+      }
+      return true;
+    })
     .required('이메일을 필수로 입력해주세요.'),
   password: yup
     .string()
@@ -45,13 +55,22 @@ const schema = yup.object().shape({
 });
 
 const SignUp =()=> {
-  const {control,handleSubmit,watch,formState: {isSubmitting,errors},reset} = useForm({
+  const {control,handleSubmit,watch,formState: {isSubmitting,errors},reset, setError,form} = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange'
   });
   console.log(watch());//유저입력값 실시간 콘솔 보기
   const username = watch().username;
   
+   // 추가된 상태 값
+   const [email, setEmail] = useState('');
+   const [verificationCode, setVerificationCode] = useState('');
+   const [confirmationCode, setConfirmationCode] = useState('');
+   const [isVerificationCodeSent, setIsVerificationCodeSent] = useState(false);
+   const [showEmailNumber, setShowEmailNumber] = useState(false);
+
+   
+
   const onSubmit = async (data) => {
     const {username, email, password} = data;
 
@@ -66,19 +85,15 @@ const SignUp =()=> {
     reset();
   };
   /* 닉네임 중복 체크 */
-  const idCheck = async(e)=> {
+  const nameCheck = async(e)=> {
     e.preventDefault();
-
     const {username} = watch();
-    const requestbody = {username};
-
     try{
-      const response = await fetch(`http://localhost:8080/api/auth/signup/nameCheck`, {
+      const response = await fetch(`http://localhost:8080/api/auth/signup/nameCheck?username=${username}`, {
       method: "GET",
       headers: {
         "Content-Type" : "application/json",
       },
-      body: JSON.stringify(requestbody),
     });
       if(response.ok) {
         alert("사용가능한 아이디입니다.");
@@ -91,6 +106,56 @@ const SignUp =()=> {
       console.error("에러", error);
     }
   }
+
+  /* 이메일 인증 */
+  const handleSendNumberClick = async () => {
+    if (isVerificationCodeSent) {
+      // 이미 인증 코드가 전송되었을 경우에는 무시
+      return;
+    }
+    setShowEmailNumber(true); // "이메일 인증번호" 입력 필드를 표시
+    // sendVerificationCode();
+  };
+
+  
+  //이메일 코드 전송하기
+  const sendVerificationCode =async()=> {
+    const emailValue = watch("email");
+    if(emailValue.length==0) {
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:8080/api/auth/signup/email?email=${emailValue}`, {
+      method:"GET",
+      headers: {
+        "Content-Type":"applicaion/json",
+      },
+    });
+    if(response.ok) {
+      const data = await response.text();
+      setConfirmationCode(data);
+      setIsVerificationCodeSent(true);
+      setShowEmailNumber(true);//인증번호 입력창 보이게 하기 위함
+      console.log(response);
+      console.log(data);
+      alert("인증번호 발송");
+    }else{
+      console.error("Error sending verification code");
+    }
+    } catch (error) {
+      console.error("Error sending verification code:",error);
+    }
+  }
+
+  //검증
+  const confirmNumber =()=> {
+    const enteredVerificationCode  = watch("emailnumber");
+      if(enteredVerificationCode===confirmationCode) {
+        alert("인증되었습니다");
+      }else{
+        alert("번호가 다릅니다");
+      }
+    }
 
 
   // render() {
@@ -126,7 +191,7 @@ const SignUp =()=> {
               />
               </Grid>
               <Grid item xs={3}>
-              <button onClick={idCheck}>중복체크</button>
+              <button onClick={nameCheck}>중복체크</button>
               </Grid>
               </Grid>
               {errors.username && <ErrorMessage message={errors.username.message}/>}
@@ -142,7 +207,6 @@ const SignUp =()=> {
               render={({field})=>(
               <TextField
                 autoComplete="email"
-                // name="email"
                 variant="outlined"
                 required
                 fullWidth
@@ -155,11 +219,43 @@ const SignUp =()=> {
                 />
                 </Grid>
                 <Grid item xs={3}>
-                <button>중복체크</button>
+                {/* <button onClick={()=> {handleSendNumberClick(); sendVerificationCode();}}>{isVerificationCodeSent ? "재전송": "인증번호"}</button> */}
+                <button onClick={sendVerificationCode}>
+                  {isVerificationCodeSent  ? "재전송":"인증번호"}
+                </button>
                 </Grid>
                 </Grid>
               {errors.email && <ErrorMessage message={errors.email.message} />}
             </Grid>
+
+            <Grid item xs={12} style={{display: showEmailNumber ? "block" : "none"}}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={9}>
+              <Controller
+              name="emailnumber"
+              control={control}
+              defaultValue=""
+              render={({field})=>(
+              <TextField
+                autoComplete="emailnumber"
+                variant="outlined"
+                required
+                fullWidth
+                id="emailnumber"
+                label="이메일 인증번호"
+                autoFocus
+                {...field}
+                />
+                )}
+                />
+                </Grid>
+                <Grid item xs={3}>
+                <button onClick={confirmNumber}>이메일인증</button>
+                </Grid>
+                </Grid>
+              {errors.emailnumber && <ErrorMessage message={errors.emailnumber.message} />}
+            </Grid>
+
             <Grid item xs={12}>
             <Controller
               name="password"
@@ -217,9 +313,7 @@ const SignUp =()=> {
               >
                 계정 생성
               </Button>
-
             </Grid>
-          </Grid>
           <Grid container justify-content="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
@@ -227,10 +321,12 @@ const SignUp =()=> {
               </Link>
             </Grid>
           </Grid>
+          </Grid>
         </form>
       </Container>
     );
-  }
+  };
+
 // }
 
 export default SignUp;

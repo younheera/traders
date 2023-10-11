@@ -6,8 +6,7 @@ public class UserException extends RuntimeException{
     
     private HttpStatus status;
 
-    public UserException(String message, HttpStatus status) {
-        super(message);
+    public UserException(HttpStatus status) {
         this.status = status;
     }
     public HttpStatus getStatus() {

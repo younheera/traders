@@ -33,7 +33,6 @@ public class UserService {
 			log.warn("Email already exists {}", email);
 			throw new RuntimeException("Email already exists");
 		}
-//사용자정보 토큰값 통해서 뽑아오는 필 
 		return userRepository.save(userEntity);
 	}
 
@@ -56,7 +55,10 @@ public class UserService {
 		return optionalUser.get();
 	}
 
-	// public boolean checkNicknameDuplicate(String username) {
-	// 	return userRepository.existByUserName(username);
-	// }
+	public boolean existsByUsername(String username) {
+	 	return userRepository.existsByUsername(username);
+	 }
+	 public boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
+	 }
 }

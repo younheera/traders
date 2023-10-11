@@ -47,12 +47,15 @@ public class TokenProvider {//토큰 생성, 유효성 검증
     private static final String BEARER_PREFIX = "Bearer ";
     private static final long TOKEN_TIME = 60 * 60 * 1000L;
 	
-	 private static final String SECRET_KEY = "Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H";
+	// @Value("${jwt.secretkey}")
+	// private String SECRET_KEY;
+
+	private static final String SECRET_KEY = "Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H";
 	  byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
 	//   byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
 	  Key key = Keys.hmacShaKeyFor(keyBytes);
 	  //private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-
+	
 	@Value("${jwt.access.header}")
 	private String accessHeader;
 	@Value("${jwt.refresh.header}")

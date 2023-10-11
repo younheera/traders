@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.newus.traders.user.dto.ResponseDTO;
 import com.newus.traders.user.dto.UserDTO;
 import com.newus.traders.user.entity.UserEntity;
+import com.newus.traders.user.exception.UserException;
 import com.newus.traders.user.security.TokenProvider;
 import com.newus.traders.user.service.UserService;
 
@@ -104,27 +105,31 @@ public class UserController {
 		}
 	}
 
-  	// @PostMapping("/auth/signup/nameCheck")
-//  	public ResponseEntity<Boolean> checkNicknameDuplicate(@PathVariable String username)throws Exception {
-// 		return ResponseEntity.ok(userService.checkNicknameDuplicate(username));
-// // 		System.out.println(id);
-// 		//Map<String, Object> data = new HashMap<String, Object>();
-// 		try{
-
-// 		boolean isDuplicate = userService.isDuplicateId(id);
-
-// 		if(isDuplicate) {
-// 			//data.put("confirm","OK");
-// 			return ResponseEntity.status(HttpStatus.OK).body("NO"); // 아이디 중복
-// 		}else{
-// 			// data.put("confirm","NO");
-// 			return ResponseEntity.status(HttpStatus.OK).body("OK");
-// 		}
-// 		// return data;
-// 	}catch(Exception e){
-// 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
-// 	}
-
-// }
-// }
+  	 @GetMapping("/auth/signup/nameCheck")
+ 	public ResponseEntity<?> checkNicknameDuplication(@RequestParam(value="username") String username) {
+		try{
+		System.out.println(username);
+		if(userService.existsByUsername(username)) {
+			throw new UserException(HttpStatus.CONFLICT);
+		}else{
+			return ResponseEntity.ok(HttpStatus.OK);
+		}
+	}catch(UserException e) {
+		return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+	}
+	}
+	
+	@GetMapping("/auth/signup/emailCheck")
+	public ResponseEntity<?> checkEmailDuplication(@RequestParam(value="email") String email) {
+		try{
+		System.out.println(email);
+		if(userService.existsByEmail(email)) {
+			throw new UserException(HttpStatus.CONFLICT);
+		}else{
+			return ResponseEntity.ok(HttpStatus.OK);
+		}
+		}catch(UserException e) {
+			return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+		}
+	}
 }
