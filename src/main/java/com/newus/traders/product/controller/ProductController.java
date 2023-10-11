@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:18:21
- * @modify date 2023-10-09 14:52:43
+ * @modify date 2023-10-11 16:47:48
  */
 package com.newus.traders.product.controller;
 
@@ -54,7 +54,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
 
         return ResponseEntity.ok(productService.getProduct(id));
     }
@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @PutMapping("/products/update/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable("id") Integer id,
+    public ResponseEntity<String> updateProduct(@PathVariable("id") Long id,
             @RequestPart("data") ProductForm productForm,
             @RequestPart("files") List<MultipartFile> newFiles,
             @RequestParam("removedFiles") List<Integer> removedFiles) {
@@ -78,13 +78,13 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/delete/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) {
 
         return ResponseEntity.ok(productService.deleteProduct(id));
     }
 
     @PutMapping("/products/purchase/{id}")
-    public ResponseEntity<String> purchaseProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<String> purchaseProduct(@PathVariable("id") Long id) {
 
         return ResponseEntity.ok(productService.purchaseProduct(id));
     }

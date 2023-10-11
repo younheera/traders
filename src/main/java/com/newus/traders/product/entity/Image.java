@@ -10,8 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.newus.traders.user.entity.UserEntity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,6 +31,10 @@ public class Image {
     @ManyToOne
     @JsonBackReference
     private Product product;
+
+    // @OneToOne
+    // @JsonBackReference
+    // private UserEntity user;
 
     String filename;
 

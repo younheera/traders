@@ -1,14 +1,13 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:19:20
- * @modify date 2023-10-06 18:48:22
+ * @modify date 2023-10-11 16:47:44
  */
 package com.newus.traders.product.service;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class ProductService {
     private final ImageRepository imageRepository;
 
     public List<ProductDto> getAllProducts() {
-        List<Product> productList = productRepository.findAll();
+        List<Product> productList = productRepository.findByIsDeletedFalse();
 
         if (productList.size() == 0) {
             // 리스트가 0일 경우에 --- 메세지를 좀 수정할 필요는 보임!
@@ -50,14 +49,14 @@ public class ProductService {
         return productDtoList;
     }
 
-    public ProductDto getProduct(int productId) {
-        Optional<Product> optionalProduct = productRepository.findById(productId);
+    public ProductDto getProduct(Long productId) {
+        Product product = productRepository.findByIdAndIsDeletedFalse(productId)
+                .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+        // Product product = productRepository.findByIdAndIsDeletedFalse(productId);
 
-        if (!optionalProduct.isPresent()) {
-            throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
-        }
-
-        Product product = optionalProduct.get();
+        // if (product == null) {
+        // throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
+        // }
 
         return new ProductDto(product);
     }
@@ -102,10 +101,15 @@ public class ProductService {
         return "물품 등록을 완료하였습니다.";
     }
 
-    public String updateProduct(int productId, ProductForm productForm, List<MultipartFile> newFiles,
+    public String updateProduct(Long productId, ProductForm productForm, List<MultipartFile> newFiles,
             List<Integer> removedFiles) {
 
-        Product product = productRepository.findById(productId)
+        // Product product = productRepository.findByIdAndIsDeletedFalse(productId);
+
+        // if (product == null) {
+        // throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
+        // }
+        Product product = productRepository.findByIdAndIsDeletedFalse(productId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
         if (!product.getStatus().equals(ProductStatus.AVAILABLE)) {
@@ -128,10 +132,17 @@ public class ProductService {
         return "물품 수정을 완료하였습니다.";
     }
 
-    public String deleteProduct(int productId) {
+    public String deleteProduct(Long productId) {
 
-        Product product = productRepository.findById(productId)
+        // Product product = productRepository.findByIdAndIsDeletedFalse(productId);
+
+        // if (product == null) {
+        // throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
+        // }
+        Product product = productRepository.findByIdAndIsDeletedFalse(productId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        product.setIsDeleted();
 
         try {
             productRepository.delete(product);
@@ -143,11 +154,15 @@ public class ProductService {
         return "물품 삭제를 완료하였습니다.";
     }
 
-    public String purchaseProduct(int productId) {
+    public String purchaseProduct(Long productId) {
 
-        Product product = productRepository.findById(productId)
+        Product product = productRepository.findByIdAndIsDeletedFalse(productId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+        // Product product = productRepository.findByIdAndIsDeletedFalse(productId);
 
+        if (product == null) {
+            throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
+        }
         product.purchaseProduct();
 
         try {

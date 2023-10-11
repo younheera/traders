@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductDto {
 
-    private int id;
+    private Long id;
 
     // 회원 entity와 연결
     // seller;
@@ -57,6 +57,7 @@ public class ProductDto {
         this.latitude = product.getLatitude();
         this.longitude = product.getLongitude();
         this.category = product.getCategory();
+        this.createdAt = product.getCreatedAt().toLocalDateTime();
         this.images = product.getImages();
         this.likes = product.getLikes();
     }
