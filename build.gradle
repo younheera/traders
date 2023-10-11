@@ -40,19 +40,29 @@ dependencies {
 
     // 희라
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
 	// JWT Token
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+<<<<<<< HEAD
+	implementation 'com.nimbusds:nimbus-jose-jwt:9.25.6'
+=======
+>>>>>>> origin/main
 	// com.sun.xml.bind
 	implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
 	implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
 	// javax.xml.bind
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+<<<<<<< HEAD
+	//spring mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.1'
+	implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+=======
 	// <https://mvnrepository.com/artifact/com.google.guava/guava>
 	//compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+>>>>>>> origin/main
 
 
 
@@ -116,4 +126,3 @@ task copyReactBuildFiles(type: Copy) {
     from "$frontendDir/build"
     into "$projectDir/src/main/resources/static"
 }
-
