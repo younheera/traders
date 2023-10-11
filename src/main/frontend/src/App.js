@@ -10,6 +10,10 @@ import LocationComponent from "./components/product/LocationComponent";
 import ProductDetails from "./components/product/ProductDetails";
 import ProductList from "./components/product/ProductList";
 
+import ChatApp from "./components/chat/ChatApp";
+import ChatBox from "./components/chat/ChatBox";
+import ChatList from "./components/chat/ChatList";
+
 function App() {
   return (
     <div>
@@ -33,6 +37,10 @@ function App() {
         <li>
           <Link to="/login">login</Link>
         </li>
+        <li>
+          <Link to="/chat">chat</Link>
+        </li>
+   
       </ul>
 
       <Switch>
@@ -59,6 +67,23 @@ function App() {
           <GreenPay />
         </Route>
         <Route path="/payment/gpay_register" component={PayRegister} />
+
+
+        <Route path="/chat" exact>
+          <ChatApp/>
+        </Route>
+      
+        
+      
+        <Route path="/chat/roomNum/:roomNum" component={ChatBox} exact></Route>
+        <Route path="/chat/list" component={ChatList} exact></Route>
+
+
+
+
+
+       
+       
       </Switch>
     </div>
   );
