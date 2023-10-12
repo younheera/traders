@@ -53,7 +53,7 @@ public class ChatController {
     // 채팅 저장
     @PostMapping("/chat")
     public Mono<ResponseEntity<String>> setMsg(@RequestBody ChatDto chat) {
-        if (chat.getRoomNum() == null || chat.getText() == null || chat.getSender() == null) {
+        if (chat.getRoomNum() == null || chat.getText() == null || chat.getSender() == null ) {
             return Mono.just(ResponseEntity.badRequest().body("Invalid chat message format"));
         }
 
@@ -83,4 +83,6 @@ public class ChatController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+
 }
