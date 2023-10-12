@@ -24,8 +24,8 @@ import javax.persistence.UniqueConstraint;
 	@UniqueConstraint(columnNames = "username")})
 public class UserEntity {
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@GeneratedValue(generator="uuid")
+	@GenericGenerator(name="uuid", strategy = "uuid")
 	private String id; // 유저에게 고유하게 부여되는 id.
 
 	@Column(nullable = false)
