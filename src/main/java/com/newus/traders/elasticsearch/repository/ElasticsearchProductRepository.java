@@ -6,15 +6,17 @@
 
 package com.newus.traders.elasticsearch.repository;
 
-import com.newus.traders.elasticsearch.document.ProductDocument;
+import java.util.List;
+
 import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-import java.util.List;
+import com.newus.traders.elasticsearch.document.ProductDocument;
 
-public interface ElasticsearchProductRepository extends ElasticsearchRepository<ProductDocument, String> {
-    @Query("{\"match\": {\"name.nori\": \"?0\"}}")
+public interface ElasticsearchProductRepository extends ElasticsearchRepository<ProductDocument, Long> {
+    // @Query("{\"match\": {\"name.nori\": \"?0\"}}")
+    // List<ProductDocument> findByName(String keyword);
+    @Query("{\"bool\": {\"must\": [{\"match\": {\"name.nori\": \"?0\"}},{\"term\": {\"is_deleted\": 0}}]}}")
     List<ProductDocument> findByName(String keyword);
 
-    ;
 }
