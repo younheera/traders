@@ -72,7 +72,7 @@ public class Product {
 
     private Long likes;
 
-    private boolean isDeleted = false;
+    private boolean isDeleted ;
 
     @Builder
     public Product(ProductForm productForm) {
@@ -83,8 +83,10 @@ public class Product {
         this.latitude = productForm.getLatitude();
         this.longitude = productForm.getLongitude();
         this.category = productForm.getCategory();
+        this.likes = 0L;
+        this.isDeleted = false;
 
-    }
+    }  
 
     public void updateProduct(ProductForm productForm) {
         this.name = productForm.getName();

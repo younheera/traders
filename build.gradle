@@ -45,13 +45,28 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+<<<<<<< Updated upstream
 	implementation 'com.nimbusds:nimbus-jose-jwt:9.25.6'
+=======
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+	implementation 'com.nimbusds:nimbus-jose-jwt:9.25.6'
+=======
+>>>>>>> origin/main
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 	// com.sun.xml.bind
 	implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
 	implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
 	// javax.xml.bind
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+<<<<<<< Updated upstream
 
+=======
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+>>>>>>> Stashed changes
 	//spring mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.1'
 	implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
@@ -59,7 +74,15 @@ dependencies {
 
 	// <https://mvnrepository.com/artifact/com.google.guava/guava>
 	//compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> origin/main
+=======
+	// <https://mvnrepository.com/artifact/com.google.guava/guava>
+	//compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 
 
@@ -75,6 +98,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'io.projectreactor:reactor-test'
+
+    //예림 - sns 뉴스 크롤러
+    implementation 'org.jsoup:jsoup:1.15.3'
+
+    implementation 'com.nimbusds:nimbus-jose-jwt:9.25.6'
 
 }
 
