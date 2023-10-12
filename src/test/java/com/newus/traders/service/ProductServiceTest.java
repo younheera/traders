@@ -74,9 +74,9 @@ public class ProductServiceTest {
     @Test
     void getProduct() {
         
-        when(productRepository.findById(1)).thenReturn(Optional.of(product1));
+        when(productRepository.findByIdAndIsDeletedFalse(1L)).thenReturn(Optional.of(product1));
 
-        ProductDto productDto = productService.getProduct(1);
+        ProductDto productDto = productService.getProduct(1L);
 
         assertEquals(productDto.getPrice(), 1L);
     }
@@ -84,10 +84,10 @@ public class ProductServiceTest {
     @Test
     void getNotExistingProduct() {
 
-        when(productRepository.findById(3)).thenReturn(Optional.empty());
+        when(productRepository.findByIdAndIsDeletedFalse(3L)).thenReturn(Optional.empty());
 
          assertThrows(CustomException.class, () -> {
-            productService.getProduct(3);
+            productService.getProduct(3L);
         });
     }
 
@@ -104,9 +104,9 @@ public class ProductServiceTest {
     @Test
     void deleteProduct() {
 
-        when(productRepository.findById(1)).thenReturn(java.util.Optional.of(product1));
+        when(productRepository.findByIdAndIsDeletedFalse(1L)).thenReturn(java.util.Optional.of(product1));
         
-        String result = productService.deleteProduct(1);
+        String result = productService.deleteProduct(1L);
         
         verify(productRepository).delete(product1);
         

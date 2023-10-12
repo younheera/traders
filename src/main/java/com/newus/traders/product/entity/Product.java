@@ -16,14 +16,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.type.ProductStatus;
+import com.newus.traders.user.entity.UserEntity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -36,11 +39,11 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
-    // 회원 entity와 연결
     // @ManyToOne
-    // seller;
+    // @JsonBackReference
+    // private UserEntity seller;
 
     private String name;
 
@@ -67,6 +70,10 @@ public class Product {
     @JsonManagedReference
     private List<Image> images;
 
+    private Long likes;
+
+    private boolean isDeleted = false;
+
     @Builder
     public Product(ProductForm productForm) {
         this.name = productForm.getName();
@@ -90,6 +97,14 @@ public class Product {
 
     public void purchaseProduct() {
         this.status = ProductStatus.SOLD;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
+    }
+
+    public void setIsDeleted() {
+        this.isDeleted = true;
     }
 
 }

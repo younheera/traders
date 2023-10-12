@@ -6,10 +6,12 @@
 import { Link, Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const history = useHistory();
+  const [data, setData] = useState({});
 
   useEffect(() => {
     axios
@@ -21,18 +23,24 @@ const ProductDetails = () => {
           console.log(errorResponse);
         }
       });
-  }, [id]);
+  }, []);
 
-  const [data, setData] = useState({});
   const { name, price, description, category, latitude, longitude, images } =
     data;
+  console.log(images);
+  console.log(Array.isArray(images));
 
   return (
     <div>
       <h1> 조건문 달아서 사용자가 작성자와 일치할 때만 링크 보이게</h1>
-      <Link to={`/products/update/${id}`} state={{ data }}>
+      <button
+        onClick={() => {
+          history.push(`/products/update/${id}`, { data });
+        }}
+      >
         수정하기
-      </Link>
+      </button>
+
       <h1>ProductController의 getProduct()</h1>
       <h2>이름 - {name}</h2>
       <hr />
@@ -42,11 +50,19 @@ const ProductDetails = () => {
       <h3> {latitude}</h3>
       <h3> {longitude}</h3>
       <h3>
-        {images.map((image, index) => (
-          <div key={index}>
-            <img src={image.filepath} width={200} />
-          </div>
-        ))}
+        <h3>
+          {images && images.length > 0
+            ? images.map((image, index) => (
+                <div key={index}>
+                  <img
+                    src={image.filepath}
+                    width={200}
+                    alt={`Image ${index}`}
+                  />
+                </div>
+              ))
+            : null}
+        </h3>
       </h3>
     </div>
   );
