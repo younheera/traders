@@ -1,9 +1,8 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:21:07
- * @modify date 2023-10-10 18:40:22
+ * @modify date 2023-10-12 11:38:04
  */
-import { Link, Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
@@ -27,8 +26,6 @@ const ProductDetails = () => {
 
   const { name, price, description, category, latitude, longitude, images } =
     data;
-  console.log(images);
-  console.log(Array.isArray(images));
 
   return (
     <div>

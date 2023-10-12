@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-08 22:08:34
- * @modify date 2023-10-11 14:40:24
+ * @modify date 2023-10-12 14:12:39
  */
 
 import axios from "axios";
@@ -34,7 +34,16 @@ const ProductUpdate = () => {
     const { name, value, type } = evt.target;
 
     if (type === "file") {
+      let maxSize = 20 * 1024 * 1024;
+
       const selectedFiles = Array.from(evt.target.files);
+
+      let fileSize = selectedFiles[0].size;
+
+      if (fileSize > maxSize) {
+        alert("파일 사이즈는 20MB 이내로 가능합니다.");
+        return;
+      }
 
       setNewFiles([...newFiles, ...selectedFiles]);
     } else {
@@ -123,11 +132,24 @@ const ProductUpdate = () => {
         name="category"
         value="furniture"
         onChange={changeInput}
+        checked={category === "furniture"}
       />
       가구
-      <input type="radio" name="category" value="pet" onChange={changeInput} />
+      <input
+        type="radio"
+        name="category"
+        value="pet"
+        onChange={changeInput}
+        checked={category === "pet"}
+      />
       반려동물 용품
-      <input type="radio" name="category" value="etc" onChange={changeInput} />
+      <input
+        type="radio"
+        name="category"
+        value="etc"
+        onChange={changeInput}
+        checked={category === "etc"}
+      />
       기타
       <br />
       거래장소 정하기
@@ -150,7 +172,6 @@ const ProductUpdate = () => {
         id="files"
         type="file"
         accept="image/png, image/jpeg"
-        multiple
         onChange={changeInput}
         style={{ display: "none" }}
       />

@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:19:28
- * @modify date 2023-10-11 14:48:43
+ * @modify date 2023-10-12 11:32:16
  */
 
 import axios from "axios";
@@ -23,8 +23,6 @@ const ProductList = () => {
         }
       });
   }, []);
-  console.log(showAvailable);
-  console.log(data);
 
   return (
     <div>

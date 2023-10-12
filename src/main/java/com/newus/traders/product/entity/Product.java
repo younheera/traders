@@ -16,17 +16,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.type.ProductStatus;
-import com.newus.traders.user.entity.UserEntity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -72,7 +69,7 @@ public class Product {
 
     private Long likes;
 
-    private boolean isDeleted = false;
+    private boolean isDeleted;
 
     @Builder
     public Product(ProductForm productForm) {
@@ -83,6 +80,8 @@ public class Product {
         this.latitude = productForm.getLatitude();
         this.longitude = productForm.getLongitude();
         this.category = productForm.getCategory();
+        this.likes = 0L;
+        this.isDeleted = false;
 
     }
 

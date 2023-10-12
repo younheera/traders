@@ -1,14 +1,18 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:19:20
- * @modify date 2023-10-11 16:47:44
+ * @modify date 2023-10-12 14:10:03
  */
 package com.newus.traders.product.service;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,6 +65,12 @@ public class ProductService {
         return new ProductDto(product);
     }
 
+    public List<ProductDto> getSearchedProducts(List<Long> productIdList) {
+
+        return productIdList.stream().map(id -> (getProduct(id)))
+                .collect(Collectors.toList());
+    }
+
     public void saveImage(List<MultipartFile> files, Product product) throws Exception {
 
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
@@ -82,10 +92,31 @@ public class ProductService {
 
     public void deleteImage(List<Integer> removedFiles) throws Exception {
 
-        removedFiles.stream().forEach(id -> imageRepository.deleteById(id));
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
 
+        for (Integer id : removedFiles) {
+            Optional<Image> imageOptional = imageRepository.findById(id);
+            if (imageOptional.isPresent()) {
+                Image image = imageOptional.get();
+                String filename = image.getFilename();
+
+                File fileToDelete = new File(projectPath, filename);
+                if (fileToDelete.exists()) {
+                    if (fileToDelete.delete()) {
+                        imageRepository.delete(image);
+                    } else {
+                        throw new Exception("파일을 삭제하지 못했습니다.");
+                    }
+                } else {
+                    throw new Exception("파일을 찾을 수 없습니다.");
+                }
+            } else {
+                throw new Exception("해당 이미지를 찾을 수 없습니다.");
+            }
+        }
     }
 
+    @Transactional
     public String registerProduct(ProductForm productForm, List<MultipartFile> files) {
 
         try {
@@ -95,12 +126,14 @@ public class ProductService {
             saveImage(files, product);
 
         } catch (Exception exception) {
+            System.out.println(exception.getMessage());
             throw new CustomException(ErrorCode.PRODUCT_NOT_SAVED);
         }
 
         return "물품 등록을 완료하였습니다.";
     }
 
+    @Transactional
     public String updateProduct(Long productId, ProductForm productForm, List<MultipartFile> newFiles,
             List<Integer> removedFiles) {
 
@@ -144,10 +177,14 @@ public class ProductService {
 
         product.setIsDeleted();
 
-        try {
-            productRepository.delete(product);
+        List<Integer> imagesToDelete = product.getImages().stream()
+                .map(image -> image.getId())
+                .collect(Collectors.toList());
 
-        } catch (RuntimeException exception) {
+        try {
+            deleteImage(imagesToDelete);
+
+        } catch (Exception exception) {
             throw new CustomException(ErrorCode.PRODUCT_NOT_DELETED);
         }
 
