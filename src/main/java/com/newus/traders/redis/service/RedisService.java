@@ -40,11 +40,10 @@ public class RedisService {
 
         String productKey = "productId:" + productId;
 
-        if (!getLikes(productId, userId)) {
-            System.out.println("addLikes에서 if문: " + userId);
+        if (!checkIfLiked(productId, userId)) {
+            System.out.println("아직 좋아요 안한 사람: " + userId);
             operationsForValue().setBit(productKey, userId, true);
         }
-        System.out.println(userId + " : " + operationsForValue().getBit(productKey, userId));
     }
 
     public void removeLikes(Long productId, Long userId) {
@@ -54,19 +53,25 @@ public class RedisService {
         operationsForValue().setBit(productKey, userId, false);
     }
 
-    public boolean getLikes(Long productId, Long userId) {
+    public boolean checkIfLiked(Long productId, Long userId) {
         String productKey = "productId:" + productId;
 
         return operationsForValue().getBit(productKey, userId);
     }
 
-    public Long countLikes(Long productId) {
+    public Object countLikes(Long productId) {
 
         String productKey = "productId:" + productId;
 
-        return (Long) redisTemplate.execute(connection -> {
+        Object objectCount = redisTemplate.execute(connection -> {
             return connection.bitCount(productKey.getBytes());
         }, true);
+        // return (Long) redisTemplate.execute(connection ->
+
+        // {
+        // return connection.bitCount(productKey.getBytes());
+        // }, true);
+        return objectCount;
     }
 
     public void updateAttendance(LocalDate currentDate, Long userId) {
@@ -82,7 +87,7 @@ public class RedisService {
         return operationsForValue().getBit(dateKey, userId);
     }
 
-    @Scheduled(cron = "0 0 0 * * ?") 
+    @Scheduled(cron = "0 0 0 * * ?")
     public void updateLikesInDB() {
 
         Set<String> productKeySet = redisTemplate.keys("productId*");
@@ -91,19 +96,21 @@ public class RedisService {
 
             String productKey = it.next();
             Long productId = Long.parseLong(productKey.split(":")[1]);
-            Long likes = countLikes(productId);
 
-            Product product = productRepository.findByIdAndIsDeletedFalse(productId)
-            .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
-            // Product product = productRepository.findByIdAndIsDeletedFalse(productId);
+            if (countLikes(productId) != null) {
 
-            if (product == null) {
-                throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
+                Product product = productRepository.findByIdAndIsDeletedFalse(productId)
+                        .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
+                // Product product = productRepository.findByIdAndIsDeletedFalse(productId);
+
+                if (product == null) {
+                    throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
+                }
+
+                product.setLikes((Long) countLikes(productId));
+
+                productRepository.save(product);
             }
-
-            product.setLikes(likes);
-
-            productRepository.save(product);
 
         }
         System.out.println("views update complete");

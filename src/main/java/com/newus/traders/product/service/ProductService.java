@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:19:20
- * @modify date 2023-10-12 14:10:03
+ * @modify date 2023-10-12 15:32:31
  */
 package com.newus.traders.product.service;
 
@@ -26,6 +26,7 @@ import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.repository.ImageRepository;
 import com.newus.traders.product.repository.ProductRepository;
 import com.newus.traders.product.type.ProductStatus;
+import com.newus.traders.redis.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +36,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
+    private final RedisService redisService;
 
     public List<ProductDto> getAllProducts() {
         List<Product> productList = productRepository.findByIsDeletedFalse();
@@ -45,24 +47,46 @@ public class ProductService {
         }
 
         List<ProductDto> productDtoList = new ArrayList<>();
-
         for (Product product : productList) {
-            productDtoList.add(new ProductDto(product));
+
+            ProductDto productDto = new ProductDto(product);
+
+            productDto.setLiked(redisService.checkIfLiked(product.getId(), 1L));
+
+            Object objectCount = redisService.countLikes(product.getId());
+
+            if (objectCount != null) {
+                productDto.setLikes((Long) objectCount);
+            }
+
+            // 임시로!!!!!!!!!!!!!!!!!!
+
+            productDtoList.add(productDto);
         }
 
         return productDtoList;
     }
 
     public ProductDto getProduct(Long productId) {
+
         Product product = productRepository.findByIdAndIsDeletedFalse(productId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
-        // Product product = productRepository.findByIdAndIsDeletedFalse(productId);
 
-        // if (product == null) {
-        // throw new CustomException(ErrorCode.PRODUCT_NOT_FOUND);
-        // }
+        ProductDto productDto = new ProductDto(product);
 
-        return new ProductDto(product);
+        System.out.println("좋아요?" + redisService.checkIfLiked(product.getId(), 1L));
+        System.out.println(productDto.isLiked());
+
+        productDto.setLiked(redisService.checkIfLiked(product.getId(), 1L));
+        System.out.println(productDto.isLiked());
+
+        Object objectCount = redisService.countLikes(product.getId());
+
+        if (objectCount != null) {
+            productDto.setLikes((Long) objectCount);
+        }
+
+        return productDto;
     }
 
     public List<ProductDto> getSearchedProducts(List<Long> productIdList) {

@@ -14,32 +14,19 @@ import LoginPageTest from "./components/service/LoginPageTest";
 function App() {
   return (
     <div>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/products/register">ProductRegistration</Link>
-        </li>
-        <li>
-          <Link to="/products/nearestProducts">NearestProductList</Link>
-        </li>
-        <li>
-          <Link to="/products">ProductList</Link>
-        </li>
+      <Link to="/products/register">ProductRegistration</Link>
+      <br />
+      <Link to="/products/nearestProducts">NearestProductList</Link>
+      <br />
 
-        <li>
-          <Link to="/login">로그인테스트</Link>
-        </li>
-        <li>
-          <Link to="/signup">회원가입테스트</Link>
-        </li>
-        <hr />
+      <Link to="/login">로그인테스트</Link>
+      <br />
 
-        <li>
-          <Link to="/payment">GreenPay</Link>
-        </li>
-      </ul>
+      <Link to="/signup">회원가입테스트</Link>
+      <br />
+
+      <Link to="/payment">GreenPay</Link>
+      <br />
 
       <Switch>
         <Route path={["/", "/main"]} exact>
