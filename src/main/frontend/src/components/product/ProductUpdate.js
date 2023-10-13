@@ -1,29 +1,34 @@
 /**
  * @author wheesunglee
- * @create date 2023-09-30 13:38:26
- * @modify date 2023-10-12 11:36:31
+ * @create date 2023-10-08 22:08:34
+ * @modify date 2023-10-12 14:12:39
  */
 
 import axios from "axios";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
 import ImagePreview from "./ImagePreview";
 import KakaoMapModal from "./KakaoMapModal";
 
-const ProductRegistration = () => {
+const ProductUpdate = () => {
+  const location = useLocation();
+  const history = useHistory();
   const form = new FormData();
 
-  const [data, setData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    category: "",
-    latitude: 0.0,
-    longitude: 0.0,
-  });
+  const [data, setData] = useState(location.state.data);
+  const [newFiles, setNewFiles] = useState([]);
+  const [removedFiles, setRemovedFiles] = useState([]);
 
-  const { name, price, description, category } = data;
-  const [files, setFiles] = useState([]);
+  const {
+    id,
+    name,
+    price,
+    description,
+    category,
+    latitude,
+    longitude,
+    images,
+  } = data;
 
   const changeInput = (evt) => {
     const { name, value, type } = evt.target;
@@ -39,7 +44,8 @@ const ProductRegistration = () => {
         alert("파일 사이즈는 20MB 이내로 가능합니다.");
         return;
       }
-      setFiles([...files, ...selectedFiles]);
+
+      setNewFiles([...newFiles, ...selectedFiles]);
     } else {
       setData({
         ...data,
@@ -56,25 +62,40 @@ const ProductRegistration = () => {
     });
   };
 
-  const deleteFile = (indexToDelete) => {
-    const updatedFiles = files.filter((_, index) => index !== indexToDelete);
-    setFiles(updatedFiles);
+  const deleteFile = (indexToUpdate) => {
+    const updatedFiles = newFiles.filter((_, index) => index !== indexToUpdate);
+    setNewFiles(updatedFiles);
   };
 
-  const history = useHistory();
+  const removeFile = (indexToDelete) => {
+    const removedFile = images.splice(indexToDelete, 1);
+    setRemovedFiles([...removedFiles, removedFile[0].id]);
+  };
+
+  const deleteProduct = () => {
+    try {
+      axios.delete(`/api/products/delete/${id}`);
+    } catch (error) {
+      if (error.response) {
+        const errorResponse = error.response.data;
+        console.log(errorResponse);
+      }
+    }
+    history.push("/");
+  };
 
   const submitData = () => {
-    files.forEach((file) => {
+    newFiles.forEach((file) => {
       form.append("files", file);
     });
+    form.append("removedFiles", removedFiles);
     form.append(
       "data",
       new Blob([JSON.stringify(data)], { type: "application/json" })
     );
-
     try {
       axios
-        .post("/api/products/register", form, {
+        .put(`/api/products/update/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -91,7 +112,7 @@ const ProductRegistration = () => {
 
   return (
     <div>
-      <h1> 물품 등록 양식</h1>
+      <h1> 물품 수정 양식</h1>
       제목
       <input type="text" name="name" value={name} onChange={changeInput} />
       <br />
@@ -111,11 +132,24 @@ const ProductRegistration = () => {
         name="category"
         value="furniture"
         onChange={changeInput}
+        checked={category === "furniture"}
       />
       가구
-      <input type="radio" name="category" value="pet" onChange={changeInput} />
+      <input
+        type="radio"
+        name="category"
+        value="pet"
+        onChange={changeInput}
+        checked={category === "pet"}
+      />
       반려동물 용품
-      <input type="radio" name="category" value="etc" onChange={changeInput} />
+      <input
+        type="radio"
+        name="category"
+        value="etc"
+        onChange={changeInput}
+        checked={category === "etc"}
+      />
       기타
       <br />
       거래장소 정하기
@@ -123,7 +157,6 @@ const ProductRegistration = () => {
       <br />
       <label for="files">
         <div
-          class="btn-upload"
           style={{
             border: "1px solid rgb(77,77,77)",
             width: "150px",
@@ -142,11 +175,18 @@ const ProductRegistration = () => {
         onChange={changeInput}
         style={{ display: "none" }}
       />
-      <ImagePreview files={files} deleteFile={deleteFile} />
+      {images.map((image, index) => (
+        <div key={index}>
+          <img src={image.filepath} width={200} alt={`Image ${index}`} />
+          <button onClick={() => removeFile(index)}>삭제</button>
+        </div>
+      ))}
+      <ImagePreview files={newFiles} deleteFile={deleteFile} />
       <br />
-      <button onClick={submitData}>상품작성완료</button>
+      <button onClick={submitData}>수정하기</button>
+      <button onClick={deleteProduct}>삭제하기</button>
     </div>
   );
 };
 
-export default ProductRegistration;
+export default ProductUpdate;
