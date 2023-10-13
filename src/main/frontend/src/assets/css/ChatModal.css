@@ -1,12 +1,12 @@
 /**
  * @author hyunseul
  * @create date 2023-10-11 22:34:42
- * @modify date 2023-10-12 16:29:29
+ * @modify date 2023-10-13 00:53:46
  */
 
  .modal-content {
     width: 450px; /* 모달의 가로 크기를 500px로 지정합니다. */
-    height: 800px; /* 모달의 세로 크기를 300px로 지정합니다. */
+    height: 670px; /* 모달의 세로 크기를 300px로 지정합니다. */
   }
 
 .title{

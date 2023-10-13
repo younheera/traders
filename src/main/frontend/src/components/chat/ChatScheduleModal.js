@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import MyComponent from './ScheduleDatePicker';
 import ScheduleDatePicker from './ScheduleDatePicker';
 import KakaoMapModal from '../product/KakaoMapModal';
+import ChatMap from './ChatMap';
 
 const ChatScheduleModal = ({ show, handleClose, onsave }) => {
   const [date, setDate] = useState('');
@@ -41,6 +42,10 @@ const ChatScheduleModal = ({ show, handleClose, onsave }) => {
     setMapModalVisible(false);
   };
 
+  const handleAddressChange =(newAddress) => {
+    setLocation(newAddress);
+  }
+
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
@@ -59,14 +64,18 @@ const ChatScheduleModal = ({ show, handleClose, onsave }) => {
             <Form.Control
               type="text"
               placeholder="거래 장소를 선택하세요."
-              
+              value={location}
               className='form-control react-datepicker'
               onClick={handleLocationFieldClick}
+              readOnly
             />
+            {isMapModalVisible && (
+              <ChatMap onAddressChange={handleAddressChange} />
+              // <KakaoMapModal className='map' handleClose={handleCloseMapModal} />
+            )}
           </Form.Group>
-          {isMapModalVisible && (
-            <KakaoMapModal className='map' handleClose={handleCloseMapModal} />
-          )}
+
+         
         </Form>
       </Modal.Body>
       <Modal.Footer>
