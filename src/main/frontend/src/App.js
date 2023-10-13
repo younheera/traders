@@ -7,8 +7,12 @@ import NearestProductList from "./components/product/NearestProductList";
 import ProductDetails from "./components/product/ProductDetails";
 import ProductList from "./components/product/ProductList";
 import ProductRegistration from "./components/product/ProductRegistration";
-// import ProductUpdate from "./components/product/ProductUpdate";
-// import SignUp, {Input, Signup, useValid} from "./components/login/Signup";
+
+import LoginPageTest from "./components/service/LoginPageTest";
+import ChatApp from "./components/chat/ChatApp";
+import ChatBox from "./components/chat/ChatBox";
+import ChatList from "./components/chat/ChatList";
+import { Button } from "@material-ui/core";
 import LoginPageTest from "./components/service/LoginPageTest";
 import SignUp from "./components/login/SignUp";
 import {signout} from "./components/service/DemoAPIService"; 
@@ -19,6 +23,7 @@ import Youtube from "./components/sns/Youtube";
 import ModalPage from "./components/product/ModalPage";
 import CampaignList from "./components/sns/CampaignList";
 import CampaignDatails from "./components/sns/CampaignDatails";
+
 
 function App() {
   return (
@@ -57,6 +62,12 @@ function App() {
         <li>
           <Link to="/payment">GreenPay</Link>
         </li>
+
+       
+        <li>
+          <Link to="/chat">chat</Link>
+        </li>
+
         <Button onClick={signout}>로그아웃</Button>
         <hr/>
         
@@ -69,6 +80,7 @@ function App() {
         <li>
           <Link to="/sns">sns</Link>
         </li>
+
       </ul>
 
       <Switch>
@@ -88,9 +100,13 @@ function App() {
         <Route path="/products/:id" exact>
           <ProductDetails/>
         </Route>
-        <Route path="/products/update/:id" exact>
-          {/* <ProductUpdate /> */}
-        </Route>
+
+        {/* <Route path="/products/update/:id" exact>
+          <ProductUpdate />
+        </Route> */}
+
+
+
 
         <Route path="/login" exact>
           <LoginPageTest />
@@ -107,6 +123,14 @@ function App() {
         </Route>
         <Route path="/payment/gpay_register" component={PayRegister} />
 
+
+        <Route path="/chat" exact>
+          <ChatApp/>
+        </Route>
+
+        <Route path="/chat/roomNum/:roomNum" component={ChatBox} exact></Route>
+        <Route path="/chat/list" component={ChatList} exact></Route>
+
         <Route path="/news" exact>
           <NewsList/>
           <Youtube/>
@@ -122,6 +146,7 @@ function App() {
         <Route path="/sns" exact>
           
         </Route>
+
       </Switch>
     </div>
   );
