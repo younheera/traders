@@ -25,4 +25,6 @@ public class ChatDto {
     private String roomNum; // 방 번호
     private LocalDateTime createdAt; // 메시지 생성 시간
     private String receiver; // 받는 사람
+
+
 }

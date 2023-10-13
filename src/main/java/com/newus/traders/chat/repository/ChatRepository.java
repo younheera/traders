@@ -36,6 +36,6 @@ public interface ChatRepository extends ReactiveMongoRepository<ChatDto, String>
     @Query("{ $or: [{ sender : ?0 }, { receiver : ?1 }] }")
     Flux<ChatDto> findBySenderOrReceiver(String sender, String receiver);
 
-
+    
     
 }

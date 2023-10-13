@@ -1,32 +1,62 @@
 /**
  * @author hyunseul
  * @create date 2023-10-04 13:02:02
- * @modify date 2023-10-11 12:14:18
+ * @modify date 2023-10-12 17:36:36
  */
 
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Clock from 'react-live-clock';
-import '../../assest/css/ChatStyle.css'
+import '../../assets/css/ChatStyle.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ChatList from "./ChatList";
-import Chatprofile from "../../assest/img/Chatprofile.png";
+import Chatprofile from "../../assets/img/Chatprofile.png";
 import {AiOutlineCalendar} from 'react-icons/ai';
 import {MdArrowBackIosNew} from 'react-icons/md'
+import {PiCreditCard} from 'react-icons/pi'
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import ChatScheduleModal from "./ChatScheduleModal";
+
+
+
 
 
 // 채팅 내용
 const ChatBox = () => {
   const { roomNum } = useParams();
-  const [username, setUsername] = useState("배수지");
+  const [username, setUsername] = useState("");
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const eventSourceRef = useRef(null);
   const messageRef = useRef(null);
-
   const history = useHistory();
+  
+  const [isModalVisible, setModalVisible] = useState(false); // 모달
+  const [reservedData, setReservedData] = useState(null); // 예약 정보 저장
+  const [location, setLocation] = useState("");
+  const messageEndRef = useRef(null);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  
+
+  useEffect(() => {
+    // 방 입장 시 스크롤을 맨 아래로 이동시키는 함수 호출
+    scrollToBottom();
+  }, [messages]); // 빈 배열을 두어 한 번만 실행되도록 설정
+
+  
+const scrollToBottom = () => {
+  messageRef.current.scrollTop = messageRef.current.scrollHeight;
+  messageRef.current?.scrollIntoView({behavior: 'smooth'})
+}
+
+useEffect(() => {
+  messageEndRef.current.scrollTop = messageEndRef.current.scrollHeight;
+  messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+}, [messages]);
+
 
   useEffect(() => {
     // 이전 채팅 내용을 서버에서 가져오기
@@ -46,7 +76,7 @@ const ChatBox = () => {
     };
 
     fetchData(); // 이전 채팅 내용을 가져오기
-
+    
   }, [roomNum]);
 
   useEffect(() => {
@@ -60,16 +90,18 @@ const ChatBox = () => {
         setMessages(prevMessages => [...prevMessages, newData]);
       }
     };
-  
+    scrollToBottom();
     // 컴포넌트가 언마운트될 때 EventSource 연결 닫기
     return () => {
       eventSourceRef.current.close();
+     
     };
-  }, [messages]); // roomNum 또는 messages가 변경될 때마다 useEffect가 호출됨
+  }, [messages]); // messages가 변경될 때마다 useEffect가 호출됨
 
 
   // 서버에 메세지 보내기 
   const sendMessageToServer = async (message) => {
+      
     if (message.trim() !== "") {
     const chat = {
       text: message,
@@ -84,8 +116,8 @@ const ChatBox = () => {
       setMessage("");
 
       // 새로운 메세지 배열 끝에 추가해 화면에 표시
+      scrollToBottom();
       setMessages(prevMessages => [...prevMessages, chat])
-
 
     } catch (error) {
       console.error("메시지 전송 오류:", error);
@@ -130,15 +162,6 @@ const getReceiveMsgBox = (data) => {
 };
 
 
-const scrollToBottom = () => {
-  messageRef.current.scrollTop = messageRef.current.scrollHeight;
-  messageRef.current?.scrollIntoView({behavior: 'smooth'})
-}
-
-useEffect(() => {
-  scrollToBottom();
-},[messages])
-
 const sendMessage = () => {
   if (message.trim() !== "") {
     sendMessageToServer(message);
@@ -158,22 +181,73 @@ const handleEnterPress = (e) => {
 };
 
 // 뒤로가기 버튼 클릭 이벤트 함수
-// const handleBackButtonClick = () => {
-//   history.push("/chat/list");
-// }
+ const handleBackButtonClick = () => {
+   history.push("/chat/list");
+ }
+
+
+  useEffect(() => {
+
+    // 예약 정보가 있는 경우에만 추가하도록 변경
+    if (reservedData) {
+      setMessages(prevMessages => [...prevMessages, reservedData]);
+    }
+  }, [reservedData]);
+  
+
+  // 모달 값 저장 함수
+ const handleSaveModal = (data) => {
+  console.log("모달에서 받은 데이터:", data)
+
+  //setReservedData(data);
+  const message = `${data.sender}님이 약속을 잡았습니다.\n시간: ${data.date}\n 장소: ${data.location}`;
+
+  console.log(message);
+  setLocation(data.location);
+  sendMessageToServer(message);
+  setModalVisible(false);
+
+  }
+
+// const handleSaveModal = (data) => {
+//   console.log("모달에서 받은 데이터:", data);
+
+//   // 예약 정보를 문자열로 변환하여 저장
+//   const reservationMessage = `${username}님이 약속을 잡았습니다. 시간: ${data.date}, 장소: ${data.location}`;
+
+  
+
+//   // 스타일 클래스가 있는 경우 스타일 클래스를 추가하여 저장
+//   const styledMessage = data.style
+//     ? `<div class="${data.style}">${reservationMessage}</div>`
+//     : reservationMessage;
+
+//   // 예약 정보 메시지를 서버에 전송
+//   const notice = {
+//     text: styledMessage, // 혹은 reservationMessage로 저장할 수 있습니다.
+//     sender: username,
+//     receiver: "유인나",
+//     roomNum: roomNum,
+//     style: data.style
+//   };
+
+//   sendMessageToServer(notice); // 서버에 메시지 전송
+//   setModalVisible(false); // 모달 닫기
+// };
 
 
   return (
+    <>
+    <ChatScheduleModal show={isModalVisible} handleClose={toggleModal}  onsave={handleSaveModal}/>
     <div className="message">
       <div className="message-container" ref={messageRef}>
-      <div>
-        <MdArrowBackIosNew size='20px'/>　
-        <img src={Chatprofile} alt="상품 이미지" value={username}/> 
-        　유인나
-        <AiOutlineCalendar className="icon-calendar"size='30px'/>
-        <hr/>
-        
-      </div>
+        <div>
+          <MdArrowBackIosNew size='20px' onClick={handleBackButtonClick}/>　
+          <img src={Chatprofile} alt="상품 이미지" value={username}/> 
+          　유인나
+          
+          <hr/>  
+        </div>
         <div className="clock-container">
         <div className="clock">
           <span>
@@ -181,16 +255,27 @@ const handleEnterPress = (e) => {
           </span>
         </div>
         </div>
+        
+   
         {messages.map((data, index) => (
           <div key={index}>
             {data.sender === username ?  getSendMsgBox(data)
                   : getReceiveMsgBox(data)}      
           </div>
+          
         ))}
+        <div ref={messageEndRef}></div>
       </div>
+      
+
+
+
+      <div style={{ float: "left", clear: "both" }}></div>
       <div className="message-container">
-        <div className="type_msg">
+        
           <div className="input_msg_write">
+          <AiOutlineCalendar className="icon-calendar" size="30px" onClick={toggleModal} />
+          <PiCreditCard className="icon-card" size="30px"></PiCreditCard>
             <input
               type="text"
               className="write_msg"
@@ -202,10 +287,13 @@ const handleEnterPress = (e) => {
             <button className="msg_send_btn" type="button" onClick={sendMessage}>
               Send
             </button>
-          </div>
+            
+        
         </div>
       </div>
+ 
     </div>
+    </>
   );
 }
 

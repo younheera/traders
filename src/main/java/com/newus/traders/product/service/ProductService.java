@@ -242,8 +242,6 @@ public class ProductService {
      * @modify date 2023-09-26 17:33:07
      * @desc [주어진 중심 위도와 경도를 기준으로 3km 반경 내의 상품 리스트를 뽑아옵니다.]
      */
-
-    // 3km 반경의 상품 리스트를 뽑아오기
     public List<ProductDto> getNearestProducts(double latitude, double longitude) {
 
         // 3km 반경
@@ -258,10 +256,12 @@ public class ProductService {
         List<ProductDto> nearestProductDtoList = new ArrayList<>();
 
         for (Product product : nearestProductList) {
+            //System.out.println(product.getName());
             nearestProductDtoList.add(new ProductDto(product));
         }
 
         return nearestProductDtoList;
     }
 
+    
 }

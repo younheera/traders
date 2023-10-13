@@ -51,16 +51,14 @@ dependencies {
 	implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
 	// javax.xml.bind
 	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
-
 	//spring mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.1'
 	implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
 	// <https://mvnrepository.com/artifact/com.google.guava/guava>
 	//compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
-
-
+	// <https://mvnrepository.com/artifact/com.google.guava/guava>
+	//compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
 
 
     // wheesung
@@ -75,6 +73,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'io.projectreactor:reactor-test'
+
+
+    // 현슬(알림 추가)
+    implementation 'org.infinispan:infinispan-core:12.0.1.Final'
+    implementation 'org.infinispan:infinispan-commons:12.0.1.Final'
+    implementation 'org.infinispan:infinispan-marshaller-protostuff:12.0.1.Final'
+    implementation 'org.jboss.marshalling:jboss-marshalling-osgi:2.0.10.Final'
+
+    //예림 - sns 뉴스 크롤러
+    implementation 'org.jsoup:jsoup:1.15.3'
+
+    implementation 'com.nimbusds:nimbus-jose-jwt:9.25.6'
 
 }
 

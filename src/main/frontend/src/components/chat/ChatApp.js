@@ -1,8 +1,6 @@
 import React, {useState } from "react";
 import { useHistory } from "react-router-dom";
 
-
-
 const ChatApp = () => {
   // const [username, setUsername] = useState("") // 사용자 이름
   const history = useHistory();

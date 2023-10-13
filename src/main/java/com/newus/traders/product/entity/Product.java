@@ -83,7 +83,7 @@ public class Product {
         this.likes = 0L;
         this.isDeleted = false;
 
-    }
+    }  
 
     public void updateProduct(ProductForm productForm) {
         this.name = productForm.getName();
