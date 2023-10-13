@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:21:07
- * @modify date 2023-10-13 10:23:20
+ * @modify date 2023-10-13 10:35:29
  */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const history = useHistory();
   const [data, setData] = useState({});
-  const [liked, setLiked] = useState(data.liked); // 좋아요 상태를 상태로 관리
+  const [liked, setLiked] = useState(data.liked); 
 
   useEffect(() => {
     axios
