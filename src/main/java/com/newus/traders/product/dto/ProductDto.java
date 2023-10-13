@@ -47,6 +47,8 @@ public class ProductDto {
 
     private Long likes;
 
+    private boolean liked;
+
     @Builder
     public ProductDto(Product product) {
         this.id = product.getId();
@@ -60,6 +62,14 @@ public class ProductDto {
         this.createdAt = product.getCreatedAt().toLocalDateTime();
         this.images = product.getImages();
         this.likes = product.getLikes();
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 
 }

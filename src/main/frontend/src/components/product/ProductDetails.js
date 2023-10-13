@@ -1,8 +1,8 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:21:07
- * @modify date 2023-10-12 10:25:28
-**/
+ * @modify date 2023-10-13 10:35:29
+ */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
@@ -11,6 +11,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const history = useHistory();
   const [data, setData] = useState({});
+  const [liked, setLiked] = useState(data.liked); 
 
   useEffect(() => {
     axios
@@ -22,12 +23,28 @@ const ProductDetails = () => {
           console.log(errorResponse);
         }
       });
-  }, []);
+  }, [liked]);
 
-  const { name, price, description, category, latitude, longitude, images } =
-    data;
-  console.log(images);
-  console.log(Array.isArray(images));
+  const {
+    name,
+    price,
+    description,
+    category,
+    latitude,
+    longitude,
+    images,
+    likes,
+  } = data;
+
+  const changeLiked = (id) => {
+    setLiked(!liked);
+    axios.put(`/api/redis/changeLikes/${id}`).catch((error) => {
+      if (error.response) {
+        const errorResponse = error.response.data;
+        console.log(errorResponse);
+      }
+    });
+  };
 
   return (
     <div>
@@ -43,6 +60,10 @@ const ProductDetails = () => {
       <h1>ProductController의 getProduct()</h1>
       <h2>이름 - {name}</h2>
       <hr />
+      <button onClick={() => changeLiked(id)}>
+        {liked ? "찜 취소" : "찜하기"}
+      </button>
+      <h3>좋아요 수 - {likes}</h3>
       <h3> 가격 - {price}</h3>
       <h3> 상세설명 - {description}</h3>
       <h3> 카테고리 - {category}</h3>
