@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-04 13:02:02
- * @modify date 2023-10-12 17:36:36
+ * @modify date 2023-10-12 22:01:50
  */
 
 import React, { useEffect, useState, useRef } from "react";
@@ -65,8 +65,9 @@ useEffect(() => {
         const response = await axios.get(`http://localhost:8080/api/chat/roomNum/${roomNum}`);
         const chatData = response.data || [];
 
-         if (Array.isArray(chatData)) {
-          setMessages(chatData);
+        console.log("서버에서 받아온 데이터:", chatData); // 이 부분을 추가하여 데이터를 콘솔에 출력
+         if (chatData) {
+          setMessages([chatData]);          
          } else {
            console.error("서버에서 받아온 데이터가 올바른 형식이 아닙니다.");
          }
