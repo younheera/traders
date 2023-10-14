@@ -2,20 +2,24 @@ package com.newus.traders.user.repository;
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import com.newus.traders.user.entity.UserEntity;
-import java.util.List;
+import com.newus.traders.user.entity.User;
 
+import java.util.Optional;
 
-@Repository
-public interface UserRepository extends JpaRepository<UserEntity, String> {
+public interface UserRepository extends JpaRepository<User, Long> {
+//    @EntityGraph(attributePaths = "authorities")
+//    Optional<User> findOneWithAuthoritiesByUsername(String username);
+   @EntityGraph(attributePaths = "authorities")
+   Optional<User> findOneWithAuthoritiesByEmail(String email);
 
-	UserEntity findByEmail(String email);
+   	// Optional<User> findOneWithAuthoritiesByUsername(String email);
 	Boolean existsByEmail(String email);
-	UserEntity findByEmailAndPassword(String email, String password);
-	Optional<UserEntity> findById(String id);
+	User findByEmailAndPassword(String email, String password);
+	User findByEmail(String email);
+	Optional<User> findByuserId(String userId);
 	boolean existsByUsername(String username);
 }
 

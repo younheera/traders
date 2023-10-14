@@ -10,7 +10,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signup } from "../service/DemoAPIService";
+import { signup } from "../service/SignAPIService";
 import axios from "axios";
 
 // ErrorMessage 컴포넌트 정의
@@ -85,9 +85,9 @@ const SignUp =()=> {
     reset();
   };
   /* 닉네임 중복 체크 */
-  const nameCheck = async(e)=> {
+  const NicknameCheck = async(e)=> {
     e.preventDefault();
-    const {username} = watch();
+    const {nickname} = watch();
     try{
       const response = await fetch(`http://localhost:8080/api/auth/signup/nameCheck?username=${username}`, {
       method: "GET",
@@ -163,7 +163,7 @@ const SignUp =()=> {
       <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
-            <Grid item xs={20}>
+            <Grid item xs={12}>
               <Typography component="h1" variant="h5">
                 계정 생성
               </Typography>
@@ -178,7 +178,6 @@ const SignUp =()=> {
               render={({field})=> (
               <TextField
                 autoComplete="fname"
-                // name="username"
                 variant="outlined"
                 required
                 fullWidth
@@ -191,7 +190,7 @@ const SignUp =()=> {
               />
               </Grid>
               <Grid item xs={3}>
-              <button onClick={nameCheck}>중복체크</button>
+              <button onClick={NicknameCheck}>중복체크</button>
               </Grid>
               </Grid>
               {errors.username && <ErrorMessage message={errors.username.message}/>}
