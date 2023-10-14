@@ -1,10 +1,3 @@
-/**
- * @author heera youn
- * @email [example@mail.com]
- * @create date 2023-10-14 00:53:26
- * @modify date 2023-10-14 11:36:26
- * @desc [description]
- */
 import { responsiveFontSizes } from '@material-ui/core';
 import React from 'react';
 import axios from 'axios';
@@ -33,7 +26,6 @@ export function call(api, method, request) {
   }
   return fetch(options.url, options).then((response) => {
     if (response.status===200) {
-      console.log(response);
       return response.json();
       }
     }).catch((error) => {
@@ -45,10 +37,9 @@ export function call(api, method, request) {
     });
 }
 
-export function signin(LoginDTO) {
+export function signin(UserDTO) {
   const token = localStorage.getItem(ACCESS_TOKEN);
-  
-  return axios.post(`${API_BASE_URL}/api/authenticate`, LoginDTO, {
+  return axios.post(`${API_BASE_URL}/api/auth/signin`, UserDTO, {
 
     headers: {
       "Authorization" : `Bearer ${token}`,
@@ -56,17 +47,16 @@ export function signin(LoginDTO) {
     }
   })
   .then((response) => {
-   
-    if (response.status === 200 && response.data) {
-      localStorage.setItem("ACCESS_TOKEN", response.data.accessToken);
-      localStorage.setItem("REFRESH_TOKEN", response.data.refreshToken);
-      //  window.location.href = "/";
+
+    if (response.status === 200 && response.data.token) {// 로컬 스토리지에 토큰 저장
+    console.log("Response from server:", response);
+      localStorage.setItem("ACCESS_TOKEN", response.data.token);
+       window.location.href = "/";
     }
   })
   .catch((error) => {
     if (error.response && (error.response.status === 403 || error.response.status === 400)) {
-      console.log("error: "+error.response);
-      // window.location.href = "/login";
+      window.location.href = "/login";
     }
   });
 }
@@ -75,7 +65,6 @@ export function signout() {
   localStorage.setItem(ACCESS_TOKEN, null);
   window.location.href = "/login";
 }
-
 
 export function signup(userDTO) {
   return call("/api/auth/signup", "POST", userDTO);
