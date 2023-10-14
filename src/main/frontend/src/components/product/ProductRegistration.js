@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-30 13:38:26
- * @modify date 2023-10-08 22:08:34
+ * @modify date 2023-10-12 11:36:31
  */
 
 import axios from "axios";
@@ -20,25 +20,26 @@ const ProductRegistration = () => {
     category: "",
     latitude: 0.0,
     longitude: 0.0,
-    //files: [],
   });
 
   const { name, price, description, category } = data;
-  // const { name, price, description, categor, files } = data;
   const [files, setFiles] = useState([]);
 
   const changeInput = (evt) => {
     const { name, value, type } = evt.target;
 
     if (type === "file") {
+      let maxSize = 20 * 1024 * 1024;
+
       const selectedFiles = Array.from(evt.target.files);
 
-      setFiles(selectedFiles);
+      let fileSize = selectedFiles[0].size;
 
-      // setData({
-      //   ...data,
-      //   files: selectedFiles,
-      // });
+      if (fileSize > maxSize) {
+        alert("파일 사이즈는 20MB 이내로 가능합니다.");
+        return;
+      }
+      setFiles([...files, ...selectedFiles]);
     } else {
       setData({
         ...data,
@@ -58,11 +59,6 @@ const ProductRegistration = () => {
   const deleteFile = (indexToDelete) => {
     const updatedFiles = files.filter((_, index) => index !== indexToDelete);
     setFiles(updatedFiles);
-    // const updatedFiles = files.filter((_, index) => index !== indexToDelete);
-    // setData({
-    //   ...data,
-    //   files: updatedFiles,
-    // });
   };
 
   const history = useHistory();
@@ -75,6 +71,7 @@ const ProductRegistration = () => {
       "data",
       new Blob([JSON.stringify(data)], { type: "application/json" })
     );
+
     try {
       axios
         .post("/api/products/register", form, {
@@ -142,7 +139,6 @@ const ProductRegistration = () => {
         id="files"
         type="file"
         accept="image/png, image/jpeg"
-        multiple
         onChange={changeInput}
         style={{ display: "none" }}
       />

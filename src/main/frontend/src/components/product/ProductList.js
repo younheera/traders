@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:19:28
- * @modify date 2023-10-08 22:08:41
+ * @modify date 2023-10-12 16:52:11
  */
 
 import axios from "axios";
@@ -10,6 +10,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 
 const ProductList = () => {
   const [data, setData] = useState([]);
+  const [showAvailable, setShowAvailable] = useState(false);
 
   useEffect(() => {
     axios
@@ -23,22 +24,34 @@ const ProductList = () => {
       });
   }, []);
 
-  const filterProductStatus = () => {
-    
-    
-  };
-
   return (
     <div>
       <h1>ProductController의 showAllProducts()</h1>
+      <button onClick={() => setShowAvailable(!showAvailable)}>
+        {showAvailable ? "전체 상품 보기" : "거래 가능한 상품 보기"}
+      </button>
       <ul>
-        {data.map((product, index) => (
-          <li key={index}>
-            {product.id}/{product.name}
-            <br />
-            <Link to={`/products/${product.id}`}>ProductDetails</Link>
-          </li>
-        ))}
+        {data.map((product, index) => {
+          if (showAvailable && product.status === "SOLD") {
+            return null;
+          }
+          return (
+            <li key={index}>
+              {product.id}/{product.name}
+              <br />
+              {product.images.map((image, index) => (
+                <div key={index}>
+                  <img
+                    src={image.filepath}
+                    width={200}
+                    alt={`Image ${index}`}
+                  />
+                </div>
+              ))}
+              <Link to={`/products/${product.id}`}>ProductDetails</Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

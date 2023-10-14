@@ -1,0 +1,187 @@
+/**
+ * @author hyunseul
+ * @create date 2023-10-09 11:05:10
+ * @modify date 2023-10-12 17:31:32
+ */
+
+/* ChatStyle.css */
+
+.message{
+  text-align: center;
+  margin-bottom: 0px;
+
+}
+
+/* 채팅 메시지 컨테이너 */
+.message-container {
+  margin-top: 0px;
+  width: 60%;
+  max-height: 350px; /* 채팅 창 높이 설정 */
+  overflow-y: auto; /* 스크롤이 필요한 경우 스크롤 표시 */
+  border: 1px solid #ccc; /* 테두리 스타일 설정 */
+  padding: 10px 10px;
+  text-align: left;
+  display: inline-block; 
+
+  
+}
+
+/* 파란색 박스 (사용자가 보낸 메시지) */
+.sent_msg {
+  background-color: #128828;
+  border-radius: 5px;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 5px 0; /* 상하 여백 */
+  max-width: 300px;
+  text-align: left;
+  word-wrap: break-word;  /*긴 단어를 줄 바꿈 */
+  float: right; /* 화면 오른쪽으로 이동하는 부분 */
+  clear: both; /* float를 해제하여 다음 요소가 올바르게 배치되도록 함 */
+  margin-top: 10px;
+ 
+  
+}
+
+/* 회색 박스 (상대방이 보낸 메시지) */
+.received_withd_msg {
+  background: #f2f2f2; /* 회색 배경색 */
+  color: #000; /* 텍스트 색상 */
+  border-radius: 5px; /* 모서리를 둥글게 */
+  padding: 5px 10px; /* 내용 주위의 여백 */
+  margin: 5px 0; /* 상하 여백 */
+  max-width: 300px; /* 최대 너비 */
+  word-wrap: break-word;   /* 긴 단어를 줄 바꿈 */
+  float: left; /* 왼쪽 정렬 (상대방이 보낸 메시지는 왼쪽에 표시됨) */
+  clear: both;
+
+}
+
+.sent_msg, .received_withd_msg {
+  margin-top: 5px; /* 또는 다른 적절한 여백 값 */
+ 
+}
+
+.sent_msg p,
+.received_withd_msg p {
+  margin: 3px 0; /* 각 메시지 간의 간격 조절 */
+}
+
+.message-content {
+  margin: 0;
+  white-space: pre-line;
+  /* word-wrap: break-word; */
+}
+
+.sent_time_date{
+  margin-right: 5px;   /*시간 띄어쓰기 간격조절 */
+  font-size: 5pt;
+  left: -74px;
+  float: right;
+  margin-top: 30px;
+  padding-bottom: 10px;
+
+
+}
+
+
+.time_date{
+ margin-left: 5px;   /*시간 띄어쓰기 간격조절 */
+ font-size: 5pt;
+ left: -74px;
+ float: left;
+ margin-top: 30px;
+ padding-bottom: 10px;
+}
+
+/* 메시지 입력 상자와 전송 버튼 */
+/* .type_msg {
+
+  position: relative; 
+  width: 100%;
+  text-align: center;
+  height: 30px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  
+} */
+
+.input_msg_write {
+  align-items: center;
+  align-content: center;
+}
+
+.input_msg_write input {
+  
+  background-color: #fff; /* 입력 상자 배경색 */
+  border: none; /* 테두리 없음 */
+  margin-right: 10px;
+  width: 65%; /* 입력 상자 너비 설정 */
+  outline-width: 0; /* 포커스 시 파란 테두리 제거 */
+  font-size: 18px; /* 폰트 크기 설정 */
+  height: 50px;
+ 
+}
+
+/* 달력 아이콘 */
+.icon-calendar{
+  margin-right: 5px;
+  float:left;
+  height: 50px;
+ }
+
+ /* 카드 아이콘 */
+ .icon-card{
+  margin-right: 10px;
+  float:left;
+  height: 50px;
+ }
+
+.msg_send_btn {
+  display: inline-block;
+  background: #128828; /* 전송 버튼 배경색 */
+  border: none; /* 테두리 없음 */
+  color: #fff; /* 텍스트 색상 */
+  cursor: pointer; /* 커서를 포인터로 변경 */
+  padding: 10px; /* 버튼 내 여백 설정 */
+  width: 20%; /* 버튼 너비 설정 */
+  border-radius: 5px; /* 버튼을 원 모양으로 만듦 */
+  position: relative; /* 절대 위치 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  font-size: 15px; /* 폰트 크기 설정 */
+
+}
+
+/* 채팅 시작 날짜 */
+.clock-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  
+}
+
+.clock {
+  background: #f2f2f2; /* 회색 배경색 */
+  color: #000; /* 텍스트 색상 */
+  border-radius: 50px; /* 모서리를 둥글게 */
+  padding: 5px 10px; /* 내용 주위의 여백 */
+  margin: 10px 10px; /* 상하 여백 */
+  word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
+  display: inline-block;
+  text-align: center;  
+}
+
+
+
+/* 공지 */
+.notice {
+  background-color: #474444; /* 배경색 */
+  color: #ae2d2d; /* 글자색 */
+  font-weight: bold; /* 글자 굵기 */
+  padding: 10px; /* 패딩 */
+  border-radius: 10px; /* 테두리 모서리 둥글게 만들기 */
+  margin-bottom: 10px; /* 하단 여백 */
+}
+

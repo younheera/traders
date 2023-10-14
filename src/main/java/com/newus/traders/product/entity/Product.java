@@ -36,11 +36,11 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
-    // 회원 entity와 연결
     // @ManyToOne
-    // seller;
+    // @JsonBackReference
+    // private UserEntity seller;
 
     private String name;
 
@@ -67,6 +67,10 @@ public class Product {
     @JsonManagedReference
     private List<Image> images;
 
+    private Long likes;
+
+    private boolean isDeleted;
+
     @Builder
     public Product(ProductForm productForm) {
         this.name = productForm.getName();
@@ -76,8 +80,10 @@ public class Product {
         this.latitude = productForm.getLatitude();
         this.longitude = productForm.getLongitude();
         this.category = productForm.getCategory();
+        this.likes = 0L;
+        this.isDeleted = false;
 
-    }
+    }  
 
     public void updateProduct(ProductForm productForm) {
         this.name = productForm.getName();
@@ -90,6 +96,14 @@ public class Product {
 
     public void purchaseProduct() {
         this.status = ProductStatus.SOLD;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
+    }
+
+    public void setIsDeleted() {
+        this.isDeleted = true;
     }
 
 }

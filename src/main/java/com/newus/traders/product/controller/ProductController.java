@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-19 08:18:21
- * @modify date 2023-10-06 11:25:16
+ * @modify date 2023-10-11 16:47:48
  */
 package com.newus.traders.product.controller;
 
@@ -54,7 +54,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
 
         return ResponseEntity.ok(productService.getProduct(id));
     }
@@ -69,37 +69,64 @@ public class ProductController {
     }
 
     @PutMapping("/products/update/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable("id") Integer id,
+    public ResponseEntity<String> updateProduct(@PathVariable("id") Long id,
             @RequestPart("data") ProductForm productForm,
-            @RequestPart("files") List<MultipartFile> files) {
+            @RequestPart("files") List<MultipartFile> newFiles,
+            @RequestParam("removedFiles") List<Integer> removedFiles) {
 
-        return ResponseEntity.ok(productService.updateProduct(id, productForm, files));
+        return ResponseEntity.ok(productService.updateProduct(id, productForm, newFiles, removedFiles));
     }
 
     @DeleteMapping("/products/delete/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) {
 
         return ResponseEntity.ok(productService.deleteProduct(id));
     }
 
     @PutMapping("/products/purchase/{id}")
-    public ResponseEntity<String> purchaseProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<String> purchaseProduct(@PathVariable("id") Long id) {
 
         return ResponseEntity.ok(productService.purchaseProduct(id));
     }
 
-    /**
-     * @author jeongyearim
-     * @create date 2023-09-26 13:41:14
-     * @modify date 2023-09-26 13:41:14
-     * @desc [프론트단에서 받아온 위도,경도를 확인하고 db에서 3km 반경의 상품 데이터를 찾아 리스트를 전송한다]
-     */
+    
+    /* @author jeongyearim
+    * @create date 2023-09-26 13:41:14
+    * @modify date 2023-09-26 13:41:14
+    * @desc [프론트단에서 받아온 위도,경도를 확인하고 3km 반경의 랜덤 생성 데이터를 db에 넣는다.]
+    */
 
+
+   /////////////////////
     @GetMapping("/products/nearestProducts")
     public ResponseEntity<List<ProductDto>> getNearestProducts(@RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude) {
 
+        //System.out.println("받은 위도: " + latitude);
+        //System.out.println("받은 경도: " + longitude);
+
         return ResponseEntity.ok(productService.getNearestProducts(latitude, longitude));
     }
 
+    /* 
+    @PostMapping("/products/nearestProducts")
+    public ResponseEntity<List<Product>> receiveCoordinates(@RequestBody Coordinates coordinates) {
+        double latitude = coordinates.getLatitude();
+        double longitude = coordinates.getLongitude();
+
+        // 여기에서 위도와 경도 데이터를 활용하여 원하는 작업을 수행합니다.
+        System.out.println("받은 위도: " + latitude);
+        System.out.println("받은 경도: " + longitude);
+
+        //3km 반경의 10개 무작위 상품 데이터 생성
+        //productService.generateRandomProducts(35.438663933103975, 128.82745361768966, 10, 10);
+
+        //3km 반경의 상품들을 오라클 db에서 가져온다.
+        List<Product> products = productService.findProductsWithin3Km(latitude, longitude);
+
+        return ResponseEntity.ok(products);
+    }
+    */
+    
+    
 }
