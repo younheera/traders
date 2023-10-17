@@ -1,10 +1,7 @@
 package com.newus.traders.user.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.validation.Valid;
 
-import java.util.HashMap;
-
-import org.elasticsearch.core.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,105 +15,110 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newus.traders.user.dto.ResponseDTO;
-import com.newus.traders.user.dto.UserDTO;
-import com.newus.traders.user.entity.UserEntity;
-import com.newus.traders.user.exception.UserException;
-import com.newus.traders.user.security.TokenProvider;
-import com.newus.traders.user.service.UserService;
 
-@Slf4j
+import com.newus.traders.user.controller.dto.UserResponseDTO;
+import com.newus.traders.user.exception.UserException;
+import com.newus.traders.user.jwt.TokenProvider;
+import com.newus.traders.user.service.UserService;
+import com.newus.traders.user.util.SecurityUtil;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private TokenProvider tokenProvider;
+	//로그인한 사용자의 ID통해서 사용자 정보를 조회
+	@GetMapping("/auth/me")
+    public ResponseEntity<UserResponseDTO> findMemberInfoById() {
+		System.out.println("옵니까??");
+        return ResponseEntity.ok(userService.findMemberInfoById(SecurityUtil.getCurrentUserId()));
+    }
+	// //사용자의 이메일 주소 기반 사용자 정보 조회
+	@GetMapping("/auth/{email}")
+    public ResponseEntity<UserResponseDTO> findMemberInfoByEmail(@PathVariable String email) {
+		System.out.println("오지마세요??");
+        return ResponseEntity.ok(userService.findMemberInfoByEmail(email));
+    }
 
-	// Bean으로 작성해도 됨.
-	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+// 	// public UserController(UserService userService) {
+//     //     this.userService = userService;
+//     // }
+// 	// private TokenProvider tokenProvider;
+
+// 	// Bean으로 작성해도 됨.
+// 	// private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-	@PostMapping("/auth/signup")
-	public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
-		System.out.println(userDTO);
-		try {
-			// 리퀘스트를 이용해 저장할 유저 만들기
-			UserEntity user = UserEntity.builder()
-							.email(userDTO.getEmail())
-							.username(userDTO.getUsername())
-							.password(passwordEncoder.encode(userDTO.getPassword()))
-							.build();
-			// 서비스를 이용해 리파지토리에 유저 저장
-			UserEntity registeredUser = userService.create(user);
-			UserDTO responseUserDTO = UserDTO.builder()
-							.email(registeredUser.getEmail())
-							.id(registeredUser.getId())
-							.username(registeredUser.getUsername())
-							.build();
-			// 유저 정보는 항상 하나이므로 그냥 리스트로 만들어야하는 ResponseDTO를 사용하지 않고 그냥 UserDTO 리턴.
-			return ResponseEntity.ok(responseUserDTO);
-
-		} catch (Exception e) {
-			// 예외가 나는 경우 bad 리스폰스 리턴.
-			ResponseDTO responseDTO 
-			= ResponseDTO.builder().error(e.getMessage()).build();
-			System.out.println(e.getMessage());
-			return ResponseEntity
-							.badRequest()
-							.body(responseDTO);
-		}
-	}
+// 	@PostMapping("/auth/signup")
+// 	public ResponseEntity<UserDTO> signup(
+//             @Valid @RequestBody UserDTO userDto
+//     ) {
+//         return ResponseEntity.ok(userService.signup(userDto));
+//     }
 	
 
-	@PostMapping("/auth/signin")
-	public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO) {
-		UserEntity user = userService.getByCredentials(
-						userDTO.getEmail(),
-						userDTO.getPassword(),
-						passwordEncoder);
+// 	// @PostMapping("/auth/signin")
+// 	// public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO) {
+// 	// 	UserEntity user = userService.getByCredentials(
+// 	// 					userDTO.getEmail(),
+// 	// 					userDTO.getPassword(),
+// 	// 					passwordEncoder);
 
-		if(user != null) {
-			// 토큰 생성
-			final String token = tokenProvider.create(user);
+// 	// 	if(user != null) {
+// 	// 		// 토큰 생성
+// 	// 		final String token = tokenProvider.create(user);
 
-			final UserDTO responseUserDTO = UserDTO
-							.builder()
-							.email(user.getEmail())
-							.username(user.getUsername())
-							.password(user.getPassword())
-							.id(user.getId())
-							.token(token)
-							.build();
-			System.out.println("responseUserDTO" + responseUserDTO);
+// 	// 		final UserDTO responseUserDTO = UserDTO
+// 	// 						.builder()
+// 	// 						.email(user.getEmail())
+// 	// 						.username(user.getUsername())
+// 	// 						.password(user.getPassword())
+// 	// 						.id(user.getId())
+// 	// 						.token(token)
+// 	// 						.build();
+// 	// 		System.out.println("responseUserDTO" + responseUserDTO);
 
-			return ResponseEntity.ok().body(responseUserDTO);
+// 	// 		return ResponseEntity.ok().body(responseUserDTO);
 			
-		} else {
-			ResponseDTO responseDTO = ResponseDTO.builder()
-							.error("Login failed.")
-							.build();
-			return ResponseEntity
-							.badRequest()
-							.body(responseDTO);
-		}
-	}
+// 	// 	} else {
+// 	// 		ResponseDTO responseDTO = ResponseDTO.builder()
+// 	// 						.error("Login failed.")
+// 	// 						.build();
+// 	// 		return ResponseEntity
+// 	// 						.badRequest()
+// 	// 						.body(responseDTO);
+// 	// 	}
+// 	// }
+	
+// 	// //회원정보 조회 API
+// 	// @GetMapping("/auth/user")
+// 	// Public ResponseEntity<?> findUser(@RequestHeader("Authorization") String accessToken) {
 
-  	 @GetMapping("/auth/signup/nameCheck")
- 	public ResponseEntity<?> checkNicknameDuplication(@RequestParam(value="username") String username) {
-		try{
-		System.out.println(username);
-		if(userService.existsByUsername(username)) {
-			throw new UserException(HttpStatus.CONFLICT);
-		}else{
-			return ResponseEntity.ok(HttpStatus.OK);
-		}
-	}catch(UserException e) {
-		return ResponseEntity.status(e.getStatus()).body(e.getMessage());
-	}
+// 	// }
+// 	// //회원정보 수정 API
+// 	// @PutMapping("/auth/user")
+
+	@GetMapping("/auth/signup/nameCheck")
+	public ResponseEntity<?> checkNicknameDuplication(@RequestParam(value="username") String username) {
+
+	   try{
+	   System.out.println("FE에서 넘어온 이름" + username);
+
+	   if(userService.existsByUsername(username)) {
+		   throw new UserException(HttpStatus.CONFLICT);
+	   }else{
+		   return ResponseEntity.ok(HttpStatus.OK);
+	   }
+   }catch(UserException e) {
+		System.out.println(username + "에러시 이름");
+	   return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+   }
 	}
 	
 	@GetMapping("/auth/signup/emailCheck")
@@ -133,3 +135,4 @@ public class UserController {
 		}
 	}
 }
+

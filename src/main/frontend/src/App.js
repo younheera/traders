@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import Main from "./components/Main";
 import GreenPay from "./components/payment/GreenPay";
@@ -12,17 +12,36 @@ import ChatApp from "./components/chat/ChatApp";
 import ChatBox from "./components/chat/ChatBox";
 import ChatList from "./components/chat/ChatList";
 import SignUp from "./components/login/SignUp";
-import LoginPageTest from "./components/service/LoginPageTest";
 
-import ModalPage from "./components/product/ModalPage";
-import CampaignDatails from "./components/sns/CampaignDatails";
-import CampaignList from "./components/sns/CampaignList";
-import NewsList from "./components/sns/NewsList";
-import Youtube from "./components/sns/Youtube";
+// import ModalPage from "./components/product/ModalPage";
+// import CampaignDatails from "./components/sns/CampaignDatails";
+// import CampaignList from "./components/sns/CampaignList";
+// import NewsList from "./components/sns/NewsList";
+// import Youtube from "./components/sns/Youtube";
+import { signout } from "./components/service/SignAPIService";
+import './index.css';
+import { ThemeProvider, createTheme } from "@material-ui/core";
+import Login from "./components/service/Login";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import TokenRefresher from "./components/service/TokenRefresher";
+// import TokenRefresher from "./components/service/TokenRefresher";
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Pretendard-Regular"
+  }
+})
 
 function App() {
+  
   return (
-    <div>
+
+  <ThemeProvider theme={theme}>
+    <ToastContainer/>
+    {/* <TokenRefresher/> */}
+    <div className="Pretendard-Regular">
       <ul>
         <li>
           <Link to="/">Home</Link>
@@ -60,12 +79,11 @@ function App() {
         <li>
           <Link to="/payment">GreenPay</Link>
         </li>
-
         <li>
           <Link to="/chat">chat</Link>
         </li>
 
-        <Button onClick={signout}>로그아웃</Button>
+        <button onClick={signout}>로그아웃</button>
         <hr />
 
         <li>
@@ -80,6 +98,7 @@ function App() {
       </ul>
 
       <Switch>
+
         <Route path={["/", "/main"]} exact>
           <Main />
         </Route>
@@ -102,18 +121,19 @@ function App() {
         </Route> */}
 
         <Route path="/login" exact>
-          <LoginPageTest />
+          <Login/>
         </Route>
         <Route path="/signup" exact>
           <SignUp />
         </Route>
-
+{/* 
         <Route path="/KakaoMap" exact>
           <ModalPage />
-        </Route>
-        <Route path="/payment" exact>
+        </Route> */}
+        {/* <Route path="/payment" exact>
           <GreenPay />
         </Route>
+
         <Route path="/payment/gpay_register" component={PayRegister} />
 
         <Route path="/chat" exact>
@@ -121,23 +141,26 @@ function App() {
         </Route>
 
         <Route path="/chat/roomNum/:roomNum" component={ChatBox} exact></Route>
-        <Route path="/chat/list" component={ChatList} exact></Route>
+        <Route path="/chat/list" component={ChatList} exact></Route> */}
 
-        <Route path="/news" exact>
+        {/* <Route path="/news" exact>
           <NewsList />
           <Youtube />
-        </Route>
+        </Route> */}
 
-        <Route path="/campaign" exact>
+        {/* <Route path="/campaign" exact>
           <CampaignList />
         </Route>
         <Route path="/campaign/:id" exact>
           <CampaignDatails />
-        </Route>
+        </Route> */}
 
-        <Route path="/sns" exact></Route>
+    시발뭐야?
+        {/* <Route path="/sns" exact></Route> */}
       </Switch>
     </div>
+
+    </ThemeProvider>
   );
 }
 

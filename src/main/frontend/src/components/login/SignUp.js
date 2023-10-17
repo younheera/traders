@@ -1,17 +1,15 @@
 import React, {Component, useCallback, useState} from "react";
-import {
-  Button,
-  TextField,
-  Link,
-  Grid,
-  Container,
-  Typography,
-} from "@material-ui/core";
+import {Button,TextField,Link,Grid,Container,Typography,} from "@material-ui/core";
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signup } from "../service/DemoAPIService";
-import axios from "axios";
+import { signup } from "../service/SignAPIService";
+import JoinPresenter from "./JoinPresenter";
+import {PiEyeBold} from "react-icons/pi";
+import {PiEyeClosedBold} from "react-icons/pi";
+import { Success, Warn, Error } from "../toastify/Alert";
+import useStyles from "../../styles/styles";
+import "../../styles/global.css";
 
 // ErrorMessage 컴포넌트 정의
 const ErrorMessage = ({ message }) => (
@@ -29,6 +27,7 @@ const schema = yup.object().shape({
   email: yup
     .string()
     .email('이메일 형식이 적합하지 않습니다.')
+
     /* 이메일중복체크 */
     .test('unique-email','이미 사용중인 이메일 입니다.',async function(value){
       if(value) {
@@ -59,8 +58,8 @@ const SignUp =()=> {
     resolver: yupResolver(schema),
     mode: 'onChange'
   });
-  console.log(watch());//유저입력값 실시간 콘솔 보기
-  const username = watch().username;
+  // console.log(watch());//유저입력값 실시간 콘솔 보기
+  const username = watch.username;
   
    // 추가된 상태 값
    const [email, setEmail] = useState('');
@@ -68,7 +67,13 @@ const SignUp =()=> {
    const [confirmationCode, setConfirmationCode] = useState('');
    const [isVerificationCodeSent, setIsVerificationCodeSent] = useState(false);
    const [showEmailNumber, setShowEmailNumber] = useState(false);
-
+   const [hidePassword, setHidePassword] = useState(true);
+   const classes = useStyles();
+    
+   const toggleHidePassword = () => {
+        setHidePassword(!hidePassword);
+      }
+  
    
 
   const onSubmit = async (data) => {
@@ -76,16 +81,18 @@ const SignUp =()=> {
 
     signup({email,username,password})
     .then((response)=> {
-      window.location.href="/login";
+      // window.location.href="/login";
+      console.log("data" + data);
     })
     .catch((error)=> {
       console.error("Signup error: ", error);
     })
-    console.log(data);
+    console.log("data" + data);
     reset();
   };
+  
   /* 닉네임 중복 체크 */
-  const nameCheck = async(e)=> {
+  const NicknameCheck = async(e)=> {
     e.preventDefault();
     const {username} = watch();
     try{
@@ -96,11 +103,12 @@ const SignUp =()=> {
       },
     });
       if(response.ok) {
-        alert("사용가능한 아이디입니다.");
-      }else if(response.status==409) {
-        alert("이미 사용중인 아이디입니다.");
+        Success("사용가능한 닉네임입니다.");
+      }else if(response.status===409) {
+        Warn("이미 사용중인 아이디입니다.");
       }else{
-        alert("사용 불가능한 아이디입니다.");
+        console.log(response.statusText + "응답데이터");
+        Error("사용 불가능한 아이디입니다.");
       }
     }catch(error){
       console.error("에러", error);
@@ -120,8 +128,7 @@ const SignUp =()=> {
   
   //이메일 코드 전송하기
   const sendVerificationCode =async()=> {
-    const emailValue = watch("email");
-    if(emailValue.length==0) {
+    const emailValue = watch("email");    if(emailValue.length==0) {
       return;
     }
     try {
@@ -138,7 +145,7 @@ const SignUp =()=> {
       setShowEmailNumber(true);//인증번호 입력창 보이게 하기 위함
       console.log(response);
       console.log(data);
-      alert("인증번호 발송");
+      Success("📩 인증번호 발송");
     }else{
       console.error("Error sending verification code");
     }
@@ -151,11 +158,12 @@ const SignUp =()=> {
   const confirmNumber =()=> {
     const enteredVerificationCode  = watch("emailnumber");
       if(enteredVerificationCode===confirmationCode) {
-        alert("인증되었습니다");
+        Success("✅인증되었습니다");
       }else{
-        alert("번호가 다릅니다");
+        Error("❌번호가 다릅니다");
       }
     }
+
 
 
   // render() {
@@ -163,8 +171,8 @@ const SignUp =()=> {
       <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
-            <Grid item xs={20}>
-              <Typography component="h1" variant="h5">
+            <Grid item xs={12}>
+            <Typography className={classes.customh1} component="h1" variant="h5">
                 계정 생성
               </Typography>
             </Grid>
@@ -177,8 +185,8 @@ const SignUp =()=> {
               defaultValue=""
               render={({field})=> (
               <TextField
+                className="customTextField"
                 autoComplete="fname"
-                // name="username"
                 variant="outlined"
                 required
                 fullWidth
@@ -191,7 +199,7 @@ const SignUp =()=> {
               />
               </Grid>
               <Grid item xs={3}>
-              <button onClick={nameCheck}>중복체크</button>
+              <button className="checkButton" onClick={NicknameCheck}>중복체크</button>
               </Grid>
               </Grid>
               {errors.username && <ErrorMessage message={errors.username.message}/>}
@@ -220,7 +228,7 @@ const SignUp =()=> {
                 </Grid>
                 <Grid item xs={3}>
                 {/* <button onClick={()=> {handleSendNumberClick(); sendVerificationCode();}}>{isVerificationCodeSent ? "재전송": "인증번호"}</button> */}
-                <button onClick={sendVerificationCode}>
+                <button className="checkButton" onClick={sendVerificationCode}>
                   {isVerificationCodeSent  ? "재전송":"인증번호"}
                 </button>
                 </Grid>
@@ -250,40 +258,45 @@ const SignUp =()=> {
                 />
                 </Grid>
                 <Grid item xs={3}>
-                <button onClick={confirmNumber}>이메일인증</button>
+                <button className="checkButton"onClick={confirmNumber}>이메일인증</button>
                 </Grid>
                 </Grid>
               {errors.emailnumber && <ErrorMessage message={errors.emailnumber.message} />}
             </Grid>
 
-            <Grid item xs={12}>
-            <Controller
-              name="password"
-              control={control}
-              defaultValue=""
-              render={({field})=>(
-              <TextField
-                autoComplete="current-password"
-                // id="password"
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="패스워드"
-                type="password"
-                autoFocus
-                {...field}
-              />
-              )}
-              />
-              {errors.password && <ErrorMessage message={errors.password.message} />}
-            </Grid>
+          <Grid item xs={12}>
+          <Controller
+            name="password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <div style={{ position: 'relative' }}>
+                <TextField
+                  autoComplete="current-password"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="패스워드"
+                  type={hidePassword? 'text' : 'password'}
+                  autoFocus
+                  {...field}
+                />
+                <div style={{ position: 'absolute', top: '50%', right: '16px', transform: 'translateY(-50%)' }} onClick={toggleHidePassword}>
+                  <PiEyeBold />
+                </div>
+              </div>
+            )}
+          />
+          {errors.password && <ErrorMessage message={errors.password.message} />}
+        </Grid>
             <Grid item xs={12}>
             <Controller
               name="confirmPassword"
               control={control}
               defaultValue=""
               render={({field})=>(
+              <div style={{ position: 'relative' }}>
               <TextField
                 autoComplete="confirmPassword"
                 id="confirmPassword"
@@ -292,31 +305,36 @@ const SignUp =()=> {
                 fullWidth
                 name="confirmPassword"
                 label="패스워드 확인"
-                type="confirmPassword"
+                type={hidePassword? 'password' : 'text'}
                 autoFocus
                 {...field}
-              />
-              )}
-              />
-              {errors.confirmPassword && (
-            <ErrorMessage message={errors.confirmPassword.message} />
-          )}
-            </Grid>
+                />
+                <div style={{ position: 'absolute', top: '50%', right: '16px', transform: 'translateY(-50%)' }} onClick={toggleHidePassword}>
+                  <PiEyeClosedBold />
+                </div>
+              </div>
+            )}
+          />
+          {errors.confirmPassword && <ErrorMessage message={errors.confirmPassword.message} />}
+        </Grid>
 
+          <Grid item xs={12}>
+                <JoinPresenter/>
 
+          </Grid>
+              
             <Grid item xs={12}>
               <Button
+                className="saveButton"
                 type="submit"
                 fullWidth
-                variant="contained"
-                color="primary"
-              >
+                variant="contained">
                 계정 생성
               </Button>
             </Grid>
           <Grid container justify-content="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link href="/login" variant="body2" className="necessarytext">
                 이미 계정이 있습니까? 로그인 하세요.
               </Link>
             </Grid>
@@ -327,6 +345,5 @@ const SignUp =()=> {
     );
   };
 
-// }
 
 export default SignUp;

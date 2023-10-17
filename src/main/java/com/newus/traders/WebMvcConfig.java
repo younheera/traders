@@ -16,10 +16,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
         // Origin이 http:localhost:3000에 대해
-		// .allowedOrigins("http://localhost:3000")
+		.allowedOrigins("http://localhost:3000")
         .allowedOriginPatterns("/**")
         .allowedMethods("/","GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-        .allowedHeaders("*")
+        .allowedHeaders("**")
+        .allowedHeaders("http://localhost:3000")
         .allowCredentials(true)
         .maxAge(MAX_AGE_SECS);
 

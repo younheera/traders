@@ -1,14 +1,15 @@
 import React from "react";
-import { signin } from "./DemoAPIService";
+import { signin } from "./SignAPIService";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Container, Link } from "@material-ui/core";
+import "../../styles/global.css"
 
-class LoginPageTest extends React.Component {
-    constructor(props) {
-        super(props);
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
     
@@ -20,16 +21,23 @@ class LoginPageTest extends React.Component {
         // ApiService의 signin 메서드를 사용 해 로그인.
         signin({ email: email, password: password });
       }
-    
+
       render() {
+        const customh1= {
+          color: "black",
+        textAlign: "center",
+        fontSize: '30px',
+        fontWeight: 'bold',
+        };
         return (
           <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography component="h1" variant="h5">
+                <Typography style={{ fontSize: '30px', textAlign:'center', fontWeight:'bold' }}
+                component="h1" variant="h5">
                   로그인
-                </Typography>
-              </Grid>
+                </Typography><br/>
+              </Grid><br/>
             </Grid>
             <form noValidate onSubmit={this.handleSubmit}>
               {" "}
@@ -41,7 +49,7 @@ class LoginPageTest extends React.Component {
                     required
                     fullWidth
                     id="email"
-                    label="이메일 주소"
+                    label="이메일을 입력하세요"
                     name="email"
                     autoComplete="email"
                   />
@@ -52,7 +60,7 @@ class LoginPageTest extends React.Component {
                     required
                     fullWidth
                     name="password"
-                    label="패스워드"
+                    label="비밀번호 설정"
                     type="password"
                     id="password"
                     autoComplete="current-password"
@@ -60,17 +68,16 @@ class LoginPageTest extends React.Component {
                 </Grid>
                 <Grid item xs={12}>
                   <Button
+                    className="saveButton"
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
-                  >
+                    >
                     로그인
                   </Button>
-
                 </Grid>
                 <Grid container justifyContent="flex-end" style={{marginTop : 20}}>
-                  <Link href="/signup" variant="body2">
+                  <Link className="necessarytext" href="/signup" variant="body2">
                     <Grid item>계정이 없으신가요? 회원가입</Grid>
                   </Link>
                 </Grid>
@@ -83,4 +90,4 @@ class LoginPageTest extends React.Component {
     
     
 
-export default LoginPageTest;
+export default Login;
