@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route, Switch } from "react-router-dom/cjs/react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 import Main from "./components/Main";
 import GreenPay from "./components/payment/GreenPay";
 import PayRegister from "./components/payment/PayRegister";
@@ -22,6 +22,10 @@ import Youtube from "./components/sns/Youtube";
 import MainView from "./components/layout/MainView";
 
 
+import { signout } from "./components/service/DemoAPIService";
+import { Button } from "@material-ui/core";
+
+import AccountRegister from "./components/payment/AccountRegister";
 
 function App() {
   return (
@@ -46,9 +50,6 @@ function App() {
           <Link to="/KakaoMap">KakaoMap</Link>
         </li>
 
-        {/* <li>
-          <Link to="/join">회원가입</Link>
-        </li> */}
         <hr />
         <li>
           <Link to="/login">로그인테스트</Link>
@@ -62,10 +63,6 @@ function App() {
           <Link to="/payment">GreenPay</Link>
         </li>
         <br />
-
-        <li>
-          <Link to="/payment">GreenPay</Link>
-        </li>
 
         <li>
           <Link to="/chat">chat</Link>
@@ -105,10 +102,6 @@ function App() {
           <ProductDetails />
         </Route>
 
-        {/* <Route path="/products/update/:id" exact>
-          <ProductUpdate />
-        </Route> */}
-
         <Route path="/login" exact>
           <LoginPageTest />
         </Route>
@@ -123,6 +116,7 @@ function App() {
           <GreenPay />
         </Route>
         <Route path="/payment/gpay_register" component={PayRegister} />
+        <Route path="/payment/accnt_register" component={AccountRegister} />
 
         <Route path="/chat" exact>
           <ChatApp />

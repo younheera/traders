@@ -26,7 +26,7 @@ import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.repository.ImageRepository;
 import com.newus.traders.product.repository.ProductRepository;
 import com.newus.traders.product.type.ProductStatus;
-import com.newus.traders.redis.service.RedisService;
+// import com.newus.traders.redis.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,13 +51,13 @@ public class ProductService {
 
             ProductDto productDto = new ProductDto(product);
 
-            productDto.setLiked(redisService.checkIfLiked(product.getId(), 1L));
+            // productDto.setLiked(redisService.checkIfLiked(product.getId(), 1L));
 
-            Object objectCount = redisService.countLikes(product.getId());
+            // Object objectCount = redisService.countLikes(product.getId());
 
-            if (objectCount != null) {
-                productDto.setLikes((Long) objectCount);
-            }
+            // if (objectCount != null) {
+            //     productDto.setLikes((Long) objectCount);
+            // }
 
             // 임시로!!!!!!!!!!!!!!!!!!
 
@@ -74,19 +74,19 @@ public class ProductService {
 
         ProductDto productDto = new ProductDto(product);
 
-        System.out.println("좋아요?" + redisService.checkIfLiked(product.getId(), 1L));
-        System.out.println(productDto.isLiked());
+        // System.out.println("좋아요?" + redisService.checkIfLiked(product.getId(), 1L));
+        // System.out.println(productDto.isLiked());
 
-        productDto.setLiked(redisService.checkIfLiked(product.getId(), 1L));
-        System.out.println(productDto.isLiked());
+        // productDto.setLiked(redisService.checkIfLiked(product.getId(), 1L));
+        // System.out.println(productDto.isLiked());
 
-        Object objectCount = redisService.countLikes(product.getId());
+        // Object objectCount = redisService.countLikes(product.getId());
 
-        if (objectCount != null) {
-            productDto.setLikes((Long) objectCount);
-        }
+        // if (objectCount != null) {
+        //     productDto.setLikes((Long) objectCount);
+        // }
 
-        return productDto;
+        // return productDto;
     }
 
     public List<ProductDto> getSearchedProducts(List<Long> productIdList) {

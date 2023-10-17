@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 10:32:10
- * @modify date 2023-09-27 16:27:34
+ * @modify date 2023-10-04 04:31:37
  * 그린페이 가입 - 1. 인증정보input 및 약관동의 처리
  */
 
@@ -10,13 +10,13 @@ import Terms from './Terms';
 
 const RegisterStep1 = ({ form, onText, onNext }) => {
   const {
-    user_name,
-    user_info,
-    user_gender,
-    cell_carrier,
-    user_cell_no,
-    agree_yn,
-    agree_dtime,
+    userName,
+    userInfo,
+    userGender,
+    cellCarrier,
+    userCellNo,
+    agreeYn,
+    agreeDtime
   } = form;
 
   window.addEventListener("scroll", function () {
@@ -43,8 +43,8 @@ const RegisterStep1 = ({ form, onText, onNext }) => {
         <br />
         <input
           type="text"
-          name="user_name"
-          value={user_name}
+          name="userName"
+          value={userName}
           placeholder="이름을 입력하세요"
           onChange={onText}
         />
@@ -54,8 +54,8 @@ const RegisterStep1 = ({ form, onText, onNext }) => {
         <br />
         <input
           type="text"
-          name="user_info"
-          value={user_info}
+          name="userInfo"
+          value={userInfo}
           maxLength={6}
           size={6}
           onChange={onText}
@@ -63,8 +63,8 @@ const RegisterStep1 = ({ form, onText, onNext }) => {
         -
         <input
           type="password"
-          name="user_gender"
-          value={user_gender}
+          name="userGender"
+          value={userGender}
           maxLength={1}
           size={1}
           onChange={onText}
@@ -75,7 +75,7 @@ const RegisterStep1 = ({ form, onText, onNext }) => {
         <div class="input-group mb-3">
           <label>휴대폰 번호</label>
           <br />
-          <select label="통신사" class="dropdown-menu" name="cell_carrier">
+          <select label="통신사" class="dropdown-menu" name="cellCarrier">
             <option class="dropdown-item" value="SKT">
               SKT
             </option>
@@ -98,7 +98,7 @@ const RegisterStep1 = ({ form, onText, onNext }) => {
           <input
             type="text"
             class="form-control"
-            name="user_cell_no"
+            name="userCellNo"
             placeholder="휴대폰 번호를 입력하세요"
           />
         </div>
