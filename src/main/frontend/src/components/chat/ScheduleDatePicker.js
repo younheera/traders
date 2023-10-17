@@ -1,8 +1,14 @@
+/**
+ * @author hyunseul
+ * @create date 2023-10-17 16:30:43
+ * @modify date 2023-10-17 16:30:50
+ */
+
 // ScheduleDatePicker 컴포넌트
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../../assets/css/ChatModal.css';
+import '../../assets/css/ChatMapModal.css';
 import ko from 'date-fns/locale/ko';
 
 const ScheduleDatePicker = ({ onChange, onClick }) => {

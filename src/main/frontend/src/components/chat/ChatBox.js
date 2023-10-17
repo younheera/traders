@@ -1,7 +1,8 @@
+
 /**
  * @author hyunseul
  * @create date 2023-10-04 13:02:02
- * @modify date 2023-10-12 22:01:50
+ * @modify date 2023-10-17 16:30:03
  */
 
 import React, { useEffect, useState, useRef } from "react";
@@ -16,9 +17,7 @@ import {MdArrowBackIosNew} from 'react-icons/md'
 import {PiCreditCard} from 'react-icons/pi'
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import ChatScheduleModal from "./ChatScheduleModal";
-
-
-
+import Container from 'react-bootstrap/Container';
 
 
 // 채팅 내용
@@ -30,36 +29,30 @@ const ChatBox = () => {
   const eventSourceRef = useRef(null);
   const messageRef = useRef(null);
   const history = useHistory();
-  
   const [isModalVisible, setModalVisible] = useState(false); // 모달
   const [reservedData, setReservedData] = useState(null); // 예약 정보 저장
-  const [location, setLocation] = useState("");
   const messageEndRef = useRef(null);
+  const [savedData, setSavedData] = useState(null); 
+  const [showSavedData, setShowSavedData] = useState(false);
 
+
+  
   const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+    setModalVisible(prevModalVisible => !prevModalVisible);
   };
   
 
   useEffect(() => {
-    // 방 입장 시 스크롤을 맨 아래로 이동시키는 함수 호출
     scrollToBottom();
-  }, [messages]); // 빈 배열을 두어 한 번만 실행되도록 설정
+  }, [messages]);
 
-  
-const scrollToBottom = () => {
-  messageRef.current.scrollTop = messageRef.current.scrollHeight;
-  messageRef.current?.scrollIntoView({behavior: 'smooth'})
-}
+  const scrollToBottom = () => {
+    messageRef.current.scrollTop = messageRef.current.scrollHeight;
+  };
 
-useEffect(() => {
-  messageEndRef.current.scrollTop = messageEndRef.current.scrollHeight;
-  messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
-}, [messages]);
-
-
+  // 이전 채팅 내용을 서버에서 가져오기
   useEffect(() => {
-    // 이전 채팅 내용을 서버에서 가져오기
+    setUsername(prompt("sender:"))
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/api/chat/roomNum/${roomNum}`);
@@ -75,13 +68,12 @@ useEffect(() => {
         console.error("이전 채팅 내용을 가져오는 데 실패했습니다.", error);
       }
     };
-
-    fetchData(); // 이전 채팅 내용을 가져오기
-    
+    fetchData(); // 이전 채팅 내용을 가져오기   
   }, [roomNum]);
 
+  
+  // EventSource 초기화 및 메시지 받아오기
   useEffect(() => {
-    // EventSource 초기화 및 메시지 받아오기
     eventSourceRef.current = new EventSource(`http://localhost:8080/api/chat/roomNum/${roomNum}`);
   
     eventSourceRef.current.onmessage = (event) => {
@@ -92,7 +84,7 @@ useEffect(() => {
       }
     };
     scrollToBottom();
-    // 컴포넌트가 언마운트될 때 EventSource 연결 닫기
+
     return () => {
       eventSourceRef.current.close();
      
@@ -103,29 +95,70 @@ useEffect(() => {
   // 서버에 메세지 보내기 
   const sendMessageToServer = async (message) => {
       
-    if (message.trim() !== "") {
+    if (typeof message === 'string' && message.trim() !== "") {
     const chat = {
       text: message,
       sender: username,
-      receiver:"유인나",
+      // receiver:username,
       roomNum: roomNum,
     };
-  
     try {
+      if (reservedData && reservedData.date && reservedData.location) {
+        setSavedData({
+          date: reservedData.date,
+          location: reservedData.location,
+        });
+        setShowSavedData(true);
+        // 예약 데이터 전송
+        await axios.post("http://localhost:8080/api/chat/save", reservedData);
+      }
+
       await axios.post("http://localhost:8080/api/chat", chat);
       console.log("메시지 전송 완료 " + chat);
       setMessage("");
-
-      // 새로운 메세지 배열 끝에 추가해 화면에 표시
       scrollToBottom();
-      setMessages(prevMessages => [...prevMessages, chat])
-
+      setMessages(prevMessages => [...prevMessages, chat]);
     } catch (error) {
       console.error("메시지 전송 오류:", error);
     }
-  };
+  }
 };
   
+
+  const handleSaveModal = async (data) => {
+    console.log("모달에서 받은 데이터:", data);
+
+    // 예약 정보 메시지를 서버에 전송
+    const notice = {
+      text: "일정잡힘",
+      sender: username,
+      // receiver: username,
+      roomNum: roomNum,
+      date: data.date,
+      location: data.location,
+    };
+
+    try {
+      // 메시지 전송
+      await axios.post("http://localhost:8080/api/chat/save", notice);
+      console.log("모달 메시지 전송 완료:", notice);
+
+      // 데이터 상태 변수 업데이트 (date와 location만 저장)
+      setSavedData({
+        date: data.date,
+        location: data.location,
+      });
+      setShowSavedData(true);
+    
+    } catch (error) {
+      console.error("메시지 전송 또는 데이터 저장 실패:", error);
+    }
+
+    setModalVisible(false); // 모달 닫기
+    
+  };
+
+
   
   // 보내는 사람 대화박스(블루)
   const getSendMsgBox = (data) => {
@@ -163,6 +196,38 @@ const getReceiveMsgBox = (data) => {
 };
 
 
+const saveData = (data) => {
+  //qkrtlconsole.log(sender)
+  
+  // if (showSavedData && savedData && savedData.date === data.date 
+  //   && savedData.location === data.location) {
+  //     console.log("예약 메세지 출력하는 곳")
+    return (
+      <div>
+        <div className="notice-box">
+          <div className="notice-message">
+            <p className="notice-header"><b style={{color:'green'}}>{data.sender}</b>님이 약속을 잡았습니다!</p>
+           
+            <li className="notice-content">약속일: {data.date}</li>
+            <li className="notice-content">약속 장소: {data.location}</li>
+            
+          </div>
+        </div>
+      </div>
+    );
+  }
+  //return null;
+//
+
+// 예약 정보가 있는 경우에만 추가하도록 변경
+useEffect(() => {
+  if (reservedData) {
+    setMessages(prevMessages => [...prevMessages, reservedData]);
+  }
+}, [reservedData]);
+
+
+
 const sendMessage = () => {
   if (message.trim() !== "") {
     sendMessageToServer(message);
@@ -186,114 +251,85 @@ const handleEnterPress = (e) => {
    history.push("/chat/list");
  }
 
-
-  useEffect(() => {
-
-    // 예약 정보가 있는 경우에만 추가하도록 변경
-    if (reservedData) {
-      setMessages(prevMessages => [...prevMessages, reservedData]);
-    }
-  }, [reservedData]);
-  
-
-  // 모달 값 저장 함수
- const handleSaveModal = (data) => {
-  console.log("모달에서 받은 데이터:", data)
-
-  //setReservedData(data);
-  const message = `${data.sender}님이 약속을 잡았습니다.\n시간: ${data.date}\n 장소: ${data.location}`;
-
-  console.log(message);
-  setLocation(data.location);
-  sendMessageToServer(message);
-  setModalVisible(false);
-
+  const handleCardClick = () => {
+    history.push("/")
   }
-
-// const handleSaveModal = (data) => {
-//   console.log("모달에서 받은 데이터:", data);
-
-//   // 예약 정보를 문자열로 변환하여 저장
-//   const reservationMessage = `${username}님이 약속을 잡았습니다. 시간: ${data.date}, 장소: ${data.location}`;
-
-  
-
-//   // 스타일 클래스가 있는 경우 스타일 클래스를 추가하여 저장
-//   const styledMessage = data.style
-//     ? `<div class="${data.style}">${reservationMessage}</div>`
-//     : reservationMessage;
-
-//   // 예약 정보 메시지를 서버에 전송
-//   const notice = {
-//     text: styledMessage, // 혹은 reservationMessage로 저장할 수 있습니다.
-//     sender: username,
-//     receiver: "유인나",
-//     roomNum: roomNum,
-//     style: data.style
-//   };
-
-//   sendMessageToServer(notice); // 서버에 메시지 전송
-//   setModalVisible(false); // 모달 닫기
-// };
-
 
   return (
     <>
+    <Container style={{maxWidth:"1040px"}}>
     <ChatScheduleModal show={isModalVisible} handleClose={toggleModal}  onsave={handleSaveModal}/>
-    <div className="message">
+    <div >
       <div className="message-container" ref={messageRef}>
-        <div>
+        <div className="message-header">
+          <div className="message-header-icons">
           <MdArrowBackIosNew size='20px' onClick={handleBackButtonClick}/>　
-          <img src={Chatprofile} alt="상품 이미지" value={username}/> 
-          　유인나
+          <img src={Chatprofile} className="profile_img" alt="상품 이미지" value={username}/> 
           
-          <hr/>  
-        </div>
-        <div className="clock-container">
-        <div className="clock">
-          <span>
-          <Clock format={'YYYY년 MM월 DD일'} ticking={false} timezone={"Asia/Seoul"} />
-          </span>
-        </div>
-        </div>
-        
-   
-        {messages.map((data, index) => (
-          <div key={index}>
-            {data.sender === username ?  getSendMsgBox(data)
-                  : getReceiveMsgBox(data)}      
-          </div>
+          <AiOutlineCalendar className="icon-calendar" size="35px" onClick={toggleModal} />
+          <PiCreditCard className="icon-card" size="35px" onClick={handleCardClick}></PiCreditCard>
+          </div> {/* message-header-icons 끝 */}
+          </div> {/* message-header 끝 */}
           
-        ))}
-        <div ref={messageEndRef}></div>
-      </div>
-      
+       
+        <div className="message-box">
+          <div className="clock-container">
+            <div className="clock">
+              <span>
+              <Clock format={'YYYY년 MM월 DD일'} ticking={false} timezone={"Asia/Seoul"} />
+              </span>
+            </div> {/* clock 끝 */}
+          </div> {/* clock-container 끝 */}
+          {messages.map((data, index) => {
+            // if (data.date && data.location) {
+             console.log(typeof data.text)
+            
+              if (data.text === "일정잡힘") {
+                return (
+                  <div key={index}>
+                  {saveData(data)}
+                </div>
+              );
+            } else if (data.sender === username && !data.date) {
+              return (
+                <div key={index}>
+                  {getSendMsgBox(data)}
+                </div>
+              );
+            } else if (data.sender !== username && !data.date) {
+              return (
+                <div key={index}>
+                  {getReceiveMsgBox(data)}
+                </div>
+              ); 
+            }
+            return null;
+          })}
+              <div ref={messageEndRef}></div>
 
+      {/* 모달 및 채팅창 UI 코드 (기존 코드) */} 
+            </div> {/* message-box 끝 */} 
+            <div style={{ float: "left", clear: "both" }}></div>
 
-
-      <div style={{ float: "left", clear: "both" }}></div>
-      <div className="message-container">
-        
+          <div className="message-footer">
           <div className="input_msg_write">
-          <AiOutlineCalendar className="icon-calendar" size="30px" onClick={toggleModal} />
-          <PiCreditCard className="icon-card" size="30px"></PiCreditCard>
+
             <input
               type="text"
-              className="write_msg"
-              placeholder="Type a message"
+              placeholder="메시지를 입력하세요."
               value={message}
               onChange={handleInputChange}
               onKeyDown={handleEnterPress}
             />
             <button className="msg_send_btn" type="button" onClick={sendMessage}>
-              Send
+              전송
             </button>
-            
-        
-        </div>
-      </div>
- 
-    </div>
+            </div>
+  
+         </div>  {/* input_msg_write 끝 */}
+      </div> {/* message-container 끝 */}
+    </div>  {/* message 끝 */}
+    </Container>
     </>
   );
 }

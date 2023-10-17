@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.newus.traders.chat.dto.ChatDto;
 import com.newus.traders.chat.repository.ChatRepository;
@@ -42,12 +43,17 @@ public class ChatService {
     }
 
     // 채팅방 목록 조회
-    public Flux<String> getChatRoomListBySender(String sender){
-        
-        return chatRepository.findBySenderOrReceiver(sender,sender)
-        .map(ChatDto::getRoomNum)
-        .distinct();
+    public Flux<String> getChatRoomListBySender(String sender) {
+
+        return chatRepository.findBySenderOrReceiver(sender, sender)
+                .map(ChatDto::getRoomNum)
+                .distinct();
     }
 
- 
+    // 모달에서 받아온 채팅 저장
+    public Mono<ChatDto> saveChatFromModal(ChatDto chat) {
+        chat.setCreatedAt(LocalDateTime.now()); // 메세지 생성 시간
+        return chatRepository.save(chat);
+    }
+
 }

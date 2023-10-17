@@ -19,6 +19,9 @@ import CampaignDatails from "./components/sns/CampaignDatails";
 import CampaignList from "./components/sns/CampaignList";
 import NewsList from "./components/sns/NewsList";
 import Youtube from "./components/sns/Youtube";
+import MainView from "./components/layout/MainView";
+
+
 import { signout } from "./components/service/DemoAPIService";
 import { Button } from "@material-ui/core";
 
@@ -26,7 +29,10 @@ import AccountRegister from "./components/payment/AccountRegister";
 
 function App() {
   return (
+    <>
+   
     <div>
+     
       <ul>
         <li>
           <Link to="/">Home</Link>
@@ -62,8 +68,8 @@ function App() {
           <Link to="/chat">chat</Link>
         </li>
 
-        <Button onClick={signout}>로그아웃</Button>
-        <hr />
+        {/* <Button onClick={signout}>로그아웃</Button>
+        <hr /> */}
 
         <li>
           <Link to="/news">News</Link>
@@ -75,10 +81,12 @@ function App() {
           <Link to="/sns">sns</Link>
         </li>
       </ul>
+        
+     
 
       <Switch>
         <Route path={["/", "/main"]} exact>
-          <Main />
+          <MainView />
         </Route>
         <Route path="/products" exact>
           <ProductList />
@@ -131,7 +139,13 @@ function App() {
 
         <Route path="/sns" exact></Route>
       </Switch>
+     
+        <ChatList/>
+        {/* <MainView/> */}
     </div>
+        
+
+</>
   );
 }
 

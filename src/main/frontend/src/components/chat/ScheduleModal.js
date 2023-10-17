@@ -1,12 +1,12 @@
 /**
  * @author hyunseul
  * @create date 2023-10-11 17:59:15
- * @modify date 2023-10-11 18:46:37
+ * @modify date 2023-10-17 09:19:56
  */
 
 import React from 'react';
 
-function Modal(props) {
+function ScheduleModal(props) {
  
     function closeModal() {
         props.closeModal();
