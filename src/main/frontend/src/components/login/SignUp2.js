@@ -2,7 +2,7 @@
  * @author heera youn
  * @email [example@mail.com]
  * @create date 2023-10-04 13:01:49
- * @modify date 2023-10-04 13:01:50
+ * @modify date 2023-10-15 01:19:52
  * @desc [description]
  */
 import React from 'react';
@@ -51,8 +51,7 @@ const SingUp2 = () => {
     resolver: yupResolver(schema),
     mode: 'onChange',
   });
-console.log(watch());
-const nickname = watch().nickname;
+const nickname = nickname;
 
   const onSubmit = async (data) => {
     console.log(data);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import Main from "./components/Main";
 import GreenPay from "./components/payment/GreenPay";
@@ -12,8 +12,6 @@ import ChatApp from "./components/chat/ChatApp";
 import ChatBox from "./components/chat/ChatBox";
 import ChatList from "./components/chat/ChatList";
 import SignUp from "./components/login/SignUp";
-import LoginPageTest from "./components/service/LoginPageTest";
-
 import ModalPage from "./components/product/ModalPage";
 import CampaignDatails from "./components/sns/CampaignDatails";
 import CampaignList from "./components/sns/CampaignList";
@@ -21,18 +19,31 @@ import NewsList from "./components/sns/NewsList";
 import Youtube from "./components/sns/Youtube";
 import MainView from "./components/layout/MainView";
 
-
+import './index.css';
+import { ThemeProvider, createTheme } from "@material-ui/core";
+import Login from "./components/service/Login";
 import { signout } from "./components/service/DemoAPIService";
 import { Button } from "@material-ui/core";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
+import TokenRefresher from "./components/service/TokenRefresher";
 import AccountRegister from "./components/payment/AccountRegister";
 
+const theme = createTheme({
+  typography: {
+    fontFamily: "Pretendard-Regular"
+  }
+})
+
 function App() {
+  
   return (
-    <>
-   
-    <div>
-     
+
+  <ThemeProvider theme={theme}>
+    <ToastContainer/>
+    {/* <TokenRefresher/> */}
+    <div className="Pretendard-Regular">
       <ul>
         <li>
           <Link to="/">Home</Link>
@@ -65,11 +76,14 @@ function App() {
         <br />
 
         <li>
+          <Link to="/payment">GreenPay</Link>
+        </li>
+        <li>
           <Link to="/chat">chat</Link>
         </li>
 
-        {/* <Button onClick={signout}>로그아웃</Button>
-        <hr /> */}
+        <button onClick={signout}>로그아웃</button>
+        <hr />
 
         <li>
           <Link to="/news">News</Link>
@@ -85,6 +99,7 @@ function App() {
      
 
       <Switch>
+
         <Route path={["/", "/main"]} exact>
           <MainView />
         </Route>
@@ -103,7 +118,7 @@ function App() {
         </Route>
 
         <Route path="/login" exact>
-          <LoginPageTest />
+          <Login/>
         </Route>
         <Route path="/signup" exact>
           <SignUp />
@@ -111,10 +126,11 @@ function App() {
 
         <Route path="/KakaoMap" exact>
           <ModalPage />
-        </Route>
+        </Route> 
         <Route path="/payment" exact>
           <GreenPay />
         </Route>
+
         <Route path="/payment/gpay_register" component={PayRegister} />
         <Route path="/payment/accnt_register" component={AccountRegister} />
 
@@ -141,11 +157,10 @@ function App() {
       </Switch>
      
         <ChatList/>
-        {/* <MainView/> */}
+       <MainView/>
     </div>
-        
 
-</>
+    </ThemeProvider>
   );
 }
 

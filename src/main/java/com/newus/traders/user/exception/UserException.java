@@ -1,5 +1,4 @@
 package com.newus.traders.user.exception;
-
 import org.springframework.http.HttpStatus;
 
 public class UserException extends RuntimeException{
