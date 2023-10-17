@@ -1,11 +1,17 @@
+/**
+ * @author hyunseul
+ * @create date 2023-10-17 16:30:19
+ * @modify date 2023-10-17 16:30:25
+ */
+
 import React, { useState } from 'react';
-import '../../assets/css/ChatModal.css';
+import '../../assets/css/ChatMapModal.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import MyComponent from './ScheduleDatePicker';
+
 import ScheduleDatePicker from './ScheduleDatePicker';
-import KakaoMapModal from '../product/KakaoMapModal';
+
 import ChatMap from './ChatMap';
 
 const ChatScheduleModal = ({ show, handleClose, onsave }) => {

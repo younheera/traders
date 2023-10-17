@@ -26,7 +26,8 @@ import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.repository.ImageRepository;
 import com.newus.traders.product.repository.ProductRepository;
 import com.newus.traders.product.type.ProductStatus;
-// import com.newus.traders.redis.service.RedisService;
+import com.newus.traders.redis.service.RedisService;
+import com.newus.traders.redis.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -86,7 +87,7 @@ public class ProductService {
         //     productDto.setLikes((Long) objectCount);
         // }
 
-        // return productDto;
+        return productDto;
     }
 
     public List<ProductDto> getSearchedProducts(List<Long> productIdList) {

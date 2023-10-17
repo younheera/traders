@@ -30,7 +30,6 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-
 // 채팅 메세지 생성, 조회 및 스트리밍
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -53,12 +52,30 @@ public class ChatController {
     // 채팅 저장
     @PostMapping("/chat")
     public Mono<ResponseEntity<String>> setMsg(@RequestBody ChatDto chat) {
-        if (chat.getRoomNum() == null || chat.getText() == null || chat.getSender() == null ) {
+        if (chat.getRoomNum() == null || chat.getText() == null || chat.getSender() == null) {
             return Mono.just(ResponseEntity.badRequest().body("Invalid chat message format"));
         }
 
         logger.info("Received POST request with data: {}", chat);
 
+        chat.setCreatedAt(LocalDateTime.now()); // 메세지 생성 시간
+        return chatService.setMsg(chat)
+                .map(savedChat -> ResponseEntity.ok("Chat message saved successfully"))
+                .defaultIfEmpty(
+                        ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save chat message"));
+    }
+
+    // 모달데이터 채팅서버 저장
+    @PostMapping("/chat/save")
+    public Mono<ResponseEntity<String>> saveChatFromModal(@RequestBody ChatDto chat) {
+        // 받아온 데이터의 유효성을 검사합니다.
+        if (chat.getRoomNum() == null || chat.getText() == null || chat.getSender() == null) {
+            return Mono.just(ResponseEntity.badRequest().body("Invalid chat message format"));
+        }
+
+        logger.info("Received chat message from modal: {}", chat);
+
+        // 채팅 메시지 저장 로직을 수행합니다.
         chat.setCreatedAt(LocalDateTime.now()); // 메세지 생성 시간
         return chatService.setMsg(chat)
                 .map(savedChat -> ResponseEntity.ok("Chat message saved successfully"))
@@ -83,6 +100,5 @@ public class ChatController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
 
 }
