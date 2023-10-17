@@ -1,5 +1,12 @@
+/**
+ * @author hyunseul
+ * @create date 2023-10-17 16:30:10
+ * @modify date 2023-10-17 16:30:16
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import '../../assets/css/ChatMapModal.css';
 
 const ChatMap = ({ onAddressChange }) => {
   const { kakao } = window;
@@ -69,8 +76,8 @@ const ChatMap = ({ onAddressChange }) => {
   return (
     <>
       <Map
+        className='map'
         center={{ lat: markerPosition.lat, lng: markerPosition.lng }}
-        style={{ width: '100%', height: '300px', marginTop:'15px', }}
         level={3}
       >
         <MapMarker position={{ lat: markerPosition.lat, lng: markerPosition.lng }} draggable={true} onDragEnd={handleMarkerDragEnd} />

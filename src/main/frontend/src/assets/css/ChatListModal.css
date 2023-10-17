@@ -1,0 +1,87 @@
+/**
+ * @author hyunseul
+ * @create date 2023-10-17 12:10:32
+ * @modify date 2023-10-17 16:25:51
+ */
+
+/* ChatList css */
+
+
+
+/* 모달 전체 */
+.modal-content {
+  width: 450px;
+  height: 600px;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 내용을 위로 정렬 */
+
+}
+
+/* 모달 헤더 */
+.list-header{
+text-align: center;
+position: relative;
+align-items: center;
+font-weight: 900;
+font-size: 23pt;
+color:  #198754;
+margin-bottom: 0px !;
+
+}
+
+
+.Row{
+  margin: 0px !important;
+  height: 80px;
+}
+
+.list-content-msg{
+ position: relative;
+ top: 15px;
+}
+
+
+/* userProfile */
+.list-content-img{
+  position: relative;
+  top:20px;
+  left: 10px;
+
+  border-radius: 50px;
+  align-items: center;
+  display: inline-block;
+}
+
+
+
+/* 사용자 이름과 내용의 스타일 조정 */
+.list-content-p {
+  margin-bottom: 20px;
+  display: inline-block; /* 사용자 이름과 내용 사이 간격 조정 */
+}
+
+.list-receiver {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.list-lastMsg {
+  color: #333;
+  font-size: 14px;
+}
+
+/* 채팅 아이콘 */
+.chatListBtn{
+ position: fixed;
+ float: right;
+ z-index: 1;
+ right: 70px;
+ top:800px;
+ display: flex;
+ overflow-x: hidden;
+ overflow-y: auto;
+}
