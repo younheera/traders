@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-09-25 18:43:06
- * @modify date 2023-09-27 16:27:32
+ * @modify date 2023-10-13 13:07:20
  * 그린페이 가입 프로세스
  */
 
@@ -10,29 +10,29 @@ import RegisterStep1 from "./RegisterStep1";
 import RegisterStep2 from "./RegisterStep2";
 import RegisterStep3 from "./RegisterStep3";
 import RegisterStep4 from "./RegisterStep4";
+import RegisterComplete from "./RegisterComplete";
 
 const PayRegister = () => {
   const [form, setForm] = useState({
-    user_name: "",
-    user_info: "",
-    user_gender: "",
-    cell_carrier: "",
-    user_cell_no: "",
-    agree_yn: "",
-    agree_dtime: "",
-    inputAuthNum: "",
+    userName: "",
+    userInfo: "",
+    userGender: "",
+    cellCarrier: "",
+    userCellNo: "",
+    agreeYn: "",
+    agreeDtime: ""
   });
 
   const {
-    user_name,
-    user_info,
-    user_gender,
-    cell_carrier,
-    user_cell_no,
-    agree_yn,
-    agree_dtime,
-    inputAuthNum,
+    userName,
+    userInfo,
+    userGender,
+    cellCarrier,
+    userCellNo,
+    agreeYn,
+    agreeDtime
   } = form;
+  const [inputAuthNum, setInputAuthNum] = useState('')
   const [authNum, setAuthNum] = useState("");
 
   const onText = (evt) => {
@@ -52,6 +52,16 @@ const PayRegister = () => {
     setStep((state) => state - 1);
   };
 
+  function confirmGpayPwd(gpayPwd1, gpayPwd2){
+    if (gpayPwd1===gpayPwd2){
+      /* gpayPwd 저장 */
+      PayRegisterHandler()
+      onNext()
+    }else{
+      onPrev()
+    }    
+  }
+
   function getCurrentDtime() {
     const now = new Date();
     const year = now.getFullYear().toString().padStart(4, "0");
@@ -63,6 +73,46 @@ const PayRegister = () => {
 
     return `${year}${month}${day}${hour}${minutes}${seconds}`;
   }
+
+  const PayRegisterHandler = async () => {
+    const apiUrl = 'http://localhost:8080/api/payment/register'; // 백엔드 API의 URL로 대체
+  
+    try {
+      // 요청 데이터 생성
+      const requestData = {
+        userName: '이아라',
+        userInfo: '19930304',
+        userGender: 'F',
+        cellCarrier: 'KT',
+        userCellNo: '01077021685',
+        agreeYn: 'Y',
+        agreeDtime: getCurrentDtime(),
+        payPassword: '111111',
+      };
+  
+      // HTTP POST 요청 설정
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('API 호출 실패');  // 에러 처리 보완
+      }
+  
+      const responseData = await response.json();
+      console.log('API 응답:', responseData);
+  
+      // {API 호출 성공 시 추가 작업}
+  
+    } catch (error) {
+      console.error('API 호출 오류:', error);
+      // {오류 처리}
+    }
+  };
 
   return (
     <div>
@@ -79,7 +129,8 @@ const PayRegister = () => {
         />
       )}
       {step === 3 && <RegisterStep3 onNext={onNext} />}
-      {step === 4 && <RegisterStep4 onNext={onNext} />}
+      {step === 4 && <RegisterStep4 onNext={onNext} confirmGpayPwd={confirmGpayPwd} />}
+      {step === 5 && <RegisterComplete />}
     </div>
   );
 };

@@ -1,13 +1,13 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 14:00:35
- * @modify date 2023-09-27 16:27:41
+ * @modify date 2023-10-04 07:30:31
  * 그린페이 가입 - 4. 간편비밀번호 확인(리팩필수)
  */
 
 import React, { useState } from "react";
 
-const RegisterStep4 = ({ onNext }) => {
+const RegisterStep4 = ({ onNext, confirmGpayPwd }) => {
   const [password, setPassword] = useState("");
 
   // 0~9와 총 10개의 문자 배열을 랜덤하게 섞은 배열
@@ -56,19 +56,19 @@ const RegisterStep4 = ({ onNext }) => {
     return chunkedArray;
   }
 
+  function setGpayPwd() {
+    {
+      /* payRegister에 보내고 */
+    }
+    confirmGpayPwd('111111','111111')
+  }
+
   return (
     <div>
       <h2>간편비밀번호 확인</h2>
       다시 한 번 비밀번호를 입력해주세요.
       <br />
-      <input
-        type="text"
-        id="gpayPwd"
-        maxLength={6}
-        size={6}
-        value={password}
-        onChange={handlePasswordChange}
-      />
+      <input type="text" id="gpayPwd" maxLength={6} size={6} value={password} onChange={handlePasswordChange} readOnly/>
       <div id="keypad">
         {keypadRows.map((row, rowIndex) => (
           <div key={rowIndex}>
@@ -89,7 +89,7 @@ const RegisterStep4 = ({ onNext }) => {
           ←
         </button>
       </div>
-      <button>확인</button>
+      <button onClick={setGpayPwd}>확인</button>
     </div>
   );
 };

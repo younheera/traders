@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 14:00:35
- * @modify date 2023-09-27 16:27:38
+ * @modify date 2023-09-27 19:45:05
  * 그린페이 가입 - 3. 간편비밀번호 설정
  */
 
@@ -56,7 +56,11 @@ const RegisterStep3 = ({ onNext }) => {
     return chunkedArray;
   }
 
-  function setGpayPwd() {
+  function setGpayPwd(password) {
+    if (password.length!==6){
+      /* 에러처리 */
+      return
+    }
     {
       /* payRegister에 보내고 */
     }
@@ -68,14 +72,7 @@ const RegisterStep3 = ({ onNext }) => {
       <h2>간편비밀번호 설정</h2>
       페이에 사용할 6자리 비밀번호를 입력해주세요.
       <br />
-      <input
-        type="text"
-        id="gpayPwd"
-        maxLength={6}
-        size={6}
-        value={password}
-        onChange={handlePasswordChange}
-      />
+      <input type="text" id="gpayPwd" maxLength={6} size={6} value={password} onChange={handlePasswordChange} readOnly/>
       <div id="keypad">
         {keypadRows.map((row, rowIndex) => (
           <div key={rowIndex}>
