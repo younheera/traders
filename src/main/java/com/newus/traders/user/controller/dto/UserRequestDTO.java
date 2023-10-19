@@ -11,11 +11,13 @@ import com.newus.traders.user.entity.User;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestDTO {
-   private String email;
+    private String username;
+    private String email;
     private String password;
 
     public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()
+                .username(username)
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .authority(Authority.ROLE_USER)

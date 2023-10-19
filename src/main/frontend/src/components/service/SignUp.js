@@ -1,20 +1,23 @@
 import React, {Component, useCallback, useState} from "react";
-import {Button,TextField,Link,Grid,Container,Typography,} from "@material-ui/core";
+import {Button,TextField,Link,Grid,Container,Typography, makeStyles,} from "@material-ui/core";
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { signup } from "../service/SignAPIService";
-import JoinPresenter from "./JoinPresenter";
+import { signup } from "./SignAPIService";
 import {PiEyeBold} from "react-icons/pi";
 import {PiEyeClosedBold} from "react-icons/pi";
 import { Success, Warn, Error } from "../toastify/Alert";
-import useStyles from "../../styles/styles";
+import { ComponentStyles, CustomTextField, customStylesLabelled } from '../../styles/styles.js';
 import "../../styles/global.css";
+import JoinTerms from "./JoinTerms";
+import { ToastContainer } from "react-toastify";
+
 
 // ErrorMessage 컴포넌트 정의
 const ErrorMessage = ({ message }) => (
   <p style={{ color: '#f00', lineHeight: 1.4 }}>{message}</p>
 );
+
 const schema = yup.object().shape({
   username: yup
     .string()
@@ -54,6 +57,7 @@ const schema = yup.object().shape({
 });
 
 const SignUp =()=> {
+ 
   const {control,handleSubmit,watch,formState: {isSubmitting,errors},reset, setError,form} = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange'
@@ -68,8 +72,7 @@ const SignUp =()=> {
    const [isVerificationCodeSent, setIsVerificationCodeSent] = useState(false);
    const [showEmailNumber, setShowEmailNumber] = useState(false);
    const [hidePassword, setHidePassword] = useState(true);
-   const classes = useStyles();
-    
+   const [allAgreed, setAllAgreed] = useState(false);
    const toggleHidePassword = () => {
         setHidePassword(!hidePassword);
       }
@@ -172,10 +175,11 @@ const SignUp =()=> {
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-            <Typography className={classes.customh1} component="h1" variant="h5">
+            <Typography style={{ fontSize: '30px', textAlign: 'center', fontWeight: 'bold' }}
+            component="h1" variant="h5">
                 계정 생성
               </Typography>
-            </Grid>
+            </Grid><br/>
             <Grid item xs={12}>
               <Grid container spacing={2} alignItems="center">
               <Grid item xs={9}>
@@ -184,12 +188,12 @@ const SignUp =()=> {
               control={control}
               defaultValue=""
               render={({field})=> (
-              <TextField
+              <CustomTextField
                 className="customTextField"
                 autoComplete="fname"
                 variant="outlined"
                 required
-                fullWidth
+                fullWidth bordercolor="green"
                 id="username"
                 label="닉네임"
                 autoFocus
@@ -213,11 +217,11 @@ const SignUp =()=> {
               control={control}
               defaultValue=""
               render={({field})=>(
-              <TextField
+              <CustomTextField
                 autoComplete="email"
                 variant="outlined"
                 required
-                fullWidth
+                fullWidth bordercolor="green"
                 id="email"
                 label="이메일 주소"
                 autoFocus
@@ -244,11 +248,11 @@ const SignUp =()=> {
               control={control}
               defaultValue=""
               render={({field})=>(
-              <TextField
+              <CustomTextField
                 autoComplete="emailnumber"
                 variant="outlined"
                 required
-                fullWidth
+                fullWidth bordercolor="green"
                 id="emailnumber"
                 label="이메일 인증번호"
                 autoFocus
@@ -271,11 +275,11 @@ const SignUp =()=> {
             defaultValue=""
             render={({ field }) => (
               <div style={{ position: 'relative' }}>
-                <TextField
+                <CustomTextField
                   autoComplete="current-password"
                   variant="outlined"
                   required
-                  fullWidth
+                  fullWidth bordercolor="green"
                   name="password"
                   label="패스워드"
                   type={hidePassword? 'text' : 'password'}
@@ -297,12 +301,12 @@ const SignUp =()=> {
               defaultValue=""
               render={({field})=>(
               <div style={{ position: 'relative' }}>
-              <TextField
+              <CustomTextField
                 autoComplete="confirmPassword"
                 id="confirmPassword"
                 variant="outlined"
                 required
-                fullWidth
+                fullWidth bordercolor="green"
                 name="confirmPassword"
                 label="패스워드 확인"
                 type={hidePassword? 'password' : 'text'}
@@ -319,8 +323,8 @@ const SignUp =()=> {
         </Grid>
 
           <Grid item xs={12}>
-                <JoinPresenter/>
-
+            <JoinTerms allAgreedState={setAllAgreed}
+          />
           </Grid>
               
             <Grid item xs={12}>
@@ -328,10 +332,12 @@ const SignUp =()=> {
                 className="saveButton"
                 type="submit"
                 fullWidth
-                variant="contained">
+                variant="contained"
+                disabled={!allAgreed}>
                 계정 생성
               </Button>
             </Grid>
+
           <Grid container justify-content="flex-end">
             <Grid item>
               <Link href="/login" variant="body2" className="necessarytext">

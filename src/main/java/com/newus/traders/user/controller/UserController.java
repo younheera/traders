@@ -35,10 +35,12 @@ public class UserController {
 	//로그인한 사용자의 ID통해서 사용자 정보를 조회
 	@GetMapping("/auth/me")
     public ResponseEntity<UserResponseDTO> findMemberInfoById() {
-		System.out.println("옵니까??");
+		System.out.println("로그인한 사용자의 ID를 이용 사용자 정보 조회??");
+
         return ResponseEntity.ok(userService.findMemberInfoById(SecurityUtil.getCurrentUserId()));
     }
-	// //사용자의 이메일 주소 기반 사용자 정보 조회
+
+	//사용자의 이메일 주소 기반 사용자 정보 조회
 	@GetMapping("/auth/{email}")
     public ResponseEntity<UserResponseDTO> findMemberInfoByEmail(@PathVariable String email) {
 		System.out.println("오지마세요??");

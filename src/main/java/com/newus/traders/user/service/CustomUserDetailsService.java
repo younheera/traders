@@ -29,7 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {//UserDetai
    @Transactional
    //loadUserByUsername 메소드를 오버라이드 => 넘겨받은 UserDetails 와 Authentication 의 패스워드를 비교, 검증 로직
    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("여기까지 오나요?????");
 
         //DB에서 USERNAME을 기반으로 값을 가져옴, 아이디 존재 여부 자동 검증
 
@@ -45,10 +44,10 @@ public class CustomUserDetailsService implements UserDetailsService {//UserDetai
    // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
    private UserDetails createUserDetails(User user) {
       GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getAuthority().toString());
-        System.out.println("여기까지 오나요22222?????");
 
       return new org.springframework.security.core.userdetails.User(
-              String.valueOf(user.getUserId()),
+              //String.valueOf(user.getUserId()),
+              user.getUsername(),
               user.getPassword(),
               Collections.singleton(grantedAuthority)
       );

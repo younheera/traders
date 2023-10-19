@@ -11,7 +11,7 @@ import ProductRegistration from "./components/product/ProductRegistration";
 import ChatApp from "./components/chat/ChatApp";
 import ChatBox from "./components/chat/ChatBox";
 import ChatList from "./components/chat/ChatList";
-import SignUp from "./components/login/SignUp";
+import SignUp from "./components/service/SignUp";
 import ModalPage from "./components/product/ModalPage";
 import CampaignDatails from "./components/sns/CampaignDatails";
 import CampaignList from "./components/sns/CampaignList";
@@ -19,28 +19,27 @@ import NewsList from "./components/sns/NewsList";
 import Youtube from "./components/sns/Youtube";
 import MainView from "./components/layout/MainView";
 
-import './index.css';
-import { ThemeProvider, createTheme } from "@material-ui/core";
 import Login from "./components/service/Login";
-import { signout } from "./components/service/DemoAPIService";
-import { Button } from "@material-ui/core";
+import { signout } from "./components/service/SignAPIService";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
 import TokenRefresher from "./components/service/TokenRefresher";
 import AccountRegister from "./components/payment/AccountRegister";
+import "./styles/global.css";
+import { createTheme, ThemeProvider  } from "@material-ui/core/styles";
+
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Pretendard-Regular"
+    fontFamily: 'NanumSquareNeo',
   }
-})
+});
 
 function App() {
   
   return (
 
-  <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
     <ToastContainer/>
     {/* <TokenRefresher/> */}
     <div className="Pretendard-Regular">
@@ -161,6 +160,7 @@ function App() {
     </div>
 
     </ThemeProvider>
+
   );
 }
 

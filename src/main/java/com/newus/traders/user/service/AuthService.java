@@ -42,19 +42,14 @@ public class AuthService {
     public TokenDTO login(UserRequestDTO userRequestDTO) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = userRequestDTO.toAuthentication();
-        System.out.println(authenticationToken + "로그인검증 정보");
+        System.out.println("로그인검증 정보" + authenticationToken);
 
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        
-        System.out.println("???어디계세요?");
-        System.out.println("authentication???" +  authentication);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDTO tokenDTO = tokenProvider.generateTokenDto(authentication);
-        
-        System.out.println("login시 tokenDTO입니다" + tokenDTO);
         
         // 4. RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()
