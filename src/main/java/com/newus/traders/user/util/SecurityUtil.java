@@ -21,7 +21,6 @@ public class SecurityUtil { //JwtFilter 에서 SecurityContext 에 세팅한 유
       if (authentication == null || authentication.getName() == null) {
           throw  new RuntimeException("Security Context 에 인증 정보가 없습니다.");
       }
-
       return Long.parseLong(authentication.getName()); //userId를 저장하므로 꺼내서 Long 타입 파싱 반환
   }
 }

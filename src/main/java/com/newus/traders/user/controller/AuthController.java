@@ -46,25 +46,12 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(userRequestDTO));
     }
 
-    
-    // @PostMapping("/reissue")
-    // public ResponseEntity<?> reissue(@RequestHeader Map<String, String> data) {
-    //     System.out.println(data.toString());
-    //     //TokenRequestDTO tokenRequestDTO
-    //     System.out.println(data.get("refresh"));
-    //     //여기서 rt를 가지고 다시 at와, rt를 발급받게끔
-    //     //근데 서비스에서 reissue 할때에 autheticationd을 at를 이용해서 가져오기때문에, 차라리 프론트에서 at를 가져오는게 나을 수도 있겠다. 라는 의견
-    //     // System.out.println("//////AT///////" + tokenRequestDTO.getAccessToken());
-    //     // System.out.println("//////RT///////" + tokenRequestDTO.getRefreshToken());
-    //     return ResponseEntity.ok("ok");
      @PostMapping("/auth/reissue")
     public ResponseEntity<TokenDTO> reissue(@RequestBody TokenRequestDTO tokenRequestDTO, HttpServletRequest request) {
         String refreshToken = request.getHeader("Refresh"); // Refresh 헤더 가져오기
         System.out.println("Refresh 헤더 값: " + refreshToken);
-        System.out.println("무엇을 요청?"+ tokenRequestDTO.toString());
         System.out.println("넘어온 AT:" + tokenRequestDTO.getAccessToken());
         System.out.println("넘어온 RT: " + tokenRequestDTO.getRefreshToken());
-        System.out.println("?");
         return ResponseEntity.ok(authService.reissue(tokenRequestDTO));
     }
 }

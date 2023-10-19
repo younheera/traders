@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,6 +38,11 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+    @Bean
+    public SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter(){
+        return new SecurityContextHolderAwareRequestFilter();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -74,11 +80,12 @@ public class SecurityConfig {
         // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
         .and()
         .authorizeRequests()
-        .antMatchers("/api/**","/api/auth/**",
-        "/api/auth/login/",
-        "/api/auth/signup/",
-        "/api/auth/reissue/").permitAll()
-        // .antMatchers("/api/products/register").hasRole("USER")
+        .antMatchers("/api/auth/**",
+        "/api/auth/login",
+        "/api/auth/signup",
+        "/api/auth/reissue",
+        "/files/**").permitAll()
+        // .antMatchers("/api/products/register").hasAnyAuthority("USER")
         .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
         // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용

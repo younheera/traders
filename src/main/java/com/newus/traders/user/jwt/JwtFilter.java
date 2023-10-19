@@ -44,15 +44,24 @@ public class JwtFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             System.out.println("!!!!토큰 검증 결과/:" + tokenProvider.validateToken(jwt));
             Authentication authentication = tokenProvider.getAuthentication(jwt);
+
+            System.out.println("jwtFilter의 문제? 오나요?" + authentication.getPrincipal());
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            System.out.println(principal);
+             System.out.println("좋앗숴!!!!!!!!!!!!!!!끝끝!!");
         }
 
         filterChain.doFilter(request, response);
     }
+
     // Request Header 에서 토큰 정보를 꺼내오기
     private String resolveToken(HttpServletRequest request) {
       String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
       if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+        
           return bearerToken.substring(7);
       }
       return null;
