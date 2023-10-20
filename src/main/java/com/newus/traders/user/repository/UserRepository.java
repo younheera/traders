@@ -16,9 +16,11 @@ import com.newus.traders.user.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	//현재 Email이 LoginID
    Optional<User> findByEmail(String email);
+   Optional<User> findByUsername(String username);
    Boolean existsByEmail(String email);   
    
    boolean existsByUsername(String username);
+   
 
 }
 
