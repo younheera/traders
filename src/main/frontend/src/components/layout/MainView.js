@@ -1,25 +1,26 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:30:56
- * @modify date 2023-10-17 16:31:15
+ * @modify date 2023-10-19 21:56:53
  */
 import React from 'react';
 import MainCarousel from './MainCarousel';
-import MainTop from './MainTop';
-import MainFooter from './MainFooter';
+import  ResizedComponent  from './ResizedComponent';
+import MainNews from './MainNews';
+import MainImg from './MainImg';
+
 
 
 const MainView = () => {
     return (
-        <div>
-            <body>
-                <div>
-                    <MainTop/>
-                    <MainCarousel/>
-                    <MainFooter/>
-                </div>
-            </body>
-        </div>
+        <>
+        <ResizedComponent>
+            <MainCarousel/>
+            <MainImg/>
+            <MainNews/>
+        </ResizedComponent>
+        </>       
+        
     );
 };
 
