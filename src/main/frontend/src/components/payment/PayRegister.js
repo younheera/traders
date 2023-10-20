@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-09-25 18:43:06
- * @modify date 2023-10-13 13:07:20
+ * @modify date 2023-10-20 01:39:16
  * 그린페이 가입 프로세스
  */
 
@@ -11,6 +11,7 @@ import RegisterStep2 from "./RegisterStep2";
 import RegisterStep3 from "./RegisterStep3";
 import RegisterStep4 from "./RegisterStep4";
 import RegisterComplete from "./RegisterComplete";
+import ProgressForm from "../service/ProgressForm";
 
 const PayRegister = () => {
   const [form, setForm] = useState({
@@ -46,6 +47,7 @@ const PayRegister = () => {
   const [step, setStep] = useState(1);
 
   const onNext = () => {
+    console.log("onNext called");
     setStep((state) => state + 1);
   };
   const onPrev = () => {
@@ -116,9 +118,10 @@ const PayRegister = () => {
 
   return (
     <div>
+      <ProgressForm onNext={onNext}/>
       {step === 1 && (
-        <RegisterStep1 form={form} onText={onText} onNext={onNext} />
-      )}
+        <RegisterStep1 form={form} onText={onText} onNext={onNext} />)
+        }
       {step === 2 && (
         <RegisterStep2
           {...form}

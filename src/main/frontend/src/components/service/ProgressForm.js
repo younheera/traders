@@ -1,96 +1,63 @@
-import React, { Component } from 'react';
-import { ProgressBar } from '../../styles/progressbar.css';
+import React, { useRef, useState } from 'react';
+import progressbar from '../../styles/progressbar.css';
 
-class ProgressForm extends Component {
-  constructor(props) {
-    super(props);
+const ProgressForm = ({onNext}) => {
+    let [currentProgress, setCurrentProgress] = useState(1);
+    const circle = useRef();
+    const progressBar = useRef();
 
-    this.state = {
-      currentStep: null,
-      steps: [
-        { label: "one" },
-        { label: "two" },
-        { label: "three" },
-        { label: "complete" }
-      ]
-    };
-  }
-
-  nextStep(next = true) {
-    const { steps, currentStep } = this.state;
-    const currentIndex = steps.indexOf(currentStep);
-
-    if (!next) {
-      if (currentStep && currentStep.label === 'complete') {
-        this.setState({ currentStep: steps[steps.length - 1] });
-        return;
-      }
-
-      if (steps[currentIndex - 1]) {
-        this.setState({ currentStep: steps[currentIndex - 1] });
-        return;
-      }
-
-      this.setState({ currentStep: { label: "start" } });
-      return;
+	// 첫 번째 circle은 항상 active 되어야 되므로 2부터 시작해주기.
+    const progressArr = [2, 3, 4];
+    
+    const minusSteps = (e) => {
+      	// ui에 적혀있는 숫자 번호 가져오기
+        let progressCount = Number(circle.current.childNodes[currentProgress - 2].textContent);
+        progressBar.current.style = `width: ${(progressCount - 1) * 25}%`;   
+        setCurrentProgress(currentProgress -= 1);
+        if (currentProgress === progressCount) { 
+            circle.current.childNodes[progressCount].classList.remove('active');
+        }
     }
 
-    if (currentStep && currentStep.label === 'complete') {
-      this.setState({ currentStep: { label: "start" } });
-      return;
+    const addSteps = (e) => {
+        let progressCount = Number(circle.current.childNodes[currentProgress - 1].textContent);
+        setCurrentProgress(prev => prev += 1);
+        progressBar.current.style = `width: ${progressCount * 25}%`;   
+        if (currentProgress === progressCount) {
+            circle.current.childNodes[progressCount].classList.add('active');
+        }
+        onNext();
     }
 
-    if (steps[currentIndex + 1]) {
-      this.setState({ currentStep: steps[currentIndex + 1] });
-    } else {
-      this.setState({ currentStep: { label: "complete" } });
-    }
-  }
-
-  stepClasses(index) {
-    const { currentStep, steps } = this.state;
-    let result = `progress__step progress__step--${index + 1} `;
-    if (
-      currentStep &&
-      currentStep.label === 'complete' ||
-      index < steps.indexOf(currentStep)
-    ) {
-      return (result += 'progress__step--complete');
-    }
-    if (index === steps.indexOf(currentStep)) {
-      return (result += 'progress__step--active');
-    }
-    return result;
-  }
-
-  progressClasses() {
-    const { currentStep, steps } = this.state;
-    let result = 'progress ';
-    if (currentStep && currentStep.label === 'complete') {
-      return (result += 'progress--complete');
-    }
-    return (result += `progress--${steps.indexOf(currentStep) + 1}`);
-  }
-
-  render() {
     return (
-      <div id="app">
-        {/* JSX로 프로그레스 바 및 버튼을 만듭니다 */}
-        <div className={this.progressClasses()}>
-          {this.state.steps.map((step, index) => (
-            <div
-              key={index}
-              className={this.stepClasses(index)}
-              onClick={() => this.nextStep(index === this.state.steps.indexOf(this.state.currentStep) + 1)}
-            >
-              {step.label}
+        <div className="container">
+      		{/* // ref는 부모 요소에 넣어주기. */}
+            <div className="steps" ref={circle}>
+      			{/* // 첫 번째 circle은 항상 active 되어 있도록 해주기. */}
+                <spen className="circle active">1</spen>
+                {
+                    progressArr.map((i) => (
+                        
+                        <span className="circle">{i}</span> 
+                    ))
+                }
+                <div className="progress-bar">
+                    <span ref={progressBar} className="indicator"></span>
+                </div>
             </div>
-          ))}
+            <div className="buttons">
+              	{/* // 현재 프로그래스 위치가 1(처음)이면 prev 버튼 못 누르게 하기 */}
+                <button id="prev" disabled={currentProgress === 1 ? true : false} onClick={(() => {minusSteps()})} className='saveButton'>Prev</button>
+				        {/* // 현재 프로그래스 위치가 4(마지막)이면 next 버튼 못 누르게 하기. */}
+                <button id="next" 
+                disabled={currentProgress === 4 ? true : false} 
+                onClick={() => 
+                  {addSteps(); 
+                  onNext();}} 
+                className='saveButton'>Next</button>
+            </div>
         </div>
-        <button onClick={() => this.nextStep()}>Next</button>
-      </div>
     );
-  }
-}
+};
 
 export default ProgressForm;

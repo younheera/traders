@@ -1,10 +1,11 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 13:20:05
- * @modify date 2023-09-27 16:27:36
+ * @modify date 2023-10-20 08:23:32
  * 그린페이 가입 - 2. 문자인증 처리
  */
 
+import { Container, Grid, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 
 const RegisterStep2 = ({ inputAuthNum, authNum, onText, onNext }) => {
@@ -23,7 +24,10 @@ const RegisterStep2 = ({ inputAuthNum, authNum, onText, onNext }) => {
 
   return (
     <div>
-      <h2>문자 인증</h2>
+      <Container component="main" maxWidth="xs" style={{ marginTop: "8%"}}>
+      <Grid item xs={12}>
+      <Typography style={{ fontSize: '30px', textAlign:'center', fontWeight:'bold' }} component="h1" variant="h5">문자 인증</Typography>
+      </Grid>
       <button
         name="authNumBtn"
         onClick={toggleAuthNumBtn}
@@ -46,6 +50,7 @@ const RegisterStep2 = ({ inputAuthNum, authNum, onText, onNext }) => {
           </button>
         </div>
       )}
+  </Container>
     </div>
   );
 };

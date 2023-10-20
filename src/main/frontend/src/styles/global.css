@@ -51,8 +51,6 @@ code {
     align-items: center;
     align-content: center;
     justify-content: center;
-
-
  }
  .checkButton{
        margin: auto;
@@ -134,7 +132,7 @@ code {
  }
  
  .public-bottombutton{
-  position: fixed; 
+  position: fixed;
   color: #167146 !important;
   float: right;
   z-index: 1;

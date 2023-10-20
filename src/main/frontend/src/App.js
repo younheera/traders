@@ -27,6 +27,7 @@ import TokenRefresher from "./components/service/TokenRefresher";
 import AccountRegister from "./components/payment/AccountRegister";
 import "./styles/global.css";
 import { createTheme, ThemeProvider  } from "@material-ui/core/styles";
+import ProgressForm from "./components/service/ProgressForm";
 
 
 const theme = createTheme({
@@ -93,6 +94,10 @@ function App() {
         <li>
           <Link to="/sns">sns</Link>
         </li>
+
+        <li>
+          <Link to ="/progress">progress</Link>
+        </li>
       </ul>
         
      
@@ -153,6 +158,10 @@ function App() {
         </Route>
 
         <Route path="/sns" exact></Route>
+
+        <Route path="/progress" exact>
+          <ProgressForm/>
+        </Route>
       </Switch>
      
         <ChatList/>

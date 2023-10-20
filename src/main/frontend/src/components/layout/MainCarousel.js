@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:30:56
- * @modify date 2023-10-17 16:30:58
+ * @modify date 2023-10-20 09:15:49
  */
 
 
@@ -30,7 +30,7 @@ const MainCarousel = () => {
             </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item >
-            <img  text="Second slide" src={webmain2} className='carousel-inner'/>
+            <img text="Second slide" src={webmain2} className='carousel-inner'/>
             <Carousel.Caption>
             <h3>Second slide label</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
