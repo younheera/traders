@@ -1,11 +1,3 @@
-/**
- * @author hyunseul
-
- * @create date 2023-10-17 22:26:02
- * @modify date 2023-10-18 09:34:45
- * @desc [description]
- */
-
 import React, { useState, useEffect } from 'react';
 
 

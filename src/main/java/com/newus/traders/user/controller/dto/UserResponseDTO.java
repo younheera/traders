@@ -9,9 +9,11 @@ import com.newus.traders.user.entity.User;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseDTO {
+  private String username;
   private String email;
 
     public static UserResponseDTO of(User user) {
-        return new UserResponseDTO(user.getEmail());
+
+        return new UserResponseDTO(user.getUsername(),user.getEmail());
     }
 }

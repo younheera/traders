@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 export const Success = (alertText) => {
   toast.success(`${alertText}`, {
     position: "top-right",
-    autoClose: 1300,
+    autoClose: 1500,
   });
   return;
 };
@@ -11,7 +11,7 @@ export const Success = (alertText) => {
 export const Warn = (alertText) => {
   toast.warn(`${alertText}`, {
     position: "top-right",
-    autoClose: 1300,
+    autoClose: 1500,
   });
   return;
 };

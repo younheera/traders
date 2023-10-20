@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.newus.traders.user.controller.dto.TokenDTO;
+import com.newus.traders.user.service.CustomUserDetailsService;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -37,6 +38,7 @@ public class TokenProvider {
    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60;            // 30분 * 30;
    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 200 * 20;   // 7일 * 60 * 24 * 7;
    private Key key;
+   private CustomUserDetailsService customUserDetailsService;
 
 
    public TokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -114,9 +116,9 @@ public TokenDTO reissueAccessToken(Authentication authentication, String refresh
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-
+       
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+         UserDetails principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
