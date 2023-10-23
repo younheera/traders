@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-11 19:03:18
- * @modify date 2023-10-17 22:13:55
+ * @modify date 2023-10-17 16:30:05
  */
 
 import React, { useEffect, useState } from "react";
@@ -18,7 +18,6 @@ import {BsChatDots} from "react-icons/bs"
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ResizedComponent from "../layout/ResizedComponent";
 
 const ChatList = (props) => {
   const { location } = props;
@@ -115,8 +114,8 @@ const closeBtn = () => {
 
 
   return (
-    <ResizedComponent>
-     <BsChatDots onClick={openModalHandler} className="chatListBtn"/>
+    <>
+     <BsChatDots onClick={openModalHandler} className="chatListBtn" size='50px'/>
       <Modal show={isOpen} onHide={closeBtn}>   
         <Modal.Header>
           <Modal.Title className="w-100 title list-header">
@@ -151,7 +150,7 @@ const closeBtn = () => {
       </Modal.Body>
     )}
   </Modal>
-</ResizedComponent>
+</>
 );
 }
 

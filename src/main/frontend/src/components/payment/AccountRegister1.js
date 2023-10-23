@@ -1,42 +1,24 @@
 /**
  * @author ahrayi
  * @create date 2023-10-13 16:44:23
- * @modify date 2023-10-19 17:33:53
+ * @modify date 2023-10-23 12:13:39
  */
 
 import React, { useState } from 'react';
 import { TextField, MenuItem, Button } from '@mui/material';
 import bankCode from './bankCode';
-import TokenRefresher from '../service/TokenRefresher';
+import TokenRefresher from '../member/TokenRefresher';
 
-const AccountRegister1 = ({form, onText, onNext, setRanNum}) => {
 
-    const [address,setAddress] = useState('');
+const AccountRegister1 = ({form, setForm, onNext, setRanNum}) => {
 
-    var themeObj = {
-        searchBgColor: "#198754", //검색창 배경색
-        queryTextColor: "#FFFFFF" //검색창 글자색
-     };
-
-    const handleAddressInput = () => {
-    if (window.daum && window.daum.Postcode) {
-        // 'daum' 객체 및 'Postcode' 함수가 로드된 상태에서 실행
-    
-        new window.daum.Postcode({
-            theme: themeObj,
-            popupTitle: '주소 검색 - TRADERS',
-            popupKey: 'popup1',
-            oncomplete: (data) => {
-                // 'data' 객체에서 주소와 상세주소 정보 가져오기
-                setAddress(data.address);
-                onText({ target: { value: data.address, name: 'addr1' } });
-        },
-        }).open();
-    } else {
-        // 'daum' 객체나 'Postcode' 함수가 로드되지 않은 경우에 대한 처리
-        console.error('Daum Postcode API is not available.');
-    }
-    };
+    const onText = (evt) => {
+        const { value, name } = evt.target;
+        setForm({
+          ...form,
+          [name]: value,
+        });
+      };
 
     const handleAccountVerification =()=>{
 
@@ -98,8 +80,7 @@ const AccountRegister1 = ({form, onText, onNext, setRanNum}) => {
             </TextField>
             <br/><br/>
                 
-            주소     <input type='text' id='addr1' name='addr1' value={address} required onChange={onText} readOnly></input>
-                     <Button onClick={handleAddressInput}>주소입력</Button><br/>
+            주소     <input type='text' id='addr1' name='addr1' required onChange={onText}></input><Button>주소입력</Button><br/>
             상세주소 <input type='text' id='addr2' name='addr2' required onChange={onText}></input>
                 
             <br/><br/>

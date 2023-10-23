@@ -1,11 +1,14 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 14:00:35
- * @modify date 2023-10-19 16:04:01
+ * @modify date 2023-10-21 18:00:09
  * 그린페이 가입 - 4. 간편비밀번호 확인(리팩필수)
  */
 
+import { TextField, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import { Row } from "react-bootstrap";
+import { Error } from "../toastify/Alert";
 
 const RegisterStep4 = ({ gpayPwd2,setGpayPwd2,confirmGpayPwd }) => {
   const [password2, setPassword2] = useState("");
@@ -16,7 +19,7 @@ const RegisterStep4 = ({ gpayPwd2,setGpayPwd2,confirmGpayPwd }) => {
   );
 
   // 숫자 키패드를 3개씩 묶어서 저장
-  const keypadRows = chunkArray(randomCharacters, 3);
+  const keypadRows = chunkArray(randomCharacters, 2);
 
   const handlePasswordChange = (e) => {
     setPassword2(e.target.value);
@@ -60,7 +63,7 @@ const RegisterStep4 = ({ gpayPwd2,setGpayPwd2,confirmGpayPwd }) => {
     if (password2.length === 6) {
       setGpayPwd2(password2);
     } else {
-      alert("비밀번호 6자리를 입력해주세요.");
+      Error("❌ 비밀번호는 6자리입니다 ❌");
       return;
     }
   }
@@ -72,16 +75,44 @@ const RegisterStep4 = ({ gpayPwd2,setGpayPwd2,confirmGpayPwd }) => {
   }, [gpayPwd2]);
 
   return (
-    <div>
-      <h2>간편비밀번호 확인</h2>
-      다시 한 번 비밀번호를 입력해주세요.
-      <br />
-      <input type="password" id="gpayPwd" maxLength={6} size={6} value={password2} onChange={handlePasswordChange} readOnly/>
-      <div id="keypad">
+    <>
+    <Row>
+        <Typography style={{ fontSize: '30px', textAlign: 'center', fontWeight: 'bold', marginBottom: '30px'}}
+        component="h1" variant="h5">간편비밀번호 확인
+      </Typography>
+    </Row>
+    
+        <Row className="basefont"
+        style={{margin:'auto', justifyContent:'center'}}>
+          페이에 사용할 6자리 비밀번호를 입력해주세요.
+        </Row><br/><br/>
+        
+    <Row style={{width:'300px', margin:'auto'}}>
+          
+      <TextField type="password" id="gpayPwd2" maxLength={6} size={6} 
+      value={password2} onChange={handlePasswordChange} 
+      inputProps={{ style: {textAlign: 'center'} }} readOnly/><br/><br/><br/><br/>
+      
+      <button 
+       className="checkButton"
+       id="setGpayPwd" 
+       onClick={() => handleGpayPwd(password2)}>
+       확인
+      </button>
+      
+    </Row><br/><br/>
+      
+      <Row style={{margin:'auto', margin:'auto'}}>
+        <div id="keypad" style={{margin:'auto',flexBasis:'content'}}>
         {keypadRows.map((row, rowIndex) => (
-          <div key={rowIndex}>
+          
+          <span style={{float:'left'}}>
+            <div key={rowIndex} className="key__button" 
+            style={{justifyContent:'center'}}>
             {row.map((character) => (
               <button
+                style={{justifyContent:'center'}}
+                className="key__button"
                 key={character}
                 onClick={() => handleKeypadButtonClick(character)}
               >
@@ -89,16 +120,19 @@ const RegisterStep4 = ({ gpayPwd2,setGpayPwd2,confirmGpayPwd }) => {
               </button>
             ))}
           </div>
+          </span>
         ))}
-        <button key={"C"} onClick={handleClearButtonClick}>
+        <button key={"C"} onClick={handleClearButtonClick}
+        className="key__button">
           C
         </button>
-        <button key={"←"} onClick={handleDeleteButtonClick}>
+        <button key={"←"} onClick={handleDeleteButtonClick}
+        className="key__button">
           ←
         </button>
       </div>
-      <button onClick={() => handleGpayPwd(password2)}>확인</button>
-    </div>
+      </Row>
+    </>
   );
 };
 

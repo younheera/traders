@@ -51,8 +51,6 @@ code {
     align-items: center;
     align-content: center;
     justify-content: center;
-
-
  }
  .checkButton{
        margin: auto;
@@ -65,7 +63,18 @@ code {
        /* font-weight: lighter; */
        background-color:#198754;
        color: #fff;
-   
+    }
+ .backButton{
+       margin: auto;
+       width: 80px;
+       height: 40px;
+       border-radius: 5px;
+       /* background-color: #fff; */
+       font-size: 14px;
+       font-family: 'MICEGothic' !important;
+       /* font-weight: lighter; */
+       background-color:#a4a7a5;
+       color: #1a0101;
     }
 
  .cancelButton{
@@ -111,8 +120,8 @@ code {
    font-weight: bolder;
   }
   .titleterms{
-   font-size: 25px;
-   font-weight: bolder;
+   font-size: 30px;
+   font-weight: bold;
    margin-bottom:20px;
   }
   .title1{
@@ -134,8 +143,8 @@ code {
  }
  
  .public-bottombutton{
-  position: fixed; 
-  color: #167146 !important;
+  position: fixed;
+  color: rgb(15, 26, 95) !important;
   float: right;
   z-index: 1;
   right: 70px;
@@ -152,4 +161,14 @@ code {
   justify-content: center;
   font-weight: bold;
   margin-bottom: 10px;
+}
+.gpaymsg{
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  height: auto !important;
+}
+.usernickname{
+  font-family: 'Pretendard-Regular' !important;
+  font-weight: bold;
 }
