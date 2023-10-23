@@ -17,12 +17,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.newus.traders.exception.CustomException;
+import com.newus.traders.exception.ErrorCode;
+import com.newus.traders.image.service.ImageService;
 import com.newus.traders.payment.dto.PayAccountDto;
 import com.newus.traders.payment.dto.PaymentDto;
 import com.newus.traders.payment.entity.PayAccount;
 import com.newus.traders.payment.entity.Payment;
 import com.newus.traders.payment.repository.PayAccountRepository;
 import com.newus.traders.payment.repository.PaymentRepository;
+import com.newus.traders.redis.service.RedisService;
+import com.newus.traders.user.entity.User;
+import com.newus.traders.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import net.nurigo.sdk.NurigoApp;
@@ -142,6 +148,27 @@ public class PaymentService {
             verNum += random.nextInt(10);
         }
         return verNum;
+    }
+
+
+
+
+
+    private final RedisService redisservice;
+     private final UserRepository userRepository;
+
+
+    public User getUser(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
+    
+
+    // 출석체크 지급
+    public void addBalanceForAttendance(String username) {
+        User user = getUser(username);
+
+        
     }
 
 }

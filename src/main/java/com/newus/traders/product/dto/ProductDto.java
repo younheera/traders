@@ -6,10 +6,10 @@
 
 package com.newus.traders.product.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
-import com.newus.traders.product.entity.Image;
+import com.newus.traders.image.entity.Image;
 import com.newus.traders.product.entity.Product;
 import com.newus.traders.product.type.ProductStatus;
 
@@ -27,6 +27,8 @@ public class ProductDto {
     // 회원 entity와 연결
     // seller;
 
+    private String seller;
+
     private String name;
 
     private Long price;
@@ -41,17 +43,16 @@ public class ProductDto {
 
     private String category;
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     private List<Image> images;
 
     private Long likes;
 
-    private boolean liked;
-
     @Builder
     public ProductDto(Product product) {
         this.id = product.getId();
+        this.seller = product.getSeller().getUsername();
         this.name = product.getName();
         this.price = product.getPrice();
         this.description = product.getDescription();
@@ -59,17 +60,11 @@ public class ProductDto {
         this.latitude = product.getLatitude();
         this.longitude = product.getLongitude();
         this.category = product.getCategory();
-        this.createdAt = product.getCreatedAt().toLocalDateTime();
+        this.createdAt = product.getCreatedAt().toLocalDateTime().toLocalDate();
         this.images = product.getImages();
-        this.likes = product.getLikes();
     }
 
     public void setLikes(Long likes) {
         this.likes = likes;
     }
-
-    public void setLiked(boolean liked) {
-        this.liked = liked;
-    }
-
 }
