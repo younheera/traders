@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:29:43
- * @modify date 2023-10-19 22:52:24
+ * @modify date 2023-10-21 11:24:32
  */
 
  @media (max-width: 768px) {
@@ -28,9 +28,9 @@
     }
 
     .container-fluid{
-        left: 100px !important; 
+        left: 60px !important; 
         top: 300px !important;
-        max-width: 50%;
+        max-width: 45% !important;
     
     }
 
@@ -50,7 +50,7 @@
         top:80px !important;
         width: 45% !important;
         max-width: 50% !important;
-        width: 620px !important;
+        width: 580px !important;
         float: right !important;
         right: 50px !important;
         
@@ -58,27 +58,27 @@
 
        /* mainimg css */
     .main-img{
-        float: left;
-        left: 100px;
+        float: left !important;
+        left: 100px !important;
     }
 
     .text1,.main-img-text-1,.main-img-text-2, .main-img-text-3,.main-img-text-4 {
-        font-weight: 900;
-        width:50%;
-        margin-bottom:0px;
-        position: relative;
-        text-align: center;
+        font-weight: 900 !important;
+        width:50% !important;
+        margin-bottom:0px !important;
+        position: relative !important;
+        text-align: center !important;
     }
 
     .main-img-text-1,.main-img-text-2,.main-img-text-3{
-        top:250px;
-        float: right;
+        top:250px !important;
+        float: right !important;
     }
 
     .main-img-text-1{
-        font-size: 45pt;
-        color: #167952;
-        margin-bottom: 10px;
+        font-size: 45pt !important;
+        color: #167952 !important;
+        margin-bottom: 10px !important;
     }
 
     .main-img-text-2{ 
@@ -86,13 +86,13 @@
     }
 
     .main-img-text-4{
-        top:240px;
-        float: right;
+        top:240px !important;
 
     }
     
     
 }
+
 
 /* maintop css */
 .main{
@@ -113,7 +113,7 @@
 }
 
 .container-fluid{
-    left: 200px;
+    left: 150px;
     float: left;
     position: relative;
     top: 450px;
@@ -131,14 +131,14 @@
 }
 
 .search-btn{
-    border-radius: 50px;
-    width: 120px;
+    border-radius: 50px !important;
+    width: 120px !important;
 }
 
 
 .logo-img{
 float: right;
-right: 120px;
+right: 100px;
 width: 700px;
 }
 
@@ -190,7 +190,7 @@ position: relative;
 }
 
 .main-img-text-1,.main-img-text-2,.main-img-text-3{
-    top:250px;
+    top:310px;
     float: right;
 }
 
@@ -205,7 +205,7 @@ position: relative;
 }
 
 .main-img-text-4{
-    top:240px;
+    top:290px;
     float: right;
 
 }

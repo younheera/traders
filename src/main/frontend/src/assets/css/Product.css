@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-17 19:29:09
- * @modify date 2023-10-18 15:28:53
+ * @modify date 2023-10-20 19:52:12
  */
 
 .justify-content-center {
@@ -15,14 +15,6 @@
   text-align: center;
 }
 
-.btn-1 {
-  background-color: #fff;
-  color: #198754;
-  border-radius: 5px;
-  border: #198754;
-  width: 150px;
-  height: 50px;
-}
 
 .pd-l {
   padding-left: 0.25rem;
@@ -38,10 +30,23 @@
 }
 
 .btn-2 {
-  background-color: #198754 !important;
-  border-radius: 5px;
-  color: #fff;
+  width: 100px;
+  height: 35px;;
+  border: 1px solid  #494949;
+  background-color: #efefef ;
+  border-radius: 3px;
+  color: #494949;
+  font-size: 10pt;
+  font-weight: 700;
 }
+
+.btn-2:hover{
+  background-color:#198754;
+  color: #fff;
+  border-color: #198754;
+  
+}
+
 .text-right{
     text-align: right;
 
@@ -50,10 +55,18 @@
 .col-right-align {
   text-align: right;
   margin-top: 0.5rem;
+  float: right;
+  margin-right: 10px;;
+  
 }
+
 .col-left-align {
+  display: flex;
   text-align: left;
   margin-top: 0.5rem;
+  margin-left: 10px;
+  color: #198754;
+  font-size: 11pt;
 }
 
 .bold-colored-font {
@@ -68,3 +81,136 @@
 .pb-4 {
   padding-bottom: 1.5rem;
 }
+
+
+.category-btn {
+  border:1px solid #727272e5;
+  color: #494949;
+  background-color: #fff;
+  width: 200px;
+  height: 50px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0px;
+  transition: all 0.3s ease;
+  text-align: left;
+  justify-content: center;
+  font-size: 10pt;
+}
+
+.category-btn:hover {
+  background-color: #efefef;
+  color: #494949;
+}
+
+.list-checkbox {
+  position: relative;
+  top:4px;
+  display: flex;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px; 
+}
+
+.list-checkbox:checked {
+  background-color: #198754 !important; 
+  border-color: #198754 !important;
+  color: #fff !important; 
+}
+
+
+/* productList.css */
+
+
+
+
+
+
+#product-col-md-3{
+  margin-right: auto;
+  padding:0px !important;
+  position: relative;
+  left: 10px;
+}
+.card{
+  width: 100% !important;
+  --bs-card-spacer-y:0px !important;
+  --bs-card-spacer-x:0px !important;
+  border: none !important;
+  --bs-card-border:none !important;
+  --bs-card-border-radius:0px !important;
+
+}
+
+.card-body {
+  width: 100%;
+  border: 1px solid #999 !important;
+  text-align: center;
+  padding: 0px !important;
+  transition: all 0.3s ease;
+  height: 285px;
+}
+
+
+.product-list-img{
+  width: 100%;
+  height: 185px;
+  object-fit: fill;
+  background-color: #8965e0;
+}
+
+.card-body:hover {
+  transform: scale(1.01); /* 이미지를 1.05배로 확대하는 효과 */
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
+}
+
+.badge{
+  margin-right: 8px;
+  margin-top: 10px;
+  font-size: 9pt !important;
+  background-color: #198754;
+  font-weight: 700 !important;
+}
+
+.product-name{
+  font-size: 11pt;
+  color:#494949;
+}
+.product-name,.product-price,.product-cotegory {
+  text-align: left;
+  margin-left: 10px;
+  display: flex;
+}
+
+.product-price{
+  font-weight: 700;
+  font-size: 14pt;
+}
+
+.product-addr {
+  margin-top: 6px !important;
+  margin-left: 15px;
+  font-size: 9pt;
+  color:#999
+}
+.product-name-like,.product-addr{
+  float: right;
+}
+
+.product-name-icons,.likes,.product-addr{
+  text-align: right;
+  float: right;
+
+}
+.product-name-icons{
+  font-size: 13pt;
+  color: red;
+  margin-right: 5px;
+  margin-top: 3px;
+}
+
+.likes{
+  font-size: 11pt;
+  color:#494949;
+}
+

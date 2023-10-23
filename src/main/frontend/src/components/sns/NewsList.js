@@ -1,3 +1,18 @@
+/**
+ * @author jeongyearim
+ * @email [example@mail.com]
+ * @create date 2023-10-06 17:44:23
+ * @modify date 2023-10-23 12:27:40
+ * @desc [환경 관련 뉴스기사 출력]
+ */
+
+/**
+ * @author hyunseul
+ * @create date 2023-10-19 18:32:07
+ * @modify date 2023-10-19 18:32:22
+ * @desc [css]
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
@@ -15,7 +30,7 @@ function NewsList() {
   useEffect(() => {
     // 뉴스 데이터를 가져오는 요청
     TokenRefresher
-      .get('/sns/showNews')
+      .get('http://localhost:8080/api/sns/showNews')
       .then((response) => {
         setNewsList(response.data);
       })

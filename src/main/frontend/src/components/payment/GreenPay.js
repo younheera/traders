@@ -2,7 +2,7 @@
  * @author heera youn
  * @email [example@mail.com]
  * @create date 2023-10-18 21:57:51
- * @modify date 2023-10-23 11:46:40
+ * @modify date 2023-10-23 12:31:53
  * @desc [description]
  */
 
@@ -42,7 +42,6 @@ const GreenPay = () => {
             Read More
           </a>
         </div>
-
   </div>
 
   <div className="col-xs-12 col-sm-4">

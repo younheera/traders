@@ -1,7 +1,7 @@
 /**
  * @author heera youn
  * @create date 2023-10-22 23:35:51
- * @modify date 2023-10-22 23:36:06
+ * @modify date 2023-10-23 12:29:55
  * @desc [로고 회전 및 메뉴명 수정]
  */
 import React from 'react';
@@ -11,12 +11,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import '../../assets/css/NavBar.css';
 import NavLogo1 from "../../assets/img/NavLogo1.png"
-import {PiUserPlusLight,PiUserMinusLight} from 'react-icons/pi'
+import {PiUserPlusLight} from 'react-icons/pi'
+import {BsBagPlus} from 'react-icons/bs'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const NavBar = () => {
 
   const user = window.user;
 
+  const history = useHistory();
     return (
       <div className='basefont'>
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary nav">
@@ -63,8 +66,19 @@ const NavBar = () => {
                 <img src={NavLogo1} className='nav-logo-img'/>
                 Traders
             </Navbar.Brand>
-            
             <Nav>
+              {/* 로그인 상태에 따른 이름 출력 */}
+              <div className='usernickname'><span style={{color: '#167146'}}>
+                {user ? <p>{user}님 안녕하세요!</p> : null}</span></div>
+              
+              {/* <Nav.Link href="/products/register" className='navbar-icons' >
+                <BsBagPlus style={{fontSize:'17pt'}} onClick={()=>{
+                  history.push("./products/register")
+                }}/>
+                  <span style={{marginLeft:'5px',position:'relative',top:'3px',fontSize:'12pt'}}>판매하기</span>
+              </Nav.Link> */}
+            
+          
 
 
               <Nav.Link href="/" className='nav-logout-icons'>
