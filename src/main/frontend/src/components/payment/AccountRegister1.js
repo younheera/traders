@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-10-13 16:44:23
- * @modify date 2023-10-22 21:31:34
+ * @modify date 2023-10-23 12:28:49
  */
 
 import React, { useState } from 'react';
@@ -15,35 +15,18 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {PiNumberCircleOne} from 'react-icons/pi';
+import TokenRefresher from '../member/TokenRefresher';
 
-const AccountRegister1 = ({form, onText, onNext, setRanNum}) => {
 
-    const [address,setAddress] = useState('');
+const AccountRegister1 = ({form, setForm, onNext, setRanNum}) => {
 
-    var themeObj = {
-        searchBgColor: "#198754", //검색창 배경색
-        queryTextColor: "#FFFFFF" //검색창 글자색
-     };
-
-    const handleAddressInput = () => {
-    if (window.daum && window.daum.Postcode) {
-        // 'daum' 객체 및 'Postcode' 함수가 로드된 상태에서 실행
-    
-        new window.daum.Postcode({
-            theme: themeObj,
-            popupTitle: '주소 검색 - TRADERS',
-            popupKey: 'popup1',
-            oncomplete: (data) => {
-                // 'data' 객체에서 주소와 상세주소 정보 가져오기
-                setAddress(data.address);
-                onText({ target: { value: data.address, name: 'addr1' } });
-        },
-        }).open();
-    } else {
-        // 'daum' 객체나 'Postcode' 함수가 로드되지 않은 경우에 대한 처리
-        console.error('Daum Postcode API is not available.');
-    }
-    };
+    const onText = (evt) => {
+        const { value, name } = evt.target;
+        setForm({
+          ...form,
+          [name]: value,
+        });
+      };
 
     const handleAccountVerification =()=>{
 
@@ -55,7 +38,7 @@ const AccountRegister1 = ({form, onText, onNext, setRanNum}) => {
             clientInfo: form.clientInfo,
         }
 
-        axios.post('http://localhost:8080/api/payment/valid-account',requestBody)
+        TokenRefresher.post('http://localhost:8080/api/payment/valid-account',requestBody)
             .then(Response => {
                 if(Response.status===200) {
                     console.log(Response.data)

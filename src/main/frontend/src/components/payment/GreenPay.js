@@ -2,23 +2,22 @@
  * @author heera youn
  * @email [example@mail.com]
  * @create date 2023-10-18 21:57:51
- * @modify date 2023-10-20 12:35:28
+ * @modify date 2023-10-23 12:31:53
  * @desc [description]
  */
 
 /**
  * @author ahrayi
  * @create date 2023-09-25 15:01:56
- * @modify date 2023-10-18 21:57:47
+ * @modify date 2023-10-23 11:23:37
  */
 import React, { useHistory } from "react";
 import payment from "../../styles/payment.css";
 import { Button, Card } from "@material-ui/core";
-import ProgressForm from "../service/ProgressForm";
 import { Link } from 'react-router-dom';
-import greenpay1 from '../../styles/images/greenpay1.jpg'
-import greenpay2 from '../../styles/images/greenpay2.jpg'
-import greenpay3 from '../../styles/images/greenpay3.jpg'
+import greenpay1 from '../../assets/img/greenpay1.jpg';
+import greenpay2 from '../../assets/img/greenpay2.jpg';
+import greenpay3 from '../../assets/img/greenpay3.jpg';
 import Row from 'react-bootstrap/Row';
 
 const GreenPay = () => {
@@ -43,7 +42,6 @@ const GreenPay = () => {
             Read More
           </a>
         </div>
-    </div>
   </div>
 
   <div className="col-xs-12 col-sm-4">
@@ -83,7 +81,17 @@ const GreenPay = () => {
       </div>
     </div>
   </div>
+  </div>
 </Row>
+
+<div>
+      <br />
+      <Link to="/payment/gpay_register">시작하기</Link>
+      <br />
+      <Link to="/payment/accnt_register">계좌등록</Link>
+      <br/>
+      <Link to="/payment/payMgmt">페이관리</Link>
+</div>
   <Row style={{marginLeft:'800px'}}>
     <Link to="/payment/gpay_register"><button className="saveButton" style={{justifyContent:'center'}}></button></Link>
   </Row>

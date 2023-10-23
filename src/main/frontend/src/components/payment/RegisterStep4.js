@@ -1,10 +1,11 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 14:00:35
- * @modify date 2023-10-22 21:22:28
+ * @modify date 2023-10-23 12:33:07
  * 그린페이 가입 - 4. 간편비밀번호 확인(리팩필수)
  */
 
+import { TextField, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import '../../assets/css/AccountRegister.css';
 import { Col, Container, Row } from "react-bootstrap";

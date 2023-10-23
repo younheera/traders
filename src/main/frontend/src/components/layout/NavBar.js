@@ -1,3 +1,9 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-22 23:35:51
+ * @modify date 2023-10-23 12:29:55
+ * @desc [로고 회전 및 메뉴명 수정]
+ */
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -15,21 +21,22 @@ const NavBar = () => {
 
   const history = useHistory();
     return (
+      <div className='basefont'>
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary nav">
         <Container className='nav-container'>
          
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="nav-menu me-auto">
-             <NavDropdown title="메뉴1" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+             <NavDropdown title="상품" id="collapsible-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">상품</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                 
               </NavDropdown>
-              <NavDropdown title="메뉴2" id="collapsible-nav-dropdown">
+              <NavDropdown title="캠페인" id="collapsible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
@@ -40,18 +47,19 @@ const NavBar = () => {
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="메뉴3" id="collapsible-nav-dropdown" style={{marginRight:'0px'}}>
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown title="마이페이지" id="collapsible-nav-dropdown" style={{marginRight:'0px'}}>
+                <NavDropdown.Item href="#action/3.1">포인트 충전</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
-                  Another action
+                  나의 관심상품
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">내 등록물품</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#action/3.4">
-                  Separated link
+                  출석체크 이벤트
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
+
             <Navbar.Brand href="/" className='nav-logo'>
                 NewUs
                 {/* <img src={NavLogo} className='nav-logo-img'/> */}
@@ -69,6 +77,12 @@ const NavBar = () => {
                 }}/>
                   <span style={{marginLeft:'5px',position:'relative',top:'3px',fontSize:'12pt'}}>판매하기</span>
               </Nav.Link> */}
+            
+          
+
+
+              <Nav.Link href="/" className='nav-logout-icons'>
+                <PiUserMinusLight style={{fontSize:'23pt'}}/></Nav.Link>
 
               <NavDropdown title={<PiUserPlusLight style={{fontSize:'23pt'}}/>} id="collapsible-nav-dropdown" style={{ marginRight: '0px'}}>
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -86,7 +100,7 @@ const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    
+    </div>
     );
 };
 

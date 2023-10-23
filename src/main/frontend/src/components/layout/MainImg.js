@@ -1,6 +1,5 @@
 import React from 'react';
 import main1 from  '../../assets/img/main1.png';
-
 import '../../assets/css/MainTop.css'
 
 

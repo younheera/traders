@@ -1,5 +1,11 @@
-import React, {Component, useCallback, useState} from "react";
-import {Button,TextField,Link,Grid,Container,Typography, makeStyles,} from "@material-ui/core";
+/**
+ * @author heera youn
+ * @create date 2023-10-22 23:31:56
+ * @modify date 2023-10-22 23:32:30
+ * @desc [기능구현, FE 유효성 검사 및 Toastify, css 구현]
+ */
+import React, {useState} from "react";
+import {Button,Link,Grid,Container,Typography} from "@material-ui/core";
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,7 +13,7 @@ import { signup } from "./SignAPIService";
 import {PiEyeBold} from "react-icons/pi";
 import {PiEyeClosedBold} from "react-icons/pi";
 import { Success, Warn, Error } from "../toastify/Alert";
-import { ComponentStyles, CustomTextField, customStylesLabelled } from '../../styles/styles.js';
+import { CustomTextField } from '../../styles/styles.js';
 import "../../styles/global.css";
 import JoinTerms from "./JoinTerms";
 import { ToastContainer } from "react-toastify";

@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:30:19
- * @modify date 2023-10-19 23:16:19
+ * @modify date 2023-10-17 16:30:25
  */
 
 import React, { useState } from 'react';
@@ -85,10 +85,10 @@ const ChatScheduleModal = ({ show, handleClose, onsave }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button className='cancelButton-1' onClick={handleClose}>
+        <Button className='cancelButton' onClick={handleClose}>
           취소
         </Button>
-        <Button className="saveButton-1" onClick={handleSaveClick}>
+        <Button className="saveButton" onClick={handleSaveClick}>
           확인
         </Button>
       </Modal.Footer>

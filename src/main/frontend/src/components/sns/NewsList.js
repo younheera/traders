@@ -2,7 +2,7 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-06 17:44:23
- * @modify date 2023-10-20 14:47:21
+ * @modify date 2023-10-23 12:27:40
  * @desc [환경 관련 뉴스기사 출력]
  */
 
@@ -19,7 +19,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import {AiOutlinePlus} from 'react-icons/ai'
-import TokenRefresher from '../service/TokenRefresher';
+import TokenRefresher from '../member/TokenRefresher';
+
 
 function NewsList() {
   const [newsList, setNewsList] = useState([]);
@@ -55,7 +56,7 @@ function NewsList() {
             <Col key={index} sm={6} md={4}>
               <div className="news-item" ref={index === displayedNews.length - 1 ? scrollRef : null}>
                 <img src={news.imageUrl} alt={news.articleTitle} className="news-img" />
-                <p className="news-title">{news.articleTitle}</p>
+                <a href={news.articleLink}><p className="news-title">{news.articleTitle}</p></a>
               </div>
             </Col>
           ))}
@@ -66,8 +67,3 @@ function NewsList() {
 }
 
 export default NewsList;
-
-
-
-
-

@@ -1,11 +1,15 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 14:00:35
- * @modify date 2023-10-22 21:23:58
+ * @modify date 2023-10-23 12:32:34
  * 그린페이 가입 - 3. 간편비밀번호 설정
  */
 
+import { Container, InputAdornment, TextField, Typography } from "@material-ui/core";
 import React, { useState } from "react";
+import { Row } from "react-bootstrap";
+import PayRegister from "../../assets/css/PayRegister.css";
+import { Error } from "../toastify/Alert";
 
 import '../../assets/css/AccountRegister.css';
 import { Col, Container, Row } from "react-bootstrap";
@@ -68,10 +72,9 @@ const RegisterStep3 = ({ onNext, setGpayPwd }) => {
   function handleGpayPwd(password) {
     if (password.length===6){
       setGpayPwd(password)
-      console.log('비밀번호1: ' + password)
       onNext();
     }else{
-      alert("비밀번호 6자리를 입력해주세요.")
+      Error("❌ 비밀번호는 6자리입니다 ❌");
     }
   }
 

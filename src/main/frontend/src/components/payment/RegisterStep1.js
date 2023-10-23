@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 10:32:10
- * @modify date 2023-10-20 14:25:01
+ * @modify date 2023-10-21 10:33:55
  * 그린페이 가입 - 1. 인증정보input 및 약관동의 처리
  */
 

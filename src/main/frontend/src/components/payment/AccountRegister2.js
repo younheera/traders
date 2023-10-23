@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-10-13 16:31:55
- * @modify date 2023-10-23 10:31:47
+ * @modify date 2023-10-23 12:29:06
  */
 
 import React, { useEffect, useState } from 'react';
@@ -21,6 +21,8 @@ const AccountRegister2 = ({onNext, ranNum}) => {
         if(ranNum==inputRanNum){
             onNext();
         }else{
+            console.log(ranNum)
+            console.log(inputRanNum)
             alert("올바르지 않은 번호입니다.")
         }
     }
