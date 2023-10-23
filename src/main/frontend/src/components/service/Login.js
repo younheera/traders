@@ -13,6 +13,7 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // Do something with email and password (e.g., calling signin)
     signin({ email, password });
   };
 

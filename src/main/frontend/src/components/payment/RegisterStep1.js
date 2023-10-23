@@ -1,17 +1,13 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 10:32:10
- * @modify date 2023-10-21 10:33:55
+ * @modify date 2023-10-18 16:05:49
  * 그린페이 가입 - 1. 인증정보input 및 약관동의 처리
  */
 
 import React, { useState } from 'react';
 import Terms from './Terms';
 import Form from 'react-bootstrap/Form';
-import {Grid,Container,Typography} from "@material-ui/core";
-import { useForm } from 'react-hook-form';
-import { CustomTextField } from '../../styles/styles';
-import { Row } from 'react-bootstrap';
 
 const RegisterStep1 = ({ form, onText, onNext }) => {
   const {
@@ -23,9 +19,6 @@ const RegisterStep1 = ({ form, onText, onNext }) => {
     agreeYn,
     agreeDtime
   } = form;
-  
-  const {control} = useForm({
-  });
 
   const [termFlag, setTermFlag] = useState(false);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
@@ -35,116 +28,95 @@ const RegisterStep1 = ({ form, onText, onNext }) => {
   };
 
   const handleNextClick = () => {
-    console.log(form);
     if (userName === "" || userInfo === "" || userGender === "" || cellCarrier === "" || userCellNo === "") {
       alert("모든 항목을 작성해주세요."); // 유효성 검사 추가
-                                          // 이름(한글20) userInfo(숫자6) userGender(숫자1) userCellNo(숫자11)
+                                          // 이름(한글20) userInfo(숫자6) userGender(숫자1) cuserCellNo(숫자11)
     } else {
       onNext();
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-      <Typography style={{ fontSize: '30px', textAlign: 'center', fontWeight: 'bold', marginBottom: '30px'}}component="h1" variant="h5">본인인증
-      </Typography></Grid>
-      
-      <Grid item xs={12}>
-          <CustomTextField
-            variant="outlined"
-            required
-            id="userName"
-            label="이름을 입력하세요"
-            name="userName"
-            value={userName}
-            className="customTextField"
-            autoComplete="fname"
-            fullWidth bordercolor="green"
-            autoFocus
-            onChange={onText}
-            />
-      </Grid>
-      
-      <Grid item xs={12}>
-      <Grid container spacing={2} alignItems="center">
-      <Grid item xs={5}>
-        <CustomTextField
-          variant="outlined" 
-          required 
-          id="userInfo"
-          label="주민등록번호"
-          name="userInfo"
+    <>
+      <h2>본인인증</h2>
+      <p>
+        <label>이름</label>
+        <br />
+        <input
           type="text"
+          name="userName"
+          value={userName}
+          placeholder="이름을 입력하세요"
+          onChange={onText}
+        />
+      </p>
+      <p>
+        <label>주민등록번호</label>
+        <br />
+        <input
+          type="text"
+          name="userInfo"
           value={userInfo}
           maxLength={6}
           size={6}
           onChange={onText}
-          bordercolor="green"
+          required
         />
-        </Grid>
-        <text style={{fontSize: '36px', verticalAlign: 'middle'}}>&nbsp;&nbsp;-&nbsp;&nbsp;</text>
-        <Grid item xs={2}>
-        <CustomTextField
-          variant="outlined" required fullWidth
+        -
+        <input
           type="password"
           name="userGender"
-          bordercolor="green"
-          lable="성별*"
           value={userGender}
           maxLength={1}
           size={1}
           onChange={onText}
+          required
         />
-        </Grid>
-        <text style={{fontSize: '36px', verticalAlign: 'middle'}}>******</text>
-      </Grid></Grid><br/>
-      
-      <Grid item xs={12}>
-      <Grid container spacing={2} alignItems="center">
-      <Grid item xs={4}>
-          <Form.Select label="통신사" name="cellCarrier" 
-          value={cellCarrier} onChange={onText} required
-          style={{height:'61px', width: '120px'}}
-          className='basefont'>
-            <option>통신사</option>
-            <option value="SKT">SKT</option>
-            <option value="KT">KT</option>
-            <option value="LG U+">LG U+</option>
-            <option value="SKT 알뜰폰">SKT 알뜰폰</option>
-            <option value="KT 알뜰폰">KT 알뜰폰</option>
-            <option value="LG U+ 알뜰폰">LG U+ 알뜰폰</option>
+        ******
+      </p>
+      <p>
+        <div class="input-group mb-3">
+          <label>휴대폰 번호</label>
+          <br />
+          <Form.Select label="통신사" name="cellCarrier" value={cellCarrier} onChange={onText} required>
+            <option value="SKT">
+              SKT
+            </option>
+            <option value="KT">
+              KT
+            </option>
+            <option value="LG U+">
+              LG U+
+            </option>
+            <option value="SKT 알뜰폰">
+              SKT 알뜰폰
+            </option>
+            <option value="KT 알뜰폰">
+              KT 알뜰폰
+            </option>
+            <option value="LG U+ 알뜰폰">
+              LG U+ 알뜰폰
+            </option>
           </Form.Select>
-        </Grid>
-
-        
-          <Grid item xs={8}>
-          <CustomTextField
-            variant="outlined" fullWidth required
+          <input
             type="text"
+            class="form-control"
             name="userCellNo"
-            bordercolor="green"
             value={userCellNo}
-            label="휴대폰 번호를 입력하세요"
+            placeholder="휴대폰 번호를 입력하세요"
             onChange={onText}
+            required
           />
-          </Grid>
-      </Grid></Grid><br/><br/><br/>
-      </Grid>
-      
-      <Terms onTermsChange={handleTermsChange} 
-      selectAllChecked={selectAllChecked} 
-      setSelectAllChecked={setSelectAllChecked}/>
-      <br/><br/>
-      <Row>
-        <button onClick={handleNextClick} 
-        className='saveButton' 
-        disabled={!selectAllChecked}
-        style={{margin:'auto'}}>다음</button>
-      </Row>
-      
-    </Container>
+        </div>
+        <br />
+        <br />
+      </p>
+      <Terms onTermsChange={handleTermsChange} selectAllChecked={selectAllChecked} setSelectAllChecked={setSelectAllChecked}/>
+      <p>
+        <button onClick={handleNextClick} disabled={!selectAllChecked}>다음</button>
+      </p>
+    </>
   );
 };
+
 export default RegisterStep1;

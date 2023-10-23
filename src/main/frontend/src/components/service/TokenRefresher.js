@@ -1,9 +1,3 @@
-/**
- * @author heera youn
- * @create date 2023-10-22 23:30:36
- * @modify date 2023-10-22 23:31:17
- * @desc [서버와 헤더를 통해 AT, RT 갱신상태 전역적 관리]
- */
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 

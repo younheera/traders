@@ -2,7 +2,7 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-20 11:17:23
- * @modify date 2023-10-23 12:13:11
+ * @modify date 2023-10-20 11:19:11
  * @desc [snsList와 snsDetails를 감싸고 있음]
  */
 import React, { useState, useEffect } from 'react';
@@ -10,7 +10,7 @@ import SnsList from './SnsList';
 import SnsDetails from './SnsDetails';
 import Container from 'react-bootstrap/Container';
 import { Link } from "react-router-dom";
-import TokenRefresher from '../member/TokenRefresher';
+import TokenRefresher from '../service/TokenRefresher';
 
 const SnsManage = ({campaigns}) => {
   const [posts, setPosts] = useState([]);

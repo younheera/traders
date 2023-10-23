@@ -2,7 +2,7 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-20 11:17:28
- * @modify date 2023-10-23 12:13:59
+ * @modify date 2023-10-20 11:22:48
  * @desc [캠페인 리스트에서 인증하기를 누르면 캠페인에 해당되는 태그가 고정되어 들어가고,
  *       캠페인 메인페이지의 글쓰기를 누르면 자유롭게 태그를 넣을 수 있음]
  */
@@ -10,8 +10,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
 import SnsImagePreview from "./SnsImagePreview";
 import Container from 'react-bootstrap/Container';
-import TokenRefresher from "../member/TokenRefresher";
-
+import TokenRefresher from '../service/TokenRefresher';
 
 const SnsRegistration = () => {
     const form = new FormData();

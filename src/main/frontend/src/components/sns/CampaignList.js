@@ -2,7 +2,7 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-20 11:16:53
- * @modify date 2023-10-23 12:13:18
+ * @modify date 2023-10-20 11:24:55
  * @desc [CampaignDatails와 SnsManage의 상위 컴포넌트]
  */
 import React, { useState, useEffect } from "react";
@@ -11,8 +11,7 @@ import Container from 'react-bootstrap/Container';
 import SnsManage from "./SnsManage";
 import CampaignDetails from "./CampaignDatails";
 import Accordion from 'react-bootstrap/Accordion';
-import TokenRefresher from "../member/TokenRefresher";
-
+import TokenRefresher from '../service/TokenRefresher';
 
 
 const CampaignList = () => {
