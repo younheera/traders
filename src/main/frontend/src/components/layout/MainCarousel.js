@@ -1,14 +1,13 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:30:56
- * @modify date 2023-10-19 22:58:12
+ * @modify date 2023-10-20 11:17:30
  */
 
 
 import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel'
 import webmain1 from "../../assets/img/webmain1.jpg";
-import webmain2 from "../../assets/img/webmain2.jpg";
 import webmain3 from "../../assets/img/webmain3.jpg";
 import '../../assets/css/MainCarousel.css'
 import MainTop from './MainTop';

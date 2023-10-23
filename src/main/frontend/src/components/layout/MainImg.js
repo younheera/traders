@@ -1,7 +1,6 @@
 import React from 'react';
 import main1 from  '../../assets/img/main1.png';
 
-import MainMobileMap from '../../assets/img/MainMobileMap.png';
 import '../../assets/css/MainTop.css'
 
 

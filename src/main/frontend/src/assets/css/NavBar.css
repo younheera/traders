@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 22:58:38
- * @modify date 2023-10-18 10:52:30
+ * @modify date 2023-10-20 23:20:46
  */
 
 .nav{
@@ -53,7 +53,7 @@
     font-weight: 900;
     font-size: 22pt;
     justify-items: center;
-    color: rgb(15, 26, 95);
+    color: rgb(15, 26, 95);    
     
 }
 /* 지구 이미지 */
@@ -71,13 +71,13 @@
     margin-right: 100px !important;
     font-weight: 800;
     font-size: 13pt;
-    
+   
 }
 
 .navbar-nav .nav-link.active{
     color: rgb(15, 26, 95);
 }
 
-.nav-logout-icons{
-    margin-right:5px !important;
+.navbar-icons{
+    margin-right: 15px !important;
 }

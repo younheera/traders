@@ -38,10 +38,40 @@ code {
 .basefont{
   font-family: 'NanumSquareNeo' !important;
 }
+
+
+.saveButton-1{
+  margin: auto;
+  width: 200px;
+  background-color: #fff;
+  font-size: 17px;
+  font-weight: bolder;
+  background-color:#198754;
+  color: #fff;
+
+}
+
+.cancelButton-1{
+  margin: auto;
+  width: 190px;
+  background-color: rgb(166, 166, 166);
+  font-weight: bolder;
+}
+
+.saveButton-1:active,
+.saveButton-1:hover {
+  background-color:#167146 !important;
+}
+
+.cancelButton-1:active,
+.cancelButton-1:hover{
+background-color: rgb(131, 131, 131) !important;
+}
+
+
 .saveButton{
     margin: auto;
     width: 200px;
-    background-color: #fff;
     font-size: 17px;
     font-family: 'Pretendard-Regular' !important;
     font-weight: bolder;
@@ -152,4 +182,12 @@ code {
   justify-content: center;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.usernickname{
+  position: relative;
+  top: 14px;
+  margin-right: 15px;
+  font-family: 'Pretendard-Regular' !important;
+  font-size: 12pt;
 }

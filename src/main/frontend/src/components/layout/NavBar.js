@@ -5,9 +5,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import '../../assets/css/NavBar.css';
 import NavLogo1 from "../../assets/img/NavLogo1.png"
-import {PiUserPlusLight,PiUserMinusLight} from 'react-icons/pi'
+import {PiUserPlusLight} from 'react-icons/pi'
+import {BsBagPlus} from 'react-icons/bs'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const NavBar = () => {
+
+  const user = window.user;
+
+  const history = useHistory();
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary nav">
         <Container className='nav-container'>
@@ -50,9 +56,19 @@ const NavBar = () => {
                 NewUs
                 {/* <img src={NavLogo} className='nav-logo-img'/> */}
                 <img src={NavLogo1} className='nav-logo-img'/>
-                Traders</Navbar.Brand>
+                Traders
+            </Navbar.Brand>
             <Nav>
-              <Nav.Link href="/" className='nav-logout-icons'><PiUserMinusLight style={{fontSize:'23pt'}}/></Nav.Link>
+              {/* 로그인 상태에 따른 이름 출력 */}
+              <div className='usernickname'><span style={{color: '#167146'}}>
+                {user ? <p>{user}님 안녕하세요!</p> : null}</span></div>
+              
+              {/* <Nav.Link href="/products/register" className='navbar-icons' >
+                <BsBagPlus style={{fontSize:'17pt'}} onClick={()=>{
+                  history.push("./products/register")
+                }}/>
+                  <span style={{marginLeft:'5px',position:'relative',top:'3px',fontSize:'12pt'}}>판매하기</span>
+              </Nav.Link> */}
 
               <NavDropdown title={<PiUserPlusLight style={{fontSize:'23pt'}}/>} id="collapsible-nav-dropdown" style={{ marginRight: '0px'}}>
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
