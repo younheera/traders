@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-09-25 18:43:06
- * @modify date 2023-10-19 16:04:19
+ * @modify date 2023-10-19 17:34:06
  * 그린페이 가입 프로세스
  */
 
@@ -12,7 +12,7 @@ import RegisterStep3 from "./RegisterStep3";
 import RegisterStep4 from "./RegisterStep4";
 import RegisterComplete from "./RegisterComplete";
 import LoadingModal from "./LoadingModal";
-import axios from "axios";
+import TokenRefresher from "../service/TokenRefresher";
 
 const PayRegister = () => {
   const [form, setForm] = useState({
@@ -115,7 +115,7 @@ const PayRegister = () => {
       const smsRequest = {
         rphone: userCellNo,
       };
-      axios.post('http://localhost:8080/api/payment/sms', smsRequest)  // 요청 본문을 객체로 감싸서 보냅니다.
+      TokenRefresher.post('http://localhost:8080/api/payment/sms', smsRequest)  // 요청 본문을 객체로 감싸서 보냅니다.
         .then(Response => {
           if (Response.status === 200) {
             toggleAuthNumBtn();
@@ -140,7 +140,7 @@ const PayRegister = () => {
         rphone: userCellNo,
         inputAuthNum: inputAuthNum,
       }
-      axios.post('http://localhost:8080/api/payment/verify-sms',smsRequest)
+      TokenRefresher.post('http://localhost:8080/api/payment/verify-sms',smsRequest)
         .then(Response=>{
           if(Response.status===200){
             alert('문자 인증 성공')
@@ -158,45 +158,42 @@ const PayRegister = () => {
   // 계정등록 요청
   const PayRegisterHandler = async () => {
     setIsLoading(true);
-    
+
     const apiUrl = 'http://localhost:8080/api/payment/register';
     const gender = getGender();
     const birth = getBirth();
 
-  
     try {
-      const requestData = {
-        userName: userName,
-        userInfo: birth,
-        userGender: gender,
-        cellCarrier: cellCarrier,
-        userCellNo: userCellNo,
-        agreeYn: 'Y',
-        agreeDtime: getCurrentDtime(),
-        payPassword: gpayPwd,
-      };
-  
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData),
-      });
-  
-      if (!response.ok) {
-        throw new Error('API 호출 실패');  // 에러 처리 보완
+          const requestData = {
+            userName: userName,
+            userInfo: birth,
+            userGender: gender,
+            cellCarrier: cellCarrier,
+            userCellNo: userCellNo,
+            agreeYn: 'Y',
+            agreeDtime: getCurrentDtime(),
+            payPassword: gpayPwd,
+          };
+                  
+          const response = await TokenRefresher.post(apiUrl, requestData, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (response.status !== 200) {
+            throw new Error('API 호출 실패'); // 에러 처리 보완
+          }
+
+          const responseData = response.data;
+          console.log('API 응답:', responseData);
+          setIsLoading(false); // 로딩 중지
+          setStep(5);
+      } catch (error) {
+        console.error('API 호출 오류:', error);
+      } finally {
+        setIsLoading(false);
       }
-  
-      const responseData = await response.json();
-      console.log('API 응답:', responseData);
-      setIsLoading(false); // 로딩 중지
-      setStep(5);
-    } catch (error) {
-      console.error('API 호출 오류:', error);
-    } finally{
-      setIsLoading(false);
-    }
   };
 
   return (

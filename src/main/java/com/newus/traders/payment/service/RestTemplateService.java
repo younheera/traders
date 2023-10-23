@@ -193,10 +193,10 @@ public class RestTemplateService {
         request.setBankCodeStd(bankCodeStd);
         request.setAccountNum(dpAccountNum);
         request.setTransAmt(transAmt);
-        request.setReqClientName("이아라"); // 고객성명가져오기
+        request.setReqClientName(payAccountDto.getUserName()); // 고객성명가져오기
         request.setReqClientBankCode(payAccountDto.getBankCodeStd().trim());
         request.setReqClientAccountNum(payAccountDto.getAccountNum().trim());
-        request.setReqClientNum(payAccountDto.getClientInfo().toString()); // clientInfo
+        request.setReqClientNum(payAccountDto.getClientInfo().toString());
         request.setTransferPurpose(transferPurpose);
         request.setCmsNum(cmsNum);
 
@@ -235,9 +235,9 @@ public class RestTemplateService {
         reqList.setBankTranId(bankTranId);
         reqList.setBankCodeStd(payAccountDto.getBankCodeStd().trim());
         reqList.setAccountNum(payAccountDto.getAccountNum().trim());
-        reqList.setAccountHolderName("이아라"); // 이름 가져오기
+        reqList.setAccountHolderName(payAccountDto.getUserName());
         reqList.setTranAmt(tran_amt);
-        reqList.setReqClientName("이아라"); // 이름 가져오기
+        reqList.setReqClientName(payAccountDto.getUserName());
         reqList.setReqClientBankCode(payAccountDto.getBankCodeStd().trim());
         reqList.setReqClientAccountNum(payAccountDto.getAccountNum().trim());
         reqList.setReqClientNum(payAccountDto.getClientInfo().toString());
@@ -250,10 +250,10 @@ public class RestTemplateService {
         request.setWdPassPhrase(wdPassPhrase);
         if (transferPurpose == "AU") {
             reqList.setPrintContent("그린" + ranNum);
-            request.setWdPrintContent("이아라" + ranNum);
+            request.setWdPrintContent(payAccountDto.getUserName() + ranNum);
         } else {
             reqList.setPrintContent("그린페이환급");
-            request.setWdPrintContent("이아라" + "환급");
+            request.setWdPrintContent(payAccountDto.getUserName() + "환급");
         }
         request.setNameCheckOption("on");
         request.setTran_dtime(getDateTime());

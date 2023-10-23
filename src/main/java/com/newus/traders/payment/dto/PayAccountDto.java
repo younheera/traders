@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-10-16 11:48:38
- * @modify date 2023-10-16 11:48:38
+ * @modify date 2023-10-23 08:23:08
  */
 
 package com.newus.traders.payment.dto;
@@ -23,4 +23,6 @@ public class PayAccountDto {
     private LocalDateTime agreeWdTr;
     private String addr1;
     private String addr2;
+
+    private int payBalance;
 }
