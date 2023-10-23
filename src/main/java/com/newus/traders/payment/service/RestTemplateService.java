@@ -12,12 +12,11 @@ import java.net.URI;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Base64.Encoder;
 
+import org.apache.catalina.connector.Response;
 import org.apache.commons.codec.Charsets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -49,23 +48,23 @@ public class RestTemplateService {
     // https://openapi.openbanking.or.kr
     String base_uri = "https://675f6818-da9a-4047-927b-e08e3afb8de1.mock.pstmn.io";
 
-    @Value("${traders.client_id}")
+    @Value("traders.client_id")
     private String clientId;
-    @Value("${traders.client_secret}")
+    @Value("traders.client_secret")
     private String clientSecret;
-    @Value("${traders.client_use_code}")
+    @Value("traders.client_use_code")
     private String clientUseCode;
-    @Value("${traders.ctr_account_num}")
+    @Value("traders.ctr_account_num")
     private String ctrAccountNum;
-    @Value("${traders.bank_code_std}")
+    @Value("traders.bank_code_Std")
     private String bankCodeStd;
-    @Value("${traders.deposit_account_num}")
+    @Value("traders.deposit_account_num")
     private String dpAccountNum;
-    @Value("${traders.cms_num}")
+    @Value("traders.cms_num")
     private String cmsNum;
-    @Value("${traders.access_token}")
+    @Value("traders.access_token")
     private String accessTokenSa;
-    @Value("${traders.wd_pass_phrase}")
+    @Value("traders.wd_pass_phrase")
     private String wdPassPhrase;
 
     // 사용자인증 API(authorize)
@@ -131,37 +130,31 @@ public class RestTemplateService {
 
     // 사용자정보조회 API
     public MeResponseDto getUserInfo(String accessToken, String userSeqNo) {
-        try {
-            URI uri = UriComponentsBuilder
-                    .fromUriString(base_uri)
-                    .path("/v2.0/user/me")
-                    .queryParam("user_seq_no", userSeqNo)
-                    .encode(Charsets.toCharset("UTF-8"))
-                    .build()
-                    .toUri();
 
-            System.out.println(uri.toString());
+        URI uri = UriComponentsBuilder
+                .fromUriString(base_uri)
+                .path("/v2.0/user/me")
+                .queryParam("user_seq_no", userSeqNo)
+                .encode(Charsets.toCharset("UTF-8"))
+                .build()
+                .toUri();
 
-            Map<String, String> headers = new HashMap<>();
-            headers.put("Authorization", "Bearer " + accessToken);
+        System.out.println(uri.toString());
 
-            HttpEntity<?> entity = new HttpEntity<Object>(headers);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + accessToken);
 
-            System.out.println(entity.toString());
+        HttpEntity<?> entity = new HttpEntity<Object>(headers);
 
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<MeResponseDto> result = restTemplate.exchange(uri, HttpMethod.GET, entity,
-                    MeResponseDto.class);
+        System.out.println(entity.toString());
 
-            System.out.println(result.getStatusCode());
-            System.out.println(result.getBody());
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<MeResponseDto> result = restTemplate.exchange(uri, HttpMethod.GET, entity, MeResponseDto.class);
 
-            return result.getBody();
+        System.out.println(result.getStatusCode());
+        System.out.println(result.getBody());
 
-        } catch (Exception e) {
-            System.out.println(e.getStackTrace());
-            return new MeResponseDto(getCi(userSeqNo));
-        }
+        return result.getBody();
     }
 
     // 수취조회 API
@@ -345,24 +338,6 @@ public class RestTemplateService {
     // dtm(YYYYMMddHHmmssSSS)
     private String getDateTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYYMMddHHmmssSSS"));
-    }
-
-    // --임의-- userCI 생성
-    private String getCi(String userSeqNo) {
-        // 임의코드는 '사용자일련번호+이용기관코드'로 생성하기로 함
-        String text = userSeqNo + clientUseCode;
-        byte[] textToByte = text.getBytes();
-
-        // 자바 8 기본 Base64 Encoder
-        Encoder encode = Base64.getEncoder();
-
-        // Base64 인코딩
-        byte[] encodeByte = encode.encode(textToByte);
-
-        System.out.println("인코딩 전: " + text);
-        System.out.println("인코딩: " + new String(encodeByte));
-
-        return new String(encodeByte);
     }
 
     // token생성(JWT)

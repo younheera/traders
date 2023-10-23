@@ -1,9 +1,8 @@
 /**
  * @author heera youn
- * @email [example@mail.com]
  * @create date 2023-10-14 00:53:26
- * @modify date 2023-10-19 10:27:42
- * @desc [description]
+ * @modify date 2023-10-22 23:34:11
+ * @desc [회원가입 및 로그인 관련 API]
  */
 import { responsiveFontSizes } from '@material-ui/core';
 import React from 'react';
@@ -37,7 +36,7 @@ export function call(api, method, request) {
   return fetch(options.url, options).then((response) => {
     if (response.status===200) {
       Success("🎉 회원가입 성공");
-      // window.location.href = "/login";
+      window.location.href = "/login";
       }
     }).catch((error) => {
       console.log(error.sta)
@@ -63,7 +62,7 @@ export function signin(userRequestDTO) {
       localStorage.setItem("REFRESH_TOKEN", response.data.refreshToken);
       console.log("로그인 완")
       Success("🎉 로그인 성공");
-      // window.location.href = "/";
+      window.location.href = "/";
        //메인돌아갔을 때 헤더페이지에 로그아웃 + "&&&님 안녕하세요"
     }
   })
