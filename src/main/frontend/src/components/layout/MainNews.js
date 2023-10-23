@@ -1,4 +1,5 @@
 import React from 'react';
+import main3 from '../../assets/img/main3.jpg'
 import '../../assets/css/MainNews.css'
 import Youtube from '../sns/Youtube';
 import NewsList from '../sns/NewsList';

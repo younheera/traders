@@ -1,11 +1,3 @@
-/**
- * @author heera youn
- * @email [example@mail.com]
- * @create date 2023-10-21 23:00:23
- * @modify date 2023-10-21 23:00:24
- * @desc [description]
- */
-
 import { TextField } from '@material-ui/core';
 import { makeStyles, styled } from '@material-ui/core/styles';
 

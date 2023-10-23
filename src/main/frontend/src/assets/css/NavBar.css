@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 22:58:38
- * @modify date 2023-10-21 20:17:26
+ * @modify date 2023-10-18 10:52:30
  */
 
 .nav{
@@ -64,18 +64,11 @@
    margin-left: 10px;
    text-align: center;
    justify-items: center;
-   animation : logolotate 5s linear infinite ;
-}
-
-@keyframes logolotate {
-	100% {
-		transform : rotate(360deg);
-	}
 }
 
 /* 오른쪽 메뉴(로그인) */
 .navbar-nav{
-    margin-right: 40px !important;
+    margin-right: 100px !important;
     font-weight: 800;
     font-size: 13pt;
     

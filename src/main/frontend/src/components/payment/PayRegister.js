@@ -1,13 +1,6 @@
 /**
- * @author heera youn
- * @create date 2023-10-22 23:30:04
- * @modify date 2023-10-23 12:13:29
- * @desc [CSS 및 Toastify알림 추가]
- */
-/**
  * @author ahrayi
  * @create date 2023-09-25 18:43:06
- * @modify date 2023-10-21 10:41:39
  * @modify date 2023-10-19 17:34:06
  * 그린페이 가입 프로세스
  */
@@ -19,9 +12,7 @@ import RegisterStep3 from "./RegisterStep3";
 import RegisterStep4 from "./RegisterStep4";
 import RegisterComplete from "./RegisterComplete";
 import LoadingModal from "./LoadingModal";
-import { Success } from "../toastify/Alert";
-import TokenRefresher from "../member/TokenRefresher";
-
+import TokenRefresher from "../service/TokenRefresher";
 
 const PayRegister = () => {
   const [form, setForm] = useState({
@@ -128,10 +119,9 @@ const PayRegister = () => {
         .then(Response => {
           if (Response.status === 200) {
             toggleAuthNumBtn();
-            Success('📩 문자 발송 성공');
+            alert('문자 발송 성공');
             console.log(Response.data);
           } else {
-            Error('❌ 문자 발송 실패')
             console.log('전송 요청 실패');
           }
         })

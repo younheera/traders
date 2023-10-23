@@ -1,13 +1,12 @@
 /**
  * @author ahrayi
  * @create date 2023-10-22 02:49:20
- * @modify date 2023-10-23 12:12:53
+ * @modify date 2023-10-23 11:13:54
  * @desc 그린페이 관리(충전, 환급 ,이용내역)
  */
 
 import React, { useEffect, useState } from 'react';
-import TokenRefresher from '../member/TokenRefresher';
-
+import TokenRefresher from '../service/TokenRefresher';
 
 const PayMgmt = () => {
         

@@ -1,19 +1,18 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:29:22
- * @modify date 2023-10-23 09:41:07
+ * @modify date 2023-10-17 16:29:28
  */
 
 
 .footer-container {
-    margin-top: 350px;
     background-color: #4d7961a1;
-    padding: 2rem 0 2rem 0;
+    padding: 4rem 0 2rem 0;
     display: flex;
-    font-family: 'Pretendard-Regular' !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 350px;
 }
 
 .footer-subscription {
@@ -22,7 +21,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 0px;
+    margin-bottom: 24px;
+    padding: 24px;
     color: white;
 }
 
@@ -32,13 +32,13 @@
 }
 
 .footer-subscription-heading {
-    margin-bottom: 10px;
-    font-size: 20px;
+    margin-bottom: 24px;
+    font-size: 24px;
 
 }
 
 .footer-subscription-text {
-    margin-bottom: 10px;
+    margin-bottom: 24px;
     font-size: 20px;
 
 }
@@ -68,15 +68,17 @@
 
 .footer-link-items {
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     align-items: flex-start;
-    text-align: center;
+    margin: 16px;
+    text-align: left;
+    
     box-sizing: border-box;
-    margin: auto;
+    margin-right: auto;
 }
 
 .footer-link-items h2 {
-    margin-bottom: 10px;
+    margin-bottom: 16px;
 
 }
 

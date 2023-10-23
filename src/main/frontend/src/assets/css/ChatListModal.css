@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 12:10:32
- * @modify date 2023-10-20 20:43:57
+ * @modify date 2023-10-18 10:46:01
  */
 
 /* ChatList css */
@@ -24,7 +24,7 @@
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
-    color:rgb(15, 26, 95);
+    color:rgb(15, 26, 95);;
     font-size: 50px;
    }
 }
@@ -99,15 +99,14 @@ margin-bottom: 0px !;
 
 /* 채팅 아이콘 */
 .chatListBtn{
-color: rgb(15, 26, 95) !important;
  position: fixed;
  float: right;
- z-index: 1;
- right: 70px;
- top:780px;
+ z-index: 999;
+ right: 80px ;
+ top:800px ;
  display: flex;
  overflow-x: hidden;
  overflow-y: auto;
- color:rgb(15, 26, 95);
+ color:rgb(15, 26, 95);;
  font-size: 50px;
 }

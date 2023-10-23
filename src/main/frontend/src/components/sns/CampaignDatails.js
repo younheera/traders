@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container'; 
-import TokenRefresher from "../member/TokenRefresher";
-
+import TokenRefresher from '../service/TokenRefresher';
 
 
 const CampaignDetails = ({ campaignId }) => {
