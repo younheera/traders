@@ -2,7 +2,7 @@
  * @author heera youn
  * @email [example@mail.com]
  * @create date 2023-10-18 21:57:51
- * @modify date 2023-10-20 11:04:12
+ * @modify date 2023-10-22 21:42:29
  * @desc [description]
  */
 
@@ -14,11 +14,10 @@
 import React, { useHistory } from "react";
 import payment from "../../styles/payment.css";
 import { Button, Card } from "@material-ui/core";
-import ProgressForm from "../service/ProgressForm";
 import { Link } from 'react-router-dom';
-import greenpay1 from '../../styles/images/greenpay1.jpg'
-import greenpay2 from '../../styles/images/greenpay2.jpg'
-import greenpay3 from '../../styles/images/greenpay3.jpg'
+import greenpay1 from '../../assets/img/greenpay1.jpg';
+import greenpay2 from '../../assets/img/greenpay2.jpg';
+import greenpay3 from '../../assets/img/greenpay3.jpg';
 import Row from 'react-bootstrap/Row';
 
 const GreenPay = () => {

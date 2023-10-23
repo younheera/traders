@@ -1,21 +1,19 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 10:32:10
- * @modify date 2023-10-20 08:15:06
+ * @modify date 2023-10-21 10:33:55
  * 그린페이 가입 - 1. 인증정보input 및 약관동의 처리
- * FE수정(kierayoun)
  */
 
 import React, { useState } from 'react';
 import Terms from './Terms';
-import { Button, Container, Grid, GridList, GridListTile, GridListTileBar, Link, TextField, Typography } from "@material-ui/core";
-import "../../styles/global.css"
+import Form from 'react-bootstrap/Form';
+import {Grid,Container,Typography} from "@material-ui/core";
+import { useForm } from 'react-hook-form';
 import { CustomTextField } from '../../styles/styles';
-import MobileListbox from './MobileListbox';
-import ProgressForm from '../service/ProgressForm';
+import { Row } from 'react-bootstrap';
 
 const RegisterStep1 = ({ form, onText, onNext }) => {
-  
   const {
     userName,
     userInfo,
@@ -26,113 +24,127 @@ const RegisterStep1 = ({ form, onText, onNext }) => {
     agreeDtime
   } = form;
   
-  const [allTermsChecked, setAllTermsChecked] = useState(false);
-  
-  const toggleAllTermsChecked = () => {
-    setAllTermsChecked(!allTermsChecked);
+  const {control} = useForm({
+  });
+
+  const [termFlag, setTermFlag] = useState(false);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
+
+  const handleTermsChange = (selectAllChecked) => {
+    setTermFlag(selectAllChecked);
   };
-  // window.addEventListener("scroll", function () {
-  //   const header = document.querySelector(".header");
-  //   if (window.scrollY > 0) {
-  //     header.classList.add("fixed");
-  //   } else {
-  //     header.classList.remove("fixed");
-  //   }
-  // });
 
-  // {
-  //   /* 약관모두동의 + 모든 항목 not null일 때 다음 버튼 활성화 */
-  // }
-  // {
-  //   /* 다음 버튼 누르면 유효성 검사*/
-  // }
-
+  const handleNextClick = () => {
+    console.log(form);
+    if (userName === "" || userInfo === "" || userGender === "" || cellCarrier === "" || userCellNo === "") {
+      alert("모든 항목을 작성해주세요."); // 유효성 검사 추가
+                                          // 이름(한글20) userInfo(숫자6) userGender(숫자1) userCellNo(숫자11)
+    } else {
+      onNext();
+    }
+  };
 
   return (
-    <div>
-    <Container component="main" maxWidth="xs" style={{ marginTop: "8%"}}>
-      <Grid item xs={12}><Typography style={{ fontSize: '30px', textAlign:'center', fontWeight:'bold' }} component="h1" variant="h5">본인인증</Typography></Grid><br/>
-      <form noValidate>
-
-      <Grid container spacing={2}>
+    <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
-      <CustomTextField
-        variant="outlined"
-        required
-        fullWidth
-        id= "userName"
-        label="이름을 입력하세요"
-        name="userName"
-        bordercolor="green"
-        autoComplete="email"
-        value={userName}
-        onChange={onText}
-        />
+      <Typography style={{ fontSize: '30px', textAlign: 'center', fontWeight: 'bold', marginBottom: '30px'}}component="h1" variant="h5">본인인증
+      </Typography></Grid>
+      
+      <Grid item xs={12}>
+          <CustomTextField
+            variant="outlined"
+            required
+            id="userName"
+            label="이름을 입력하세요"
+            name="userName"
+            value={userName}
+            className="customTextField"
+            autoComplete="fname"
+            fullWidth bordercolor="green"
+            autoFocus
+            onChange={onText}
+            />
       </Grid>
-     </Grid><br/>
-     <Grid container spacing={12}>
-     <Grid item xs={5}>
+      
+      <Grid item xs={12}>
+      <Grid container spacing={2} alignItems="center">
+      <Grid item xs={5}>
         <CustomTextField
           variant="outlined" 
           required 
           id="userInfo"
           label="주민등록번호"
-          name="userInfo" 
+          name="userInfo"
           type="text"
-          value={userInfo} 
+          value={userInfo}
           maxLength={6}
-          size={6} 
-          bordercolor="green"
+          size={6}
           onChange={onText}
-          />
-      </Grid>
-      <text style={{fontSize: '36px', verticalAlign: 'middle'}}>&nbsp;&nbsp;-&nbsp;&nbsp;</text>
-      <Grid item xs={1}>
-      <CustomTextField
-          variant="outlined" required fullWidth
-          type="text"
-          name="userGender"
-          value={userGender}
           bordercolor="green"
+        />
+        </Grid>
+        <text style={{fontSize: '36px', verticalAlign: 'middle'}}>&nbsp;&nbsp;-&nbsp;&nbsp;</text>
+        <Grid item xs={2}>
+        <CustomTextField
+          variant="outlined" required fullWidth
+          type="password"
+          name="userGender"
+          bordercolor="green"
+          lable="성별*"
+          value={userGender}
           maxLength={1}
           size={1}
           onChange={onText}
-          />
-      </Grid>
-      <text style={{fontSize: '36px', verticalAlign: 'middle'}}>&nbsp;******</text>
-      </Grid><br/>
-    
-      <div>
-      <Grid container spacing={2}>
-        <Grid item xs={5}>
-          <MobileListbox/>
+        />
         </Grid>
+        <text style={{fontSize: '36px', verticalAlign: 'middle'}}>******</text>
+      </Grid></Grid><br/>
+      
+      <Grid item xs={12}>
+      <Grid container spacing={2} alignItems="center">
+      <Grid item xs={4}>
+          <Form.Select label="통신사" name="cellCarrier" 
+          value={cellCarrier} onChange={onText} required
+          style={{height:'61px', width: '120px'}}
+          className='basefont'>
+            <option>통신사</option>
+            <option value="SKT">SKT</option>
+            <option value="KT">KT</option>
+            <option value="LG U+">LG U+</option>
+            <option value="SKT 알뜰폰">SKT 알뜰폰</option>
+            <option value="KT 알뜰폰">KT 알뜰폰</option>
+            <option value="LG U+ 알뜰폰">LG U+ 알뜰폰</option>
+          </Form.Select>
+        </Grid>
+
         
-        <Grid item xs={7}>
+          <Grid item xs={8}>
           <CustomTextField
-            variant="outlined"
-            required
+            variant="outlined" fullWidth required
             type="text"
-            bordercolor="green"
-            className="form-control"
             name="userCellNo"
+            bordercolor="green"
+            value={userCellNo}
             label="휴대폰 번호를 입력하세요"
+            onChange={onText}
           />
-        </Grid>
+          </Grid>
+      </Grid></Grid><br/><br/><br/>
       </Grid>
-      </div>
-        <br /><br />
-      <Terms />
-      <br /><br />
-      <p>
-        {/* disabled={!allTermsChecked} 속성수정 */}
-        <button className='saveButton' 
-        onClick={()=> {onNext();}}>다음</button>
-      </p>
-      </form>
+      
+      <Terms onTermsChange={handleTermsChange} 
+      selectAllChecked={selectAllChecked} 
+      setSelectAllChecked={setSelectAllChecked}/>
+      <br/><br/>
+      <Row>
+        <button onClick={handleNextClick} 
+        className='saveButton' 
+        disabled={!selectAllChecked}
+        style={{margin:'auto'}}>다음</button>
+      </Row>
+      
     </Container>
-    </div>
   );
 };
-
 export default RegisterStep1;

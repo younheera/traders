@@ -1,10 +1,4 @@
-/**
- * @author ahrayi
- * @create date 2023-09-26 11:33:31
- * @modify date 2023-10-18 21:48:35
- */
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const initialTermStates = {
   term1: false,
@@ -12,13 +6,18 @@ const initialTermStates = {
   term3: false,
   term4: false,
 };
-export const allTermsChecked = false;
 
-const Terms = () => {
-  const [selectAllChecked, setSelectAllChecked] = useState(false);
+const Terms = ({onTermsChange,setSelectAllChecked,selectAllChecked}) => {
+  
   const [termStates, setTermStates] = useState(initialTermStates);
 
-  // 전체 동의 상태를 업데이트하는 함수
+  // 개별 동의항목 상태 변경 시 '모두 동의' 체크박스 상태 업데이트
+  useEffect(()=>{
+    const allTermsChecked = Object.values(termStates).every((value)=>value);
+    setSelectAllChecked(allTermsChecked);
+  },[termStates]);
+
+  // 전체 동의 상태를 업데이트
   const toggleSelectAll = () => {
     const allTermsChecked = !selectAllChecked;
     const updatedTermStates = { ...termStates };
@@ -29,10 +28,10 @@ const Terms = () => {
     });
 
     setTermStates(updatedTermStates);
-    setSelectAllChecked(allTermsChecked);
+    onTermsChange(allTermsChecked);
   };
 
-  // 약관 항목을 선택 또는 선택 해제하는 함수
+  // 약관 항목을 선택 또는 선택 해제
   const handleCheckboxChange = (name) => {
     const updatedTermStates = { ...termStates, [name]: !termStates[name] };
     setTermStates(updatedTermStates);
@@ -48,7 +47,7 @@ const Terms = () => {
   const terms = [
     {
       name: "term1",
-      label: "그린페이 서비스 약관",
+      label: "그린페이 서비스 약관 ",
       link: "https://www.daangnpay.com/서비스-약관",
     },
     { name: "term2", label: "그린페이 전자금융거래 이용", link: "" },
@@ -57,18 +56,22 @@ const Terms = () => {
   ];
 
   return (
-    <form className="basefont">
-
+    <div className="basefont">
+    <form>
+      <div>
         <input
+          className="typotitle"
           type="checkbox"
           name="selectall"
           value="selectall"
           checked={selectAllChecked}
           onChange={toggleSelectAll}
           required
-          className="titleterms"
+          style={{marginTop:'40px'}}
         />
-        <label>&nbsp;&nbsp;약관 모두 동의</label>
+        &nbsp;&nbsp;약관 모두 동의
+        <br />
+      </div>
 
       <hr className="hr-3" />
       {terms.map((term) => (
@@ -76,7 +79,7 @@ const Terms = () => {
           <span className="necessarytext">[필수]</span>
           &nbsp;&nbsp;{term.label}&nbsp;
           <a href={term.link} target="_blank">
-            상세
+            상세&nbsp;
           </a>
           <span style={{ float: "right" }}>
             <input
@@ -86,7 +89,8 @@ const Terms = () => {
               checked={termStates[term.name]}
               onChange={() => handleCheckboxChange(term.name)}
             />
-            동의 &nbsp;&nbsp;
+            &nbsp;&nbsp;동의 &nbsp;
+
             <input
               type="checkbox"
               className="term-checkbox"
@@ -94,12 +98,13 @@ const Terms = () => {
               checked={!termStates[term.name]}
               onChange={() => handleCheckboxChange(term.name)}
             />
-            비동의
+            &nbsp;비동의
           </span>
           <br />
         </div>
       ))}
     </form>
+    </div>
   );
 };
 

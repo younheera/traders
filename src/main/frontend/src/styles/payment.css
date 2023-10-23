@@ -97,3 +97,38 @@ h1.heading {
   font-weight: 600;
   text-transform: uppercase;
 }
+.otp-field input {
+  width: 30px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+  margin: auto;
+  border: 2px solid #55525c;
+  font-weight: bold;
+  color: #000000;
+  outline: none;
+
+  font-family: 'MICEGothic' !important;
+
+}
+.otp-field input:focus {
+  border: 2px solid rgb(33, 47, 138);
+  box-shadow: 0 0 2px 3px rgb(126, 137, 209);
+}
+/* .otp-input {
+  font-size: 24px;
+  border: solid 2px #bbb;
+  margin-right: 10px;
+}
+ 
+.otp-input:last-child {
+  margin-right: 0;
+} */
+
+.lockicon{
+  color: rgb(15, 26, 95);
+  height: 50px;
+  width: 50px;
+  justify-content: center;
+  margin: auto;
+}

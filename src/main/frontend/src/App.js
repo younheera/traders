@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useRef,useEffect } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import Main from "./components/Main";
 import GreenPay from "./components/payment/GreenPay";
@@ -11,24 +11,37 @@ import ProductRegistration from "./components/product/ProductRegistration";
 import ChatApp from "./components/chat/ChatApp";
 import ChatBox from "./components/chat/ChatBox";
 import ChatList from "./components/chat/ChatList";
-import SignUp from "./components/service/SignUp";
+import SignUp from "./components/member/SignUp";
 import ModalPage from "./components/product/ModalPage";
 import CampaignDatails from "./components/sns/CampaignDatails";
 import CampaignList from "./components/sns/CampaignList";
 import NewsList from "./components/sns/NewsList";
 import Youtube from "./components/sns/Youtube";
-import MainView from "./components/layout/MainView";
 
-import Login from "./components/service/Login";
-import { signout } from "./components/service/SignAPIService";
+
+import Login from "./components/member/Login";
+import { signout } from "./components/member/SignAPIService";
+import { Button } from "@material-ui/core";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import TokenRefresher from "./components/service/TokenRefresher";
+import TokenRefresher from "./components/member/TokenRefresher";
 import AccountRegister from "./components/payment/AccountRegister";
 import "./styles/global.css";
 import { createTheme, ThemeProvider  } from "@material-ui/core/styles";
-import ProgressForm from "./components/service/ProgressForm";
-
+import MainFooter from "./components/layout/MainFooter";
+import ResizedComponent from "./components/layout/ResizedComponent";
+import NavBar from "./components/layout/NavBar";
+import MainView from "./components/layout/MainView";
+import jwt_decode from "jwt-decode";
+import RegisterStep3 from "./components/payment/RegisterStep3";
+import RegisterStep4 from "./components/payment/RegisterStep4";
+import RegisterComplete from "./components/payment/RegisterComplete";
+import LoadingLeaf from "./assets/LoadingLeaf";
+import { OfficialLoading } from "./assets/OfficialLoading";
+import Mypage from "./components/member/Mypage";
+import LoadingModal from "./components/payment/LoadingModal";
+import RandomEvent from "./components/member/RandomEvent";
+import Confetti from "./components/payment/Confetti";
 
 const theme = createTheme({
   typography: {
@@ -36,44 +49,54 @@ const theme = createTheme({
   }
 });
 
+
 function App() {
   
+  if (localStorage.getItem("REFRESH_TOKEN")) {
+    const userInfo = jwt_decode(localStorage.getItem("REFRESH_TOKEN"));
+    window.user = userInfo.sub;
+    console.log("app.js", window.user);
+  }
   return (
+    <>
+      <ResizedComponent>
+      <NavBar/>
+        <MainView/>
+         <ThemeProvider theme={theme}>
+        <ToastContainer/>
+        <RandomEvent/>
+        {/* <TokenRefresher/> */}
+        <div className="Pretendard-Regular">
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/products/register">ProductRegistration</Link>
+            </li>
+            <li>
+              <Link to="/products/nearestProducts">NearestProductList</Link>
+            </li>
+            <li>
+              <Link to="/products">ProductList</Link>
+            </li>
+            <li>
+              <Link to="/KakaoMap">KakaoMap</Link>
+            </li>
 
-    <ThemeProvider theme={theme}>
-    <ToastContainer/>
-    {/* <TokenRefresher/> */}
-    <div className="Pretendard-Regular">
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/products/register">ProductRegistration</Link>
-        </li>
-        <li>
-          <Link to="/products/nearestProducts">NearestProductList</Link>
-        </li>
-        <li>
-          <Link to="/products">ProductList</Link>
-        </li>
-        <li>
-          <Link to="/KakaoMap">KakaoMap</Link>
-        </li>
-
-        <hr />
-        <li>
-          <Link to="/login">로그인테스트</Link>
+          <hr />
+          <li>
+            <Link to="/login">로그인테스트</Link>
+            <br />
+          </li>
+          <li>
+            <Link to="/signup">회원가입테스트</Link>
+            <br />
+          </li>
+          <li>
+            <Link to="/payment">GreenPay</Link>
+          </li>
           <br />
-        </li>
-        <li>
-          <Link to="/signup">회원가입테스트</Link>
-          <br />
-        </li>
-        <li>
-          <Link to="/payment">GreenPay</Link>
-        </li>
-        <br />
 
         <li>
           <Link to="/payment">GreenPay</Link>
@@ -95,81 +118,84 @@ function App() {
           <Link to="/sns">sns</Link>
         </li>
 
-        <li>
-          <Link to ="/progress">progress</Link>
-        </li>
+        <li><Link to="/pay3">pay3</Link></li>
+        <li><Link to="/mypage">Mypage</Link></li>
+        <li><Link to="/loading1">Loading1</Link></li>
+        <li><Link to="/loading2">Loading2</Link></li>
+        <li><Link to="/Random">RegisterComplete</Link></li>
+
       </ul>
-        
-     
 
-      <Switch>
+          <Switch>
+            <Route path={["/", "/main"]} exact>
+              {/* <MainView /> */}
+            </Route>
+            <Route path="/products" exact>
+              <ProductList />
+            </Route>
+            <Route path="/products/nearestProducts" exact>
+              <NearestProductList />
+            </Route>
+            <Route path="/products/register" exact>
+              <ProductRegistration />
+            </Route>
 
-        <Route path={["/", "/main"]} exact>
-          <MainView />
-        </Route>
-        <Route path="/products" exact>
-          <ProductList />
-        </Route>
-        <Route path="/products/nearestProducts" exact>
-          <NearestProductList />
-        </Route>
-        <Route path="/products/register" exact>
-          <ProductRegistration />
-        </Route>
+          <Route path="/products/:id" exact>
+            <ProductDetails />
+          </Route>
 
-        <Route path="/products/:id" exact>
-          <ProductDetails />
-        </Route>
+            <Route path="/login" exact>
+              <Login/>
+            </Route>
+            <Route path="/signup" exact>
+              <SignUp />
+            </Route>
 
-        <Route path="/login" exact>
-          <Login/>
-        </Route>
-        <Route path="/signup" exact>
-          <SignUp />
-        </Route>
+            <Route path="/KakaoMap" exact>
+              <ModalPage />
+            </Route>
+            <Route path="/payment" exact>
 
-        <Route path="/KakaoMap" exact>
-          <ModalPage />
-        </Route> 
-        <Route path="/payment" exact>
-          <GreenPay />
-        </Route>
+              <GreenPay />
+            </Route>
+            <Route path="/payment/gpay_register" component={PayRegister} />
+            <Route path="/payment/accnt_register" component={AccountRegister} />
 
-        <Route path="/payment/gpay_register" component={PayRegister} />
-        <Route path="/payment/accnt_register" component={AccountRegister} />
+          <Route path="/chat" exact>
+            <ChatApp />
+          </Route>
 
-        <Route path="/chat" exact>
-          <ChatApp />
-        </Route>
+          <Route path="/chat/roomNum/:roomNum" component={ChatBox} exact></Route>
+          <Route path="/chat/list" component={ChatList} exact></Route>
 
-        <Route path="/chat/roomNum/:roomNum" component={ChatBox} exact></Route>
-        <Route path="/chat/list" component={ChatList} exact></Route>
+          <Route path="/news" exact>
+            <Youtube />
+            <NewsList />
+          </Route>
 
-        <Route path="/news" exact>
-          <NewsList />
-          <Youtube />
-        </Route>
+          <Route path="/campaign" exact>
+            <CampaignList />
+          </Route>
+          <Route path="/campaign/:id" exact>
+            <CampaignDatails />
+          </Route>
+          <Route path="/sns" exact></Route>
+           <Route path="/progress" exact></Route>
 
-        <Route path="/campaign" exact>
-          <CampaignList />
-        </Route>
-        <Route path="/campaign/:id" exact>
-          <CampaignDatails />
-        </Route>
+           <Route path="/pay3"><RegisterStep4/></Route>
+           <Route path="/mypage"><Mypage/></Route>
+           <Route path="/loading1"><LoadingLeaf/></Route>
+           <Route path="/loading2"><OfficialLoading/></Route>
+           <Route path="/Random"><RegisterComplete/><Confetti/></Route>
+        </Switch>
 
-        <Route path="/sns" exact></Route>
+        </div>
 
-        <Route path="/progress" exact>
-          <ProgressForm/>
-        </Route>
-      </Switch>
-     
-        <ChatList/>
-       <MainView/>
-    </div>
-
+    <ChatList/>
+    <MainFooter/>
     </ThemeProvider>
-
+    </ResizedComponent>
+</>
   );
 }
 
