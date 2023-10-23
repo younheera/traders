@@ -26,8 +26,8 @@ import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.product.repository.ImageRepository;
 import com.newus.traders.product.repository.ProductRepository;
 import com.newus.traders.product.type.ProductStatus;
-import com.newus.traders.redis.service.RedisService;
-import com.newus.traders.redis.service.RedisService;
+// import com.newus.traders.redis.service.RedisService;
+// import com.newus.traders.redis.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +37,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
-    private final RedisService redisService;
+    // private final RedisService redisService;
 
     public List<ProductDto> getAllProducts() {
         List<Product> productList = productRepository.findByIsDeletedFalse();

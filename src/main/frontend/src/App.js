@@ -17,8 +17,6 @@ import CampaignDatails from "./components/sns/CampaignDatails";
 import CampaignList from "./components/sns/CampaignList";
 import NewsList from "./components/sns/NewsList";
 import Youtube from "./components/sns/Youtube";
-
-
 import Login from "./components/member/Login";
 import { signout } from "./components/member/SignAPIService";
 import { Button } from "@material-ui/core";
@@ -42,6 +40,8 @@ import Mypage from "./components/member/Mypage";
 import LoadingModal from "./components/payment/LoadingModal";
 import RandomEvent from "./components/member/RandomEvent";
 import Confetti from "./components/payment/Confetti";
+import SnsRegistration from "./components/sns/SnsRegistration";
+import PayMgmt from "./components/payment/PayMgmt";
 
 const theme = createTheme({
   typography: {
@@ -52,11 +52,12 @@ const theme = createTheme({
 
 function App() {
   
-  if (localStorage.getItem("REFRESH_TOKEN")) {
-    const userInfo = jwt_decode(localStorage.getItem("REFRESH_TOKEN"));
-    window.user = userInfo.sub;
-    console.log("app.js", window.user);
-  }
+  // if (localStorage.getItem("REFRESH_TOKEN")) {
+  //   const userInfo = jwt_decode(localStorage.getItem("REFRESH_TOKEN"));
+  //   window.user = userInfo.sub;
+  //   console.log("app.js", window.user);
+  // }
+
   return (
     <>
       <ResizedComponent>
@@ -99,9 +100,6 @@ function App() {
           <br />
 
         <li>
-          <Link to="/payment">GreenPay</Link>
-        </li>
-        <li>
           <Link to="/chat">chat</Link>
         </li>
 
@@ -124,7 +122,16 @@ function App() {
         <li><Link to="/loading2">Loading2</Link></li>
         <li><Link to="/Random">RegisterComplete</Link></li>
 
-      </ul>
+          <li>
+            <Link to="/news">News</Link>
+          </li>
+          <li>
+            <Link to="/campaign">Campaign</Link>
+          </li>
+          
+        </ul>
+        
+    
 
           <Switch>
             <Route path={["/", "/main"]} exact>
@@ -160,6 +167,7 @@ function App() {
             </Route>
             <Route path="/payment/gpay_register" component={PayRegister} />
             <Route path="/payment/accnt_register" component={AccountRegister} />
+            <Route path="/payment/payMgmt" component={PayMgmt} />
 
           <Route path="/chat" exact>
             <ChatApp />
@@ -187,15 +195,21 @@ function App() {
            <Route path="/loading1"><LoadingLeaf/></Route>
            <Route path="/loading2"><OfficialLoading/></Route>
            <Route path="/Random"><RegisterComplete/><Confetti/></Route>
-        </Switch>
 
-        </div>
+        <Route path="/sns/snsRegistration" exact>
+          <SnsRegistration/>
+        </Route>
 
-    <ChatList/>
-    <MainFooter/>
-    </ThemeProvider>
-    </ResizedComponent>
-</>
+      </Switch>
+    
+      </div>
+
+     
+        <ChatList/>
+        <MainFooter/>
+        </ThemeProvider>
+        </ResizedComponent>
+      </>
   );
 }
 

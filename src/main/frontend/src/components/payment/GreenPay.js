@@ -2,14 +2,14 @@
  * @author heera youn
  * @email [example@mail.com]
  * @create date 2023-10-18 21:57:51
- * @modify date 2023-10-22 21:42:29
+ * @modify date 2023-10-23 11:46:40
  * @desc [description]
  */
 
 /**
  * @author ahrayi
  * @create date 2023-09-25 15:01:56
- * @modify date 2023-10-18 21:57:47
+ * @modify date 2023-10-23 11:23:37
  */
 import React, { useHistory } from "react";
 import payment from "../../styles/payment.css";
@@ -42,7 +42,7 @@ const GreenPay = () => {
             Read More
           </a>
         </div>
-    </div>
+
   </div>
 
   <div className="col-xs-12 col-sm-4">
@@ -82,7 +82,17 @@ const GreenPay = () => {
       </div>
     </div>
   </div>
+  </div>
 </Row>
+
+<div>
+      <br />
+      <Link to="/payment/gpay_register">시작하기</Link>
+      <br />
+      <Link to="/payment/accnt_register">계좌등록</Link>
+      <br/>
+      <Link to="/payment/payMgmt">페이관리</Link>
+</div>
   <Row style={{marginLeft:'800px'}}>
     <Link to="/payment/gpay_register"><button className="saveButton" style={{justifyContent:'center'}}></button></Link>
   </Row>

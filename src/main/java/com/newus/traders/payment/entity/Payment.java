@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-10-04 01:23:39
- * @modify date 2023-10-04 01:23:39
+ * @modify date 2023-10-23 08:23:31
  */
 
 package com.newus.traders.payment.entity;
@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -26,9 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Payment {
 
-    // pk - member의 user_code와 연결?
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientInfo;
 
     // 사용자에게 입력받는 정보

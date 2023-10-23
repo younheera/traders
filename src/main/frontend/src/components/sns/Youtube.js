@@ -1,9 +1,9 @@
 /**
  * @author jeongyearim
  * @email [example@mail.com]
- * @create date 2023-10-06 17:43:20
- * @modify date 2023-10-12 11:38:26
- * @desc [유투브 api를 이용하여 해쉬태그 '기후위기'로 영상을 받아올것임 - 아직 미구현]
+ * @create date 2023-10-20 11:17:37
+ * @modify date 2023-10-23 12:07:22
+ * @desc [description]
  */
 import React from 'react';
 

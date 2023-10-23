@@ -1,15 +1,15 @@
 /**
  * @author heera youn
  * @create date 2023-10-21 20:18:24
- * @modify date 2023-10-23 00:14:48
+ * @modify date 2023-10-23 12:16:23
  * @desc [마이페이지]
  */
 import React, { useState } from 'react';
-import MyPageTab from './MyPageTab';
+
 import PayCard from '../../assets/css/PayCard.css';
 import { Row } from 'react-bootstrap';
 import CardPoint from './CardPoint';
-
+import MyPageTab from './MyPageTab';
 
 const Mypage = () => {
     const[tab, setTab] = useState(0); //탭 상태관리 변수

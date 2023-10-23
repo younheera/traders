@@ -1,13 +1,14 @@
 /**
  * @author ahrayi
  * @create date 2023-10-13 16:44:23
- * @modify date 2023-10-17 12:46:29
+ * @modify date 2023-10-23 12:13:39
  */
 
 import React, { useState } from 'react';
 import { TextField, MenuItem, Button } from '@mui/material';
 import bankCode from './bankCode';
-import axios from 'axios';
+import TokenRefresher from '../member/TokenRefresher';
+
 
 const AccountRegister1 = ({form, setForm, onNext, setRanNum}) => {
 
@@ -29,7 +30,7 @@ const AccountRegister1 = ({form, setForm, onNext, setRanNum}) => {
             clientInfo: form.clientInfo,
         }
 
-        axios.post('http://localhost:8080/api/payment/valid-account',requestBody)
+        TokenRefresher.post('http://localhost:8080/api/payment/valid-account',requestBody)
             .then(Response => {
                 if(Response.status===200) {
                     console.log(Response.data)
