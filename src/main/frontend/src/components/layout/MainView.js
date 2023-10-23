@@ -1,27 +1,28 @@
-/**
- * @author hyunseul
- * @create date 2023-10-17 16:30:56
- * @modify date 2023-10-19 21:56:53
- */
 import React from 'react';
 import MainCarousel from './MainCarousel';
-import  ResizedComponent  from './ResizedComponent';
+import { BsArrowUpCircle } from 'react-icons/bs';
+import { TopButton, scrollToTop } from './PublicComponents';
+import '../../styles/global.css';
+import ResizedComponent from './ResizedComponent';
 import MainNews from './MainNews';
 import MainImg from './MainImg';
 
-
-
 const MainView = () => {
     return (
-        <>
-        <ResizedComponent>
-            <MainCarousel/>
-            <MainImg/>
-            <MainNews/>
-        </ResizedComponent>
-        </>       
-        
-    );
-};
+        <div className='basefont'>
+            <body>
+                <div>
+                <ResizedComponent>
+                    <MainCarousel/>
+                    <MainImg/>
+                    <MainNews/>
+                    <BsArrowUpCircle onClick={scrollToTop} type='button' className='public-bottombutton' size='50px'/>
+                    <TopButton />
+                </ResizedComponent>
+                </div>
+            </body>
+        </div>
 
+    )
+    }
 export default MainView;

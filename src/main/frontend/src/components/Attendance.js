@@ -1,11 +1,11 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-22 00:24:58
- * @modify date 2023-10-22 01:14:23
+ * @modify date 2023-10-23 15:15:41
  */
 
 import React, { useEffect, useState } from "react";
-import TokenRefresher from "./service/TokenRefresher";
+import TokenRefresher from "./member/TokenRefresher";
 
 const Attendance = () => {
   const user = window.user;

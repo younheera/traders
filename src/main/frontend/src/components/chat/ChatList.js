@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-11 19:03:18
- * @modify date 2023-10-22 16:04:30
+ * @modify date 2023-10-23 15:31:45
  */
 /**
  * @author wheesunglee
@@ -21,12 +21,12 @@ import { useHistory } from "react-router-dom";
 import "../../assets/css/ChatListModal.css";
 import "../../assets/css/ChatStyle.css";
 import Chatprofile from "../../assets/img/Chatprofile.png";
-import TokenRefresher from "../service/TokenRefresher";
+import TokenRefresher from "../member/TokenRefresher";
 import { fetchLastMessages } from "./fetchLastMessages";
 
 const ChatList = () => {
   const user = window.user;
-  console.log(user,"chatlist")
+  console.log(user, "chatlist");
   const [chatRooms, setChatRooms] = useState([]);
   const history = useHistory();
   const [lastMsg, setLastMsg] = useState([]);

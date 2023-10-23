@@ -34,8 +34,10 @@ public enum ErrorCode {
     SNS_NOT_DELETED(HttpStatus.INTERNAL_SERVER_ERROR, "SNS를 삭제할 수 없습니다"),
     SNS_NOT_UPDATED(HttpStatus.INTERNAL_SERVER_ERROR, "SNS를 수정할 수 없습니다"),
 
-    NOTIFICATION_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "알림이 존재하지 않습니다");
+    NOTIFICATION_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "알림이 존재하지 않습니다"),
 
+    PAYMENT_NOT_FOUND(HttpStatus.BAD_REQUEST, "페이 가입 정보가 존재하지 않습니다.");
+    ;
     private final HttpStatus httpStatus;
     private final String message;
 }

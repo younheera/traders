@@ -1,22 +1,23 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 13:20:05
- * @modify date 2023-10-18 14:53:10
+ * @modify date 2023-10-23 17:44:03
  * 그린페이 가입 - 2. 문자인증 처리
  */
 
-import React, { useState } from "react";
+import React from "react";
 
-const RegisterStep2 = ({ inputAuthNum,handleVerifySms, onText, handleSendSms,authBtnFlag }) => {
-
+const RegisterStep2 = ({
+  inputAuthNum,
+  handleVerifySms,
+  onText,
+  handleSendSms,
+  authBtnFlag,
+}) => {
   return (
     <div>
       <h2>문자 인증</h2>
-      <button
-        name="authNumBtn"
-        onClick={handleSendSms}
-        disabled={authBtnFlag}
-      >
+      <button name="authNumBtn" onClick={handleSendSms} disabled={authBtnFlag}>
         인증번호 받기
       </button>
       <br />
@@ -29,9 +30,7 @@ const RegisterStep2 = ({ inputAuthNum,handleVerifySms, onText, handleSendSms,aut
             size={6}
             onChange={onText}
           />
-          <button onClick={handleVerifySms}>
-            인증
-          </button>
+          <button onClick={handleVerifySms}>인증</button>
         </div>
       )}
     </div>

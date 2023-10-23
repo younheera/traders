@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-04 13:02:02
- * @modify date 2023-10-23 13:48:54
+ * @modify date 2023-10-23 15:16:17
  */
 
 /**
@@ -22,7 +22,7 @@ import { withRouter } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
 import "../../assets/css/ChatStyle.css";
 import { fetchProduct } from "../../assets/js/product";
-import TokenRefresher from "../service/TokenRefresher";
+import TokenRefresher from "../member/TokenRefresher";
 import ChatScheduleModal from "./ChatScheduleModal";
 
 // 채팅 내용

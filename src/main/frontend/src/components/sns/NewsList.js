@@ -2,7 +2,7 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-06 17:44:23
- * @modify date 2023-10-20 11:14:28
+ * @modify date 2023-10-23 12:27:40
  * @desc [환경 관련 뉴스기사 출력]
  */
 
@@ -19,7 +19,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import {AiOutlinePlus} from 'react-icons/ai'
-import TokenRefresher from '../service/TokenRefresher';
+import TokenRefresher from '../member/TokenRefresher';
+
 
 function NewsList() {
   const [newsList, setNewsList] = useState([]);
@@ -29,7 +30,7 @@ function NewsList() {
   useEffect(() => {
     // 뉴스 데이터를 가져오는 요청
     TokenRefresher
-      .get('/sns/showNews')
+      .get('http://localhost:8080/api/sns/showNews')
       .then((response) => {
         setNewsList(response.data);
       })
@@ -66,8 +67,3 @@ function NewsList() {
 }
 
 export default NewsList;
-
-
-
-
-

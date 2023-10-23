@@ -1,8 +1,13 @@
+/**
+ * @author wheesunglee
+ * @create date 2023-10-06 10:16:27
+ * @modify date 2023-10-23 14:44:13
+ */
 import React, { useEffect, useState } from "react";
-import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import Col from 'react-bootstrap/Col';
+import {AiOutlineCloseCircle} from 'react-icons/ai'
 
 const ImagePreview = ({ files, deleteFile }) => {
   const [preview, setPreview] = useState([]);
@@ -32,15 +37,10 @@ const ImagePreview = ({ files, deleteFile }) => {
       <Row key={i}>
         {preview.slice(i, i + 3).map((image, index) => (
           <Col sm={4} key={index}>
-            <div className="square-box">
-              <img src={image} width={300} height={300} className="img-pre" />
-            </div>
-            <AiOutlineCloseCircle
-              onClick={() => deletePreview(i + index)}
-              className="delete-btn"
-            >
-              취소
-            </AiOutlineCloseCircle>
+              <div className="square-box">
+                <img src={image} width={300} height={300} className="img-pre" />
+              </div>
+             <AiOutlineCloseCircle onClick={() => deletePreview(i + index)} className="delete-btn">취소</AiOutlineCloseCircle >
           </Col>
         ))}
       </Row>

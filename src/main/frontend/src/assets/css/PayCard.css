@@ -1,0 +1,136 @@
+.paycardwrapper {
+  width: 296px;
+  height: 188px;
+  padding: 12px;
+
+  display: grid;
+  place-items: center;
+  background: #2b2d2f;
+}
+
+.paycardtitle {
+  text-align: center;
+  margin-top: 55px;
+  color: #fff;
+  font-size: 25px;
+}
+
+.paycard {
+  position: relative;
+  width: 296px;
+  height: 188px;
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 16px;
+  border: solid 4px rgba(255, 255, 255, 0.1);
+  background-image: url("https://products.ls.graphics/mesh-gradients/images/78.-Night-sky.jpg");
+  background-position: center;
+  background-size: cover;
+
+  box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px,
+    rgba(255, 255, 255, 0.12) 0px -12px 30px,
+    rgba(255, 255, 255, 0.12) 0px 4px 6px,
+    rgba(255, 255, 255, 0.17) 0px 12px 13px,
+    rgba(255, 255, 255, 0.09) 0px -3px 5px;
+}
+
+.paycardtext {
+  font-size: 8px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardtop,
+.cardbottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardtop img {
+  width: 20px;
+}
+
+.cardbrand {
+  height: 20px;
+  mix-blend-mode: overlay;
+}
+
+.infos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.infos--bottom {
+  display: flex;
+  gap: 20px;
+}
+
+.card-number {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+/* TableContainer */
+.TableContainer {
+  width: 60%;
+  height: 100%;
+  display: contents;
+  flex-direction: column;
+  font-size: 14px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.tablerow {
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+
+/* TableCell */
+.tablecell {
+  padding: 16px;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  align-items: center;
+  word-break: break-all;
+}
+
+/* TableRow */
+.tablerow:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* TableSubRow */
+.tablesubrow {
+  width: 100%;
+  padding: 24px;
+}
+
+/* TableHeader */
+.tableheader {
+  font-weight: 500;
+}
+
+/* TableBody */
+.tablebody {
+  display: flex;
+  flex-direction: column;
+}
+
+/* NoDataComponent */
+.nodatacomponent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

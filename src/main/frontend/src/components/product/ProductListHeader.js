@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { Col, Container, Row, Stack } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../assets/css/Product.css";
-import TokenRefresher from "../service/TokenRefresher";
+import TokenRefresher from "../member/TokenRefresher";
 import ProductList from "./ProductList";
 
 const ProductListHeader = () => {
@@ -81,27 +81,35 @@ const ProductListHeader = () => {
 
   return (
     <>
-      <Container style={{ maxWidth: "1040px", backgroundColor: "#fe4568" }}>
-        <Stack
-          direction="horizontal"
-          gap={2}
-          className="justify-content-center"
-        >
-          <button className="btn-1 bold">Category1</button>
-          <button className="btn-1 bold">Category2</button>
-          <button className="btn-1 bold">Category3</button>
-          <button className="btn-1 bold">Category4</button>
-        </Stack>
+      <Container style={{ maxWidth: "1040px" }}>
+        <Row>
+          <Col md="12" className="text-center mb-4">
+            <div style={{ width: "100%" }}>
+              <button className="category-btn ">여성의류</button>
+              <button className="category-btn ">남성의류</button>
+              <button className="category-btn ">신발</button>
+              <button className="category-btn">가방/지갑</button>
+              <button className="category-btn ">반려동물용품</button>
+              <button className="category-btn ">디지털</button>
+              <button className="category-btn">가전제품</button>
+              <button className="category-btn">스포츠/레저</button>
+              <button className="category-btn">도서/티켓/문구</button>
+              <button className="category-btn ">가구/인테리어</button>
+            </div>
+          </Col>
+        </Row>
 
         <Row>
-          <Col className="col-left-align bold-colored-font" md="4">
-            {showAvailable ? "전체 보기" : "거래 가능 보기"}
+          <Col className="col-left-align bold-colored-font ">
+            {showAvailable ? "전체 보기" : "거래 가능한 물품"}
             <input
+              className="list-checkbox"
               type="checkbox"
-              onClick={() => setShowAvailable(!showAvailable)}
+              checked={showAvailable}
+              onChange={() => setShowAvailable(!showAvailable)}
             />
           </Col>
-          <Col className="col-right-align" md="4">
+          <Col className="col-right-align">
             <button
               className="btn-2"
               // onClick={() => setViewNearby(!viewNearby)}
@@ -110,31 +118,23 @@ const ProductListHeader = () => {
               {viewNearby ? "전지역 물품" : "현위치 물품"}
             </button>
           </Col>
-          <Col className="col-right-align" md="4">
-            <button
-              className="btn-1 bold"
-              onClick={() => {
-                history.push("products/register");
-              }}
-            >
-              등록하기
-            </button>
-          </Col>
         </Row>
-        <Row className="justify-content-center">
-          <Col lg="12">
+      </Container>
+
+      <Container style={{ maxWidth: "1040px", marginTop: "15px" }}>
+        <Row className="justify-content-center" style={{ margin: "0px" }}>
+          <Col md="12" style={{ margin: "0px" }}>
             <Row>
-              {data &&
-                data.map((product, index) => {
-                  if (showAvailable && product.status === "SOLD") {
-                    return null;
-                  }
-                  return (
-                    <Col lg="4" key={index}>
-                      <ProductList product={product} />
-                    </Col>
-                  );
-                })}
+              {data.map((product, index) => {
+                if (showAvailable && product.status === "SOLD") {
+                  return null;
+                }
+                return (
+                  <Col md={3} key={index} style={{ marginBottom: "15px" }}>
+                    <ProductList product={product} />
+                  </Col>
+                );
+              })}
             </Row>
           </Col>
         </Row>

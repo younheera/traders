@@ -5,6 +5,15 @@
  */
 package com.newus.traders.product.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
 import com.newus.traders.image.service.ImageService;
@@ -16,14 +25,8 @@ import com.newus.traders.product.type.ProductStatus;
 import com.newus.traders.redis.service.RedisService;
 import com.newus.traders.user.entity.User;
 import com.newus.traders.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -111,7 +114,6 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-
     @Transactional
     public String registerProduct(String username, ProductForm productForm, List<MultipartFile> files) {
 
@@ -135,7 +137,7 @@ public class ProductService {
 
     @Transactional
     public String updateProduct(String username, Long productId, ProductForm productForm,
-                                List<MultipartFile> newFiles, List<Integer> removedFiles) {
+            List<MultipartFile> newFiles, List<Integer> removedFiles) {
 
         User user = getUser(username);
 
@@ -160,7 +162,7 @@ public class ProductService {
             if (removedFiles.size() != 0) {
                 System.out.println("deleteImage시작");
 
-                imageService.deleteImage(removedFiles);
+                imageService.updateImage(removedFiles);
             }
 
         } catch (Exception exception) {

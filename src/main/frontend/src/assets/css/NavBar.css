@@ -1,7 +1,11 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 22:58:38
- * @modify date 2023-10-18 10:52:30
+<<<<<<< HEAD
+ * @modify date 2023-10-20 23:20:46
+=======
+ * @modify date 2023-10-21 20:17:26
+>>>>>>> a0eb3f4d37944b65c993e63d2c1014e4dc83feb6
  */
 
 .nav{
@@ -53,7 +57,7 @@
     font-weight: 900;
     font-size: 22pt;
     justify-items: center;
-    color: rgb(15, 26, 95);
+    color: rgb(15, 26, 95);    
     
 }
 /* 지구 이미지 */
@@ -64,20 +68,27 @@
    margin-left: 10px;
    text-align: center;
    justify-items: center;
+   animation : logolotate 5s linear infinite ;
+}
+
+@keyframes logolotate {
+	100% {
+		transform : rotate(360deg);
+	}
 }
 
 /* 오른쪽 메뉴(로그인) */
 .navbar-nav{
-    margin-right: 100px !important;
+    margin-right: 40px !important;
     font-weight: 800;
     font-size: 13pt;
-    
+   
 }
 
 .navbar-nav .nav-link.active{
     color: rgb(15, 26, 95);
 }
 
-.nav-logout-icons{
-    margin-right:5px !important;
+.navbar-icons{
+    margin-right: 15px !important;
 }

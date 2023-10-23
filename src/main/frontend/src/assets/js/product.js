@@ -1,10 +1,10 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-20 13:54:31
- * @modify date 2023-10-21 20:58:05
+ * @modify date 2023-10-23 15:24:29
  */
 
-import TokenRefresher from "../../components/service/TokenRefresher";
+import TokenRefresher from "../../components/member/TokenRefresher";
 
 const fetchProduct = (id) => {
   return TokenRefresher.get(`http://localhost:8080/api/products/${id}`)
@@ -51,17 +51,18 @@ const fetchLikes = (id) => {
 };
 
 const changeLikes = (id) => {
-  return TokenRefresher.put(
-    `http://localhost:8080/api/redis/changeLikes/${id}`
-  ).then((res) => {
-    console.log("fetchlikes", res.data);
-    return { data: res.data };
-  }).catch((error) => {
-    if (error.response) {
-      const errorResponse = error.response.data;
-      console.log(errorResponse);
-    }
-  });
+  return TokenRefresher.put(`http://localhost:8080/api/redis/changeLikes/${id}`)
+    .then((res) => {
+      console.log("fetchlikes", res.data);
+      return { data: res.data };
+    })
+    .catch((error) => {
+      if (error.response) {
+        const errorResponse = error.response.data;
+        console.log(errorResponse);
+      }
+    });
 };
 
 export { changeLikes, fetchLiked, fetchLikes, fetchProduct };
+

@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-08 22:08:34
- * @modify date 2023-10-21 22:13:36
+ * @modify date 2023-10-23 15:16:29
  */
 
 import React, { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useHistory, withRouter } from "react-router-dom";
 import "../../assets/css/ProductRegistration.css";
 import "../../styles/global.css";
-import TokenRefresher from "../service/TokenRefresher";
+import TokenRefresher from "../member/TokenRefresher";
 import KakaoMapModal from "./KakaoMapModal";
 import UpdateImage from "./UpdateImage";
 

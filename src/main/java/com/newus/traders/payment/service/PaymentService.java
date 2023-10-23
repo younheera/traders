@@ -9,7 +9,6 @@ package com.newus.traders.payment.service;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
-import com.newus.traders.image.service.ImageService;
 import com.newus.traders.payment.dto.PayAccountDto;
 import com.newus.traders.payment.dto.PaymentDto;
 import com.newus.traders.payment.entity.PayAccount;
@@ -31,16 +29,13 @@ import com.newus.traders.user.entity.User;
 import com.newus.traders.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final PayAccountRepository payAccountRepository;
+    private final UserRepository userRepository;
     private ConcurrentHashMap<String, String> authNums = new ConcurrentHashMap<>();
 
     @Value("${sms.api_key}")
@@ -49,6 +44,50 @@ public class PaymentService {
     private String apiSecret;
     @Value("${sms.sphone}")
     private String sphone;
+
+    // 토큰 userName으로 clientInfo 추출
+    public Optional<Long> getClientInfo(String userName) {
+        Optional<User> user = userRepository.findByUsername(userName);
+
+        if (user.isPresent()) {
+            Long clientInfo = user.get().getUserId();
+            System.out.println("서비스Long: " + clientInfo);
+            return Optional.of(clientInfo);
+        } else {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+    }
+
+    // clientInfo로 Payment 정보 반환
+    public Optional<Payment> getPaymentInfo(Long clientInfo) {
+        Optional<Payment> payment = paymentRepository.findByClientInfo(clientInfo);
+
+        if (!payment.isPresent()) {
+            throw new CustomException(ErrorCode.PAYMENT_NOT_FOUND);
+        } else {
+            return payment;
+        }
+    }
+
+    // clientInfo로 페이가입여부 확인
+    public boolean checkPayMember(Long ClientInfo) {
+        Optional<Payment> payment = paymentRepository.findByClientInfo(ClientInfo);
+        if (payment.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // clientInfo로 계좌등록여부 확인
+    public boolean checkAccntMember(Long clientInfo) {
+        Optional<PayAccount> payAccount = payAccountRepository.findByClientInfo(clientInfo);
+        if (payAccount.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     // 사용자인증타입(auth_type) 판별(최초등록:0, 재인증:2)
     public int getAuthType(String clientInfo) {
@@ -62,9 +101,10 @@ public class PaymentService {
 
     // 신규 등록
     @Transactional
-    public Payment savePaymentDtoToDb(PaymentDto paymentDto) {
+    public Payment savePaymentDtoToDb(PaymentDto paymentDto, String userName) {
 
         Payment payment = new Payment();
+        payment.setClientInfo(getClientInfo(userName).get());
         payment.setUserName(paymentDto.getUserName());
         payment.setUserInfo(paymentDto.getUserInfo());
         payment.setUserGender(paymentDto.getUserGender());
@@ -150,25 +190,17 @@ public class PaymentService {
         return verNum;
     }
 
-
-
-
-
     private final RedisService redisservice;
-     private final UserRepository userRepository;
-
 
     public User getUser(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
-    
 
     // 출석체크 지급
     public void addBalanceForAttendance(String username) {
         User user = getUser(username);
 
-        
     }
 
 }
