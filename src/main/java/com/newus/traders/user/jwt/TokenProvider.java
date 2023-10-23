@@ -35,8 +35,8 @@ public class TokenProvider {
 
    private static final String AUTHORITIES_KEY = "auth";
    private static final String BEARER_TYPE = "Bearer";
-   private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60;            // 30분 * 30;
-   private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 200 * 20;   // 7일 * 60 * 24 * 7;
+   private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 120; // 2시간
+   private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000L * 60 * 60 * 24 * 14;   // 14일
    private Key key;
    private CustomUserDetailsService customUserDetailsService;
 
@@ -64,6 +64,7 @@ public class TokenProvider {
 
    // Refresh Token 생성
    String refreshToken = Jwts.builder()
+           .setSubject(authentication.getName())
            .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
            .signWith(key, SignatureAlgorithm.HS512)
            .compact();

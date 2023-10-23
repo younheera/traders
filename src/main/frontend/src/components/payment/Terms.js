@@ -1,9 +1,3 @@
-/**
- * @author ahrayi
- * @create date 2023-09-26 11:33:31
- * @modify date 2023-10-18 15:49:00
- */
-
 import React, { useState, useEffect } from "react";
 
 const initialTermStates = {
@@ -53,35 +47,39 @@ const Terms = ({onTermsChange,setSelectAllChecked,selectAllChecked}) => {
   const terms = [
     {
       name: "term1",
-      label: "그린페이 서비스 약관",
+      label: "그린페이 서비스 약관 ",
       link: "https://www.daangnpay.com/서비스-약관",
     },
-    { name: "term2", label: "그린페이 전자금융거래 이용약관", link: "" },
+    { name: "term2", label: "그린페이 전자금융거래 이용", link: "" },
     { name: "term3", label: "개인정보 수집 및 이용동의", link: "" },
-    { name: "term4", label: "개인정보 제3자 제공 동의(그린페이)", link: "" },
+    { name: "term4", label: "개인정보 제3자 제공 동의", link: "" },
   ];
 
   return (
+    <div className="basefont">
     <form>
       <div>
         <input
+          className="typotitle"
           type="checkbox"
           name="selectall"
           value="selectall"
           checked={selectAllChecked}
           onChange={toggleSelectAll}
           required
+          style={{marginTop:'40px'}}
         />
         &nbsp;&nbsp;약관 모두 동의
         <br />
       </div>
+
       <hr className="hr-3" />
       {terms.map((term) => (
         <div key={term.name}>
-          <span style={{ color: "green", fontWeight: "bold" }}>[필수]</span>
+          <span className="necessarytext">[필수]</span>
           &nbsp;&nbsp;{term.label}&nbsp;
           <a href={term.link} target="_blank">
-            상세보기
+            상세&nbsp;
           </a>
           <span style={{ float: "right" }}>
             <input
@@ -91,7 +89,8 @@ const Terms = ({onTermsChange,setSelectAllChecked,selectAllChecked}) => {
               checked={termStates[term.name]}
               onChange={() => handleCheckboxChange(term.name)}
             />
-            동의함 &nbsp;&nbsp;
+            &nbsp;&nbsp;동의 &nbsp;
+
             <input
               type="checkbox"
               className="term-checkbox"
@@ -99,12 +98,13 @@ const Terms = ({onTermsChange,setSelectAllChecked,selectAllChecked}) => {
               checked={!termStates[term.name]}
               onChange={() => handleCheckboxChange(term.name)}
             />
-            동의안함
+            &nbsp;비동의
           </span>
           <br />
         </div>
       ))}
     </form>
+    </div>
   );
 };
 

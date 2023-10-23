@@ -158,7 +158,7 @@ public class PaymentController {
 
         return new ResponseEntity<>(Collections.singletonMap("message", "계좌가 성공적으로 등록되었습니다."), HttpStatus.OK);
     }
-
+    
     // 인증문자 발송
     @Transactional
     @PostMapping(value = "/payment/sms")

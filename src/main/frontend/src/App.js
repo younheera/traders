@@ -11,32 +11,36 @@ import ProductRegistration from "./components/product/ProductRegistration";
 import ChatApp from "./components/chat/ChatApp";
 import ChatBox from "./components/chat/ChatBox";
 import ChatList from "./components/chat/ChatList";
-import SignUp from "./components/service/SignUp";
+import SignUp from "./components/member/SignUp";
 import ModalPage from "./components/product/ModalPage";
 import CampaignDatails from "./components/sns/CampaignDatails";
 import CampaignList from "./components/sns/CampaignList";
 import NewsList from "./components/sns/NewsList";
 import Youtube from "./components/sns/Youtube";
-
-
-import Login from "./components/service/Login";
-import { signout } from "./components/service/SignAPIService";
+import Login from "./components/member/Login";
+import { signout } from "./components/member/SignAPIService";
 import { Button } from "@material-ui/core";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import TokenRefresher from "./components/service/TokenRefresher";
+import TokenRefresher from "./components/member/TokenRefresher";
 import AccountRegister from "./components/payment/AccountRegister";
 import "./styles/global.css";
 import { createTheme, ThemeProvider  } from "@material-ui/core/styles";
-import jwt_decode from "jwt-decode";
-
-
 import MainFooter from "./components/layout/MainFooter";
 import ResizedComponent from "./components/layout/ResizedComponent";
 import NavBar from "./components/layout/NavBar";
 import MainView from "./components/layout/MainView";
+import jwt_decode from "jwt-decode";
+import RegisterStep3 from "./components/payment/RegisterStep3";
+import RegisterStep4 from "./components/payment/RegisterStep4";
+import RegisterComplete from "./components/payment/RegisterComplete";
+import LoadingLeaf from "./assets/LoadingLeaf";
+import { OfficialLoading } from "./assets/OfficialLoading";
+import Mypage from "./components/member/Mypage";
+import LoadingModal from "./components/payment/LoadingModal";
+import RandomEvent from "./components/member/RandomEvent";
+import Confetti from "./components/payment/Confetti";
 import SnsRegistration from "./components/sns/SnsRegistration";
-// import jwt_decode from "jwt-decode";
 import PayMgmt from "./components/payment/PayMgmt";
 
 const theme = createTheme({
@@ -45,11 +49,13 @@ const theme = createTheme({
   }
 });
 
+
 function App() {
   
-  // if (localStorage.getItem("ACCESS_TOKEN")) {
-  //   const userInfo = jwt_decode();
+  // if (localStorage.getItem("REFRESH_TOKEN")) {
+  //   const userInfo = jwt_decode(localStorage.getItem("REFRESH_TOKEN"));
   //   window.user = userInfo.sub;
+  //   console.log("app.js", window.user);
   // }
 
   return (
@@ -59,6 +65,7 @@ function App() {
         <MainView/>
          <ThemeProvider theme={theme}>
         <ToastContainer/>
+        <RandomEvent/>
         {/* <TokenRefresher/> */}
         <div className="Pretendard-Regular">
           <ul>
@@ -99,6 +106,22 @@ function App() {
         <button onClick={signout}>로그아웃</button>
         <hr />
 
+        <li>
+          <Link to="/news">News</Link>
+        </li>
+        <li>
+          <Link to="/campaign">Campaign</Link>
+        </li>
+        <li>
+          <Link to="/sns">sns</Link>
+        </li>
+
+        <li><Link to="/pay3">pay3</Link></li>
+        <li><Link to="/mypage">Mypage</Link></li>
+        <li><Link to="/loading1">Loading1</Link></li>
+        <li><Link to="/loading2">Loading2</Link></li>
+        <li><Link to="/Random">RegisterComplete</Link></li>
+
           <li>
             <Link to="/news">News</Link>
           </li>
@@ -107,7 +130,7 @@ function App() {
           </li>
           
         </ul>
-          
+        
     
 
           <Switch>
@@ -139,6 +162,7 @@ function App() {
               <ModalPage />
             </Route>
             <Route path="/payment" exact>
+
               <GreenPay />
             </Route>
             <Route path="/payment/gpay_register" component={PayRegister} />
@@ -160,7 +184,18 @@ function App() {
           <Route path="/campaign" exact>
             <CampaignList />
           </Route>
-          
+          <Route path="/campaign/:id" exact>
+            <CampaignDatails />
+          </Route>
+          <Route path="/sns" exact></Route>
+           <Route path="/progress" exact></Route>
+
+           <Route path="/pay3"><RegisterStep4/></Route>
+           <Route path="/mypage"><Mypage/></Route>
+           <Route path="/loading1"><LoadingLeaf/></Route>
+           <Route path="/loading2"><OfficialLoading/></Route>
+           <Route path="/Random"><RegisterComplete/><Confetti/></Route>
+
         <Route path="/sns/snsRegistration" exact>
           <SnsRegistration/>
         </Route>
@@ -172,11 +207,9 @@ function App() {
      
         <ChatList/>
         <MainFooter/>
-   
-        
-      </ThemeProvider>
-      </ResizedComponent>
-    </>
+        </ThemeProvider>
+        </ResizedComponent>
+      </>
   );
 }
 

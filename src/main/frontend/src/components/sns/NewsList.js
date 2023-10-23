@@ -1,25 +1,11 @@
-/**
- * @author jeongyearim
- * @email [example@mail.com]
- * @create date 2023-10-06 17:44:23
- * @modify date 2023-10-20 11:14:28
- * @desc [환경 관련 뉴스기사 출력]
- */
-
-/**
- * @author hyunseul
- * @create date 2023-10-19 18:32:07
- * @modify date 2023-10-19 18:32:22
- * @desc [css]
- */
-
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import {AiOutlinePlus} from 'react-icons/ai'
-import TokenRefresher from '../service/TokenRefresher';
+import TokenRefresher from '../member/TokenRefresher';
+
 
 function NewsList() {
   const [newsList, setNewsList] = useState([]);
@@ -66,8 +52,3 @@ function NewsList() {
 }
 
 export default NewsList;
-
-
-
-
-

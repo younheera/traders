@@ -1,113 +1,48 @@
 /**
+ * @author heera youn
+ * @create date 2023-10-22 17:24:50
+ * @modify date 2023-10-22 23:37:02
+ * @desc [모달 간략화 ]
+ */
+/**
  * @author hyunseul
  * @create date 2023-10-17 16:30:56
- * @modify date 2023-10-17 16:30:58
+ * @modify date 2023-10-17 18:05:10
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/css/Footer.css';
+import { Row } from 'react-bootstrap';
 
 const MainFooter = () => {
 
     return (
       <div className='footer-container'>
-          {/* <section className="footer-subscription"> */}
-              {/* <p className="footer-subscription-heading">
-                  Join the Adventure newsletter to receive our best vacation deals
+        
+          <section className="footer-subscription"> 
+              <p className="footer-subscription-heading">
+                  copyright © Traders. All rights reserved
+                  <hr style={{color:'white', height:'3px', margin:'10px'}}/>
               </p>
-              <p className="footer-subscription-text">
-                  You can unsubscribe at any time.
-              </p> */}
-              {/* <div className="input-areas">
-                  <form>
-                      <input type="email" name = "email" placeholder = "Your Email" 
-                      className="footer-input"/>
-                      {/* <Button buttonStyle = 'btn--outline'>Subscribe</Button> */}
-                  {/* </form> */}
-              {/* </div>  */}
-          {/* </section> */}
-          <div class='footer-links'>
+           </section>
+           
+         <div className='footer-links'>
               <div className='footer-link-wrapper'>
-                  <div class='footer-link-items'>
-                      <h2>About Us</h2>
-                      <Link to='/sign-up'>How it works</Link>
-                      <Link to='/'>Testimonials</Link>
-                      <Link to='/'>Careers</Link>
-                      <Link to='/'>Investors</Link>
-                      <Link to='/'>Terms of Service</Link>
+                  <div className='footer-link-items'>
+
+                      <Link to='/sign-up'>사이트소개&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                      <Link to='/sign-up'>개인정보처리방침&nbsp;&nbsp;&nbsp;&nbsp;</Link>
+                      <Link to='/sign-up'>이용약관</Link>
                   </div>
-                  <div class='footer-link-items'>
-                      <h2>Contact Us</h2>
-                      <Link to='/'>Contact</Link>
-                      <Link to='/'>Support</Link>
-                      <Link to='/'>Destinations</Link>
-                      <Link to='/'>Sponsorships</Link>
+            </div> 
+        </div>
+          <div className='footer-links'>
+              <div className='footer-link-wrapper'>
+                  <div className='footer-link-items'>
+                      <h2>고객센터&nbsp;&nbsp;&nbsp;&nbsp;Traders@email.com</h2>
                   </div>
-                 
-                  
-                  <div class='footer-link-items'>
-                      <h2>Videos</h2>
-                      <Link to='/'>Submit Video</Link>
-                      <Link to='/'>Ambassadors</Link>
-                      <Link to='/'>Agency</Link>
-                      <Link to='/'>Influencer</Link>
                   </div>
-                  <div class='footer-link-items'>
-                      <h2>Social Media</h2>
-                      <Link to='/'>Instagram</Link>
-                      <Link to='/'>Facebook</Link>
-                      <Link to='/'>Youtube</Link>
-                      <Link to='/'>Twitter</Link>
-                  </div>
-              </div>
-              </div>
-          {/* <section className="social-media">
-              <div className="social-media-wrap">
-                  <div className="footer-logo">
-                      <Link to='/' className="social-logo">
-                          TRVL <i className="fab fa-typo3"></i>
-                      </Link>
-                  </div>
-                  <small className="website-rights">TRVL © 2020</small>
-                  <div className="social-icons">
-                      <Link className="social-icon-link facebook" to="/"
-                      target = "_blank"
-                      aria-label="Facebook"
-                      >
-                          <i className="fab fa-facebook-f"></i>
-                      </Link>
-                      <Link className="social-icon-link instagram" to="/"
-                      target = "_blank"
-                      aria-label="Instagram"
-                      >
-                          <i className="fab fa-instagram"></i>
-                      </Link>
-                      <Link class='social-icon-link youtube'
-                      to='/'
-                      target='_blank'
-                      aria-label='Youtube'
-                      >
-                      <i class='fab fa-youtube' />
-                      </Link>
-                      <Link
-                      class='social-icon-link twitter'
-                      to='/'
-                      target='_blank'
-                      aria-label='Twitter'
-                      >
-                      <i class='fab fa-twitter' />
-                      </Link>
-                      <Link
-                      class='social-icon-link twitter'
-                      to='/'
-                      target='_blank'
-                      aria-label='LinkedIn'
-                      >
-                      <i class='fab fa-linkedin' />
-                      </Link>
-                  </div>
-              </div>
-          </section> */}
+        </div>
       </div>
   )
 }

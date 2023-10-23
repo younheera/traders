@@ -1,8 +1,13 @@
 /**
+ * @author heera youn
+ * @create date 2023-10-22 01:45:55
+ * @modify date 2023-10-23 11:47:20
+ * @desc [Loading Page CSS 및 애니메이션 이펙트]
  * @author ahrayi
  * @create date 2023-10-19 11:52:32
  * @modify date 2023-10-19 17:34:24
  */
+
 
 import React from 'react';
 import {Modal,Spinner} from 'react-bootstrap';

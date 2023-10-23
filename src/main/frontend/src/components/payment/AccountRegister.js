@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-10-13 12:56:57
- * @modify date 2023-10-20 11:28:54
+ * @modify date 2023-10-23 12:12:44
  * @desc 그린페이 계좌등록 프로세스
  */
 
@@ -11,7 +11,8 @@ import AccountRegister1 from './AccountRegister1';
 import AccountRegister2 from './AccountRegister2';
 import AccountRegister3 from './AccountRegister3';
 import AccountRegister4 from './AccountRegister4';
-import TokenRefresher from '../service/TokenRefresher';
+import TokenRefresher from '../member/TokenRefresher';
+
 
 const AccountRegister = () => {
 
@@ -69,7 +70,7 @@ const AccountRegister = () => {
     return (
         <div>
             {step===1 && (
-                <AccountRegister1 onNext={onNext} onText={onText} form={form} setRanNum={setRanNum}/>
+                <AccountRegister1 onNext={onNext} form={form}  setForm={setForm} setRanNum={setRanNum}/>
             )}
             {step===2 && <AccountRegister2 onNext={onNext} ranNum={ranNum}/>}
             {step===3 && <AccountRegister3 postAccountInfo={postAccountInfo}/>}
