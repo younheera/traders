@@ -24,14 +24,11 @@ import com.newus.traders.payment.entity.PayAccount;
 import com.newus.traders.payment.entity.Payment;
 import com.newus.traders.payment.repository.PayAccountRepository;
 import com.newus.traders.payment.repository.PaymentRepository;
+import com.newus.traders.redis.service.RedisService;
 import com.newus.traders.user.entity.User;
 import com.newus.traders.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.service.DefaultMessageService;
 
 @Service
 @RequiredArgsConstructor
@@ -193,6 +190,17 @@ public class PaymentService {
         return verNum;
     }
 
-    // PayPassword일치 확인(storedPwd, inputPwd)
+    private final RedisService redisservice;
+
+    public User getUser(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    // 출석체크 지급
+    public void addBalanceForAttendance(String username) {
+        User user = getUser(username);
+
+    }
 
 }

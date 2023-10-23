@@ -22,23 +22,18 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.newus.traders.payment.dto.DepositRequestDto;
 import com.newus.traders.payment.dto.DepositResponseDto;
 import com.newus.traders.payment.dto.InquiryRcvResponseDto;
-import com.newus.traders.payment.dto.MeResponseDto;
 import com.newus.traders.payment.dto.PayAccountDto;
 import com.newus.traders.payment.dto.PaymentDto;
 import com.newus.traders.payment.dto.RegisterResponseDto;
-import com.newus.traders.payment.dto.ReqList;
 import com.newus.traders.payment.dto.TokenResponseDto;
-import com.newus.traders.payment.dto.WithdrawRequestDto;
 import com.newus.traders.payment.entity.Payment;
 import com.newus.traders.payment.service.PaymentService;
 import com.newus.traders.payment.service.RestTemplateService;
 import com.newus.traders.user.jwt.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
-import oracle.jdbc.proxy.annotation.Post;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,7 +54,7 @@ public class PaymentController {
         Object principal = authentication.getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userName = userDetails.getUsername();
-        System.out.println("최초등록 - 토큰에서 추출한 userName: " + userName);
+        System.out.println("최초등록 - 토큰에서 추출한 nickName: " + userName);
         //
 
         // 사용자인증
@@ -69,13 +64,14 @@ public class PaymentController {
         TokenResponseDto tr = restTemplateService.getToken(rr.getCode());
 
         // 사용자정보조회
-        MeResponseDto mr = restTemplateService.getUserInfo(tr.getAccess_token(), tr.getUser_seq_no());
+        // MeResponseDto mr = restTemplateService.getUserInfo(tr.getAccess_token(),
+        // tr.getUser_seq_no());
 
         paymentDto.setAccessToken(tr.getAccess_token());
         paymentDto.setRefreshToken(tr.getRefresh_token());
         paymentDto.setUserSeqNo(tr.getUser_seq_no());
         paymentDto.setExpiresIn(paymentService.getExpirationDate(tr.getExpires_in()));
-        paymentDto.setUserCi(mr.getUser_ci());
+        paymentDto.setUserCi(restTemplateService.getCi(tr.getUser_seq_no()));
 
         paymentService.savePaymentDtoToDb(paymentDto, userName);
 
@@ -158,7 +154,7 @@ public class PaymentController {
 
         return new ResponseEntity<>(Collections.singletonMap("message", "계좌가 성공적으로 등록되었습니다."), HttpStatus.OK);
     }
-    
+
     // 인증문자 발송
     @Transactional
     @PostMapping(value = "/payment/sms")

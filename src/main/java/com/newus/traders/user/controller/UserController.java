@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.newus.traders.user.controller.dto.UserResponseDTO;
+import com.newus.traders.user.dto.UserResponseDTO;
 import com.newus.traders.user.exception.UserException;
 import com.newus.traders.user.jwt.TokenProvider;
 import com.newus.traders.user.service.UserService;

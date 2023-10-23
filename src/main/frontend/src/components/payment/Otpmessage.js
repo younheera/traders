@@ -1,45 +1,56 @@
-/**
- * @author heera youn
- * @email [example@mail.com]
- * @create date 2023-10-22 23:29:41
- * @modify date 2023-10-22 23:29:46
- * @desc [CSS]
- */
-import { Typography } from '@material-ui/core';
-import React, { useState } from 'react';
-import { Row } from 'react-bootstrap';
-import OtpInput from 'react-otp-input';
-import {TbLock, TbLockSquareRoundedFilled} from 'react-icons/tb';
+import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap CSS를 임포트하세요.
+import React, { useState } from "react";
+import { Row } from "react-bootstrap";
+import OtpInput from "react-otp-input";
 
-export default function Optmessage({onText}) {
-  const [otp, setOtp] = useState('');
-  
+export default function Optmessage({ onText }) {
+  const [otp, setOtp] = useState("");
+
   const handleOtpChange = (newOtp) => {
     setOtp(newOtp);
-    onText(newOtp); // You should define this function in the parent component.
+    onText(newOtp);
   };
 
   return (
-    <div style={{border: '3px'}}>
-    <Row style={{margin:'20px'}}>
-    <Typography style={{ fontSize: '30px', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px'}}component="h1" variant="h5">휴대폰 인증번호
-      </Typography>
-    </Row>
+    <div style={{ border: "3px" }}>
+      <Row style={{ margin: "20px" }}>
+        <h1
+          style={{
+            fontSize: "30px",
+            textAlign: "center",
+            fontWeight: "bold",
+            marginBottom: "20px",
+          }}
+        >
+          휴대폰 인증번호
+        </h1>
+      </Row>
 
-    <Row><TbLockSquareRoundedFilled className='lockicon'/></Row><br/>
-    <Row><span className='basefont'>핸드폰으로 전송된 인증번호 6자리를 입력해주시기 바랍니다.</span></Row>
-    <br/>
-    <Row className='otp-field'>
-    <OtpInput
-      value={otp}
-      onChange={setOtp}
-      numInputs={6}
-      renderSeparator={<span>&nbsp;</span>}
-      containerStyle={{display: 'contents'}}
-      inputStyle={{ width: "3rem", height: "3.5rem" }}
-      renderInput={(props) => <input name='inputAuthNum' onChange={onText}  {...props} />}
-    /></Row>
-
+      <Row>
+        <span className="lockicon">Lock Icon</span>
+      </Row>
+      <br />
+      <Row>
+        <span className="basefont">
+          핸드폰으로 전송된 인증번호 6자리를 입력해주시기 바랍니다.
+        </span>
+      </Row>
+      <br />
+      <Row className="otp-field">
+        <OtpInput
+          value={otp}
+          onChange={handleOtpChange}
+          numInputs={6}
+          separator={<span>&nbsp;</span>}
+          containerStyle={{ display: "contents" }}
+          inputStyle={{
+            width: "3rem",
+            height: "3.5rem",
+            textAlign: "center",
+            fontSize: "20px",
+          }}
+        />
+      </Row>
     </div>
   );
 }

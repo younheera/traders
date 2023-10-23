@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Optmessage from './Otpmessage';
 
-const AuthModal = ({ isOpen, onClose, onText, handleVerifySms }) => {
+const AuthModal = ({ isOpen, onClose, onText, handleVerifySms, inputAuthNum }) => {
     return (
 
         isOpen && (
@@ -38,7 +38,7 @@ const AuthModal = ({ isOpen, onClose, onText, handleVerifySms }) => {
             </Modal.Header>
 
             <Modal.Body>
-            <Optmessage onChange={onText}/>
+            <Optmessage onChange={onText} inputAuthNum = {inputAuthNum}/>
                 {/* <input
               type="text"
               name="inputAuthNum"

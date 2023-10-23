@@ -1,58 +1,40 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 13:20:05
- * @modify date 2023-10-23 11:48:05
- * @modify date 2023-10-20 19:06:25
+ * @modify date 2023-10-23 17:44:03
  * 그린페이 가입 - 2. 문자인증 처리
  */
 
-import { Container, Grid, Typography } from "@material-ui/core";
-import React, { useState } from "react";
-import gpaymessage from '../../assets/img/gpaymessage.png';
-import { Row } from "react-bootstrap";
-import AuthModal from "./AuthModal";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import React from "react";
 
-const RegisterStep2 = ({ handleVerifySms, onText, handleSendSms,authBtnFlag }) => {
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const openModal =()=> {
-    setIsModalOpen(true);
-  }
-
-  const closeModal=()=> {
-    setIsModalOpen(false);
-  }
-  
+const RegisterStep2 = ({
+  inputAuthNum,
+  handleVerifySms,
+  onText,
+  handleSendSms,
+  authBtnFlag,
+}) => {
   return (
-    <Container>
-      <div component="main" maxWidth="xs" style={{ marginTop: "8%"}}>
- 
-        <img src={gpaymessage}
-        style={{width:'100%', margin:'20px'}}/>
-
-      
-      <Row><button
-        className="saveButton"
-        name="authNumBtn"
-        onClick={()=> {
-          handleSendSms();
-          openModal();}}
-        disabled={authBtnFlag}
-        style={{borderRadius:'10px'}}>
+    <div>
+      <h2>문자 인증</h2>
+      <button name="authNumBtn" onClick={handleSendSms} disabled={authBtnFlag}>
         인증번호 받기
-      </button></Row><br /><br/>
-      
-      <AuthModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        onText={onText}
-        handleVerifySms={handleVerifySms}/>
-      </div>
-    </Container>
+      </button>
+      <br />
+      {authBtnFlag && (
+        <div>
+          <input
+            type="text"
+            name="inputAuthNum"
+            maxLength={6}
+            size={6}
+            onChange={onText}
+          />
+          <button onClick={handleVerifySms}>인증</button>
+        </div>
+      )}
+    </div>
   );
-  }
+};
 
 export default RegisterStep2;

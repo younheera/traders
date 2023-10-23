@@ -1,15 +1,11 @@
 /**
  * @author heera youn
  * @create date 2023-10-14 00:53:26
- * @modify date 2023-10-22 23:34:11
+ * @modify date 2023-10-23 15:58:18
  * @desc [회원가입 및 로그인 관련 API]
  */
-import { responsiveFontSizes } from '@material-ui/core';
-import React from 'react';
-import axios from 'axios';
-import jwt_decode from "jwt-decode";
-import { Error, Success } from '../toastify/Alert';
-import TokenRefresher from './TokenRefresher';
+import { Error, Success } from "../toastify/Alert";
+import TokenRefresher from "./TokenRefresher";
 
 let backendHost;
 const hostname = window && window.location && window.location.hostname;
@@ -27,20 +23,22 @@ export function call(api, method, request) {
     }),
     url: API_BASE_URL + api,
     method: method,
-    body: JSON.stringify(request)
+    body: JSON.stringify(request),
   };
 
   if (request) {
     options.body = JSON.stringify(request);
   }
-  return fetch(options.url, options).then((response) => {
-    if (response.status===200) {
-      Success("🎉 회원가입 성공");
-      window.location.href = "/login";
+  return fetch(options.url, options)
+    .then((response) => {
+      if (response.status === 200) {
+        Success("🎉 회원가입 성공");
+        window.location.href = "/login";
       }
-    }).catch((error) => {
-      console.log(error.sta)
-      if (error.status === 403 || error.status ===400) {
+    })
+    .catch((error) => {
+      console.log(error.sta);
+      if (error.status === 403 || error.status === 400) {
         // window.location.href = "/login";
         Error("❌ 회원가입 중 오류발생");
         return Promise.reject(error);
@@ -52,31 +50,32 @@ export function signin(userRequestDTO) {
   const token = localStorage.getItem(ACCESS_TOKEN);
   return TokenRefresher.post(`${API_BASE_URL}/api/auth/login`, userRequestDTO, {
     headers: {
-      "Authorization" : `Bearer ${token}`,
-      "Content-Type" : "application/json"
-    }
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
   })
-  .then((response) => {
-    if (response.status === 200 && response.data) {
-      localStorage.setItem("ACCESS_TOKEN", response.data.accessToken);
-      localStorage.setItem("REFRESH_TOKEN", response.data.refreshToken);
-      console.log("로그인 완")
-      Success("🎉 로그인 성공");
+    .then((response) => {
+      if (response.status === 200 && response.data) {
+        localStorage.setItem("ACCESS_TOKEN", response.data.accessToken);
+        localStorage.setItem("REFRESH_TOKEN", response.data.refreshToken);
+        console.log("로그인 완");
+        Success("🎉 로그인 성공");
+        //메인돌아갔을 때 헤더페이지에 로그아웃 + "&&&님 안녕하세요"
+      }
+
       window.location.href = "/";
-       //메인돌아갔을 때 헤더페이지에 로그아웃 + "&&&님 안녕하세요"
-    }
-  })
-  .catch((error) => {
-    if (error.response.status === 401) {
-      console.log("error: "+ error);
-      Error("❌ 로그인 중 오류발생");
-      // TokenRefresher(error);
-      //  window.location.href = "/login";   
-    }else {
-      console.log("error: "+ error);
-      console.log("혹시 너?")
-    }
-  });
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        console.log("error: " + error);
+        Error("❌ 로그인 중 오류발생");
+        // TokenRefresher(error);
+        //  window.location.href = "/login";
+      } else {
+        console.log("error: " + error);
+        console.log("혹시 너?");
+      }
+    });
 }
 
 export function signout() {

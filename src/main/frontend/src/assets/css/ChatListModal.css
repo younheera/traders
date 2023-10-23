@@ -1,11 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 12:10:32
-<<<<<<< HEAD
- * @modify date 2023-10-20 23:32:09
-=======
- * @modify date 2023-10-20 20:43:57
->>>>>>> a0eb3f4d37944b65c993e63d2c1014e4dc83feb6
+ * @modify date 2023-10-23 15:21:13
  */
 
 /* ChatList css */
@@ -18,31 +14,23 @@
   }
 }
 
-@media (max-height:721px){
-  .chatListBtn{
+@media (max-height: 721px) {
+  .chatListBtn {
     position: fixed !important;
     float: right !important;
     z-index: 999;
     right: 50px !important;
-<<<<<<< HEAD
-    top:550px !important;
+    top: 550px !important;
     display: flex !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-=======
-    top:600px !important;
-    display: flex;
-    overflow-x: hidden;
-    overflow-y: auto;
->>>>>>> a0eb3f4d37944b65c993e63d2c1014e4dc83feb6
-    color:rgb(15, 26, 95);
+    color: rgb(15, 26, 95);
     font-size: 50px;
-   }
+  }
 }
 
 /* 모달 전체 */
 .modal-content {
- 
   width: 450px;
   height: 600px;
   overflow-y: auto;
@@ -50,46 +38,39 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* 내용을 위로 정렬 */
-
-
 }
 
 /* 모달 헤더 */
-.list-header{
-text-align: center;
-position: relative;
-align-items: center;
-font-weight: 900;
-font-size: 23pt;
-color:  #198754;
-margin-bottom: 0px !;
-
+.list-header {
+  text-align: center;
+  position: relative;
+  align-items: center;
+  font-weight: 900;
+  font-size: 23pt;
+  color: #198754;
+  margin-bottom: 0px !;
 }
 
-
-.Row{
+.Row {
   margin: 0px !important;
   height: 80px;
 }
 
-.list-content-msg{
- position: relative;
- top: 15px;
+.list-content-msg {
+  position: relative;
+  top: 15px;
 }
 
-
 /* userProfile */
-.list-content-img{
+.list-content-img {
   position: relative;
-  top:20px;
+  top: 20px;
   left: 10px;
 
   border-radius: 50px;
   align-items: center;
   display: inline-block;
 }
-
-
 
 /* 사용자 이름과 내용의 스타일 조정 */
 .list-content-p {
@@ -109,22 +90,15 @@ margin-bottom: 0px !;
 }
 
 /* 채팅 아이콘 */
-.chatListBtn{
-color: rgb(15, 26, 95) !important;
- position: fixed;
- float: right;
-<<<<<<< HEAD
- z-index: 999;
- right: 80px ;
- top:750px ;
-=======
- z-index: 1;
- right: 70px;
- top:780px;
->>>>>>> a0eb3f4d37944b65c993e63d2c1014e4dc83feb6
- display: flex;
- overflow-x: hidden;
- overflow-y: auto;
- color:rgb(15, 26, 95);
- font-size: 50px;
+.chatListBtn {
+  position: fixed;
+  float: right;
+  z-index: 999;
+  right: 80px;
+  top: 750px;
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: rgb(15, 26, 95);
+  font-size: 50px;
 }

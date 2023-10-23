@@ -1,8 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-30 13:38:26
-<<<<<<< HEAD
- * @modify date 2023-10-22 01:08:03
+ * @modify date 2023-10-23 15:16:32
  */
 
 /**
@@ -10,27 +9,16 @@
  * @modify date 2023-10-18 11:11:38
  * css 수정
  */
-=======
- * @modify date 2023-10-12 11:36:31
- */
-
-import axios from "axios";
->>>>>>> a0eb3f4d37944b65c993e63d2c1014e4dc83feb6
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import TokenRefresher from "../service/TokenRefresher";
-import ImagePreview from "./ImagePreview";
-import KakaoMapModal from "./KakaoMapModal";
-<<<<<<< HEAD
-
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import "../../assets/css/ProductRegistration.css";
 import "../../styles/global.css";
-
-=======
->>>>>>> a0eb3f4d37944b65c993e63d2c1014e4dc83feb6
+import TokenRefresher from "../member/TokenRefresher";
+import ImagePreview from "./ImagePreview";
+import KakaoMapModal from "./KakaoMapModal";
 
 const ProductRegistration = () => {
   const form = new FormData();
@@ -94,36 +82,28 @@ const ProductRegistration = () => {
     );
 
     try {
-<<<<<<< HEAD
       TokenRefresher.post("http://localhost:8080/api/products/register", form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       }).then((res) => console.log(res.data));
-=======
-      axios
-        .post("/api/products/register", form, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => console.log(res.data));
->>>>>>> a0eb3f4d37944b65c993e63d2c1014e4dc83feb6
     } catch (error) {
       if (error.response) {
         const errorResponse = error.response.data;
         console.log(errorResponse);
       }
     }
-    history.push("/");
+
+    setTimeout(() => {
+      history.push("/products");
+    }, 500);
   };
 
   return (
-<<<<<<< HEAD
     <body>
       <Container
         className="product"
-        style={{ maxWidth: "1040px"}}
+        style={{ maxWidth: "1040px", height: "1500px" }}
       >
         <Row className="product-header">
           기본정보
@@ -341,11 +321,15 @@ const ProductRegistration = () => {
         <Row className="product-row-sm-1">
           <Col className="product-col-sm-1">
             <button
-              onClick={submitData}
+              onClick={() =>
+                setTimeout(() => {
+                  history.push("/products");
+                }, 500)
+              }
               className="saveButton"
               style={{ backgroundColor: "#d0d0d0", color: "rgb(88, 88, 88)" }}
             >
-              취소하기
+              뒤로가기
             </button>
 
             <button onClick={submitData} className="saveButton">
@@ -355,64 +339,6 @@ const ProductRegistration = () => {
         </Row>
       </Container>
     </body>
-=======
-    <div>
-      <h1> 물품 등록 양식</h1>
-      제목
-      <input type="text" name="name" value={name} onChange={changeInput} />
-      <br />
-      가격
-      <input type="text" name="price" value={price} onChange={changeInput} />
-      <br />
-      상세설명
-      <textarea
-        name="description"
-        value={description}
-        onChange={changeInput}
-        rows={10}
-      />
-      <br />
-      <input
-        type="radio"
-        name="category"
-        value="furniture"
-        onChange={changeInput}
-      />
-      가구
-      <input type="radio" name="category" value="pet" onChange={changeInput} />
-      반려동물 용품
-      <input type="radio" name="category" value="etc" onChange={changeInput} />
-      기타
-      <br />
-      거래장소 정하기
-      <KakaoMapModal onMapSubmit={handleMapSubmit} />
-      <br />
-      <label for="files">
-        <div
-          class="btn-upload"
-          style={{
-            border: "1px solid rgb(77,77,77)",
-            width: "150px",
-            height: "30px",
-            borderRadius: "10px",
-          }}
-        >
-          파일 업로드하기
-        </div>
-      </label>
-      <input
-        name="files"
-        id="files"
-        type="file"
-        accept="image/png, image/jpeg"
-        onChange={changeInput}
-        style={{ display: "none" }}
-      />
-      <ImagePreview files={files} deleteFile={deleteFile} />
-      <br />
-      <button onClick={submitData}>상품작성완료</button>
-    </div>
->>>>>>> a0eb3f4d37944b65c993e63d2c1014e4dc83feb6
   );
 };
 

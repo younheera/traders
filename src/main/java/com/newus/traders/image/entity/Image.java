@@ -3,17 +3,17 @@
  * @create date 2023-10-06 18:48:26
  * @modify date 2023-10-06 18:48:26
  */
-package com.newus.traders.product.entity;
+package com.newus.traders.image.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.newus.traders.product.entity.Product;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class Image {
     @JsonBackReference
     private Product product;
 
-    // @OneToOne
+    // @Many
     // @JsonBackReference
     // private UserEntity user;
 

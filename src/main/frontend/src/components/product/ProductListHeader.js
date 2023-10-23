@@ -1,11 +1,9 @@
-import axios from "axios";
 import { React, useEffect, useState } from "react";
-import { Col, Container, Row, Stack } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../assets/css/Product.css";
+import TokenRefresher from "../member/TokenRefresher";
 import ProductList from "./ProductList";
-import { ButtonGroup } from "react-bootstrap";
-import TokenRefresher from "../service/TokenRefresher";
 
 const ProductListHeader = () => {
   const [data, setData] = useState([]);
@@ -16,12 +14,10 @@ const ProductListHeader = () => {
   const history = useHistory();
 
   const getAllProducts = () => {
-    TokenRefresher
-      .get("http://localhost:8080/api/products")
+    TokenRefresher.get("http://localhost:8080/api/products")
       .then((res) => {
         setData(res.data);
       })
-
       .catch((error) => {
         if (error.response) {
           const errorResponse = error.response.data;
@@ -85,10 +81,10 @@ const ProductListHeader = () => {
 
   return (
     <>
-      <Container style={{ maxWidth: "1040px"}}>
+      <Container style={{ maxWidth: "1040px" }}>
         <Row>
-          <Col md="12" className="text-center mb-4" >
-            <div style={{width:'100%'}}>
+          <Col md="12" className="text-center mb-4">
+            <div style={{ width: "100%" }}>
               <button className="category-btn ">여성의류</button>
               <button className="category-btn ">남성의류</button>
               <button className="category-btn ">신발</button>
@@ -104,7 +100,7 @@ const ProductListHeader = () => {
         </Row>
 
         <Row>
-          <Col className="col-left-align bold-colored-font " >
+          <Col className="col-left-align bold-colored-font ">
             {showAvailable ? "전체 보기" : "거래 가능한 물품"}
             <input
               className="list-checkbox"
@@ -122,24 +118,13 @@ const ProductListHeader = () => {
               {viewNearby ? "전지역 물품" : "현위치 물품"}
             </button>
           </Col>
-          {/* <Col className="col-right-align" md="4">
-            <button
-              className="btn-1 bold"
-              onClick={() => {
-                history.push("products/register");
-              }}
-            >
-              등록하기
-            </button>
-          </Col> */}
         </Row>
+      </Container>
 
-        </Container>
-
-          <Container style={{ maxWidth: "1040px", marginTop:"15px"}}>
-        <Row className="justify-content-center" style={{margin:'0px'}} >
-          <Col md="12" style={{margin:'0px'}}>
-             <Row >
+      <Container style={{ maxWidth: "1040px", marginTop: "15px" }}>
+        <Row className="justify-content-center" style={{ margin: "0px" }}>
+          <Col md="12" style={{ margin: "0px" }}>
+            <Row>
               {data.map((product, index) => {
                 if (showAvailable && product.status === "SOLD") {
                   return null;
@@ -153,7 +138,6 @@ const ProductListHeader = () => {
             </Row>
           </Col>
         </Row>
-        
       </Container>
     </>
   );

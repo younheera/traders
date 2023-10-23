@@ -1,4 +1,4 @@
-.cardwrapper {
+.paycardwrapper {
   width: 296px;
   height: 188px;
   padding: 12px;
@@ -8,14 +8,14 @@
   background: #2b2d2f;
 }
 
-.cardtitle {
+.paycardtitle {
   text-align: center;
   margin-top: 55px;
   color: #fff;
   font-size: 25px;
 }
 
-.card {
+.paycard {
   position: relative;
   width: 296px;
   height: 188px;
@@ -37,19 +37,7 @@
     rgba(255, 255, 255, 0.09) 0px -3px 5px;
 }
 
-h1 {
-  font-size: 20px;
-}
-
-h2 {
-  font-size: 16px;
-}
-
-h3 {
-  font-size: 11px;
-}
-
-p {
+.paycardtext {
   font-size: 8px;
 }
 
