@@ -1,7 +1,7 @@
 /**
  * @author ahrayi
  * @create date 2023-10-13 12:56:57
- * @modify date 2023-10-18 19:35:55
+ * @modify date 2023-10-20 11:28:54
  * @desc 그린페이 계좌등록 프로세스
  */
 
@@ -11,14 +11,14 @@ import AccountRegister1 from './AccountRegister1';
 import AccountRegister2 from './AccountRegister2';
 import AccountRegister3 from './AccountRegister3';
 import AccountRegister4 from './AccountRegister4';
-import axios from 'axios';
+import TokenRefresher from '../service/TokenRefresher';
 
 const AccountRegister = () => {
 
     const [step, setStep] = useState(1);
     const [ranNum, setRanNum] = useState('');
     const [form, setForm] = useState({
-      clientInfo: '33',
+      clientInfo: '',
       accountNum: '',
       bankCodeStd: '',
       addr1: '',
@@ -40,11 +40,10 @@ const AccountRegister = () => {
       });
     };
 
+    // 계좌등록 요청
     const postAccountInfo =()=>{
 
       const requestBody={
-        clientInfo:form.clientInfo,
-        userName:'이아라',
         accountNum:form.accountNum,
         bankCodeStd:form.bankCodeStd,
         agreeWdTr:'',
@@ -52,7 +51,7 @@ const AccountRegister = () => {
         addr2:form.addr2,
       }
 
-      axios.post('http://localhost:8080/api/payment/save-account',requestBody)
+      TokenRefresher.post('http://localhost:8080/api/payment/save-account',requestBody)
           .then(Response => {
               if(Response.status===200) {
                   console.log(Response.data)

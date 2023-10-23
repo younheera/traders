@@ -28,16 +28,16 @@ import TokenRefresher from "./components/service/TokenRefresher";
 import AccountRegister from "./components/payment/AccountRegister";
 import "./styles/global.css";
 import { createTheme, ThemeProvider  } from "@material-ui/core/styles";
+import jwt_decode from "jwt-decode";
 
 
 import MainFooter from "./components/layout/MainFooter";
 import ResizedComponent from "./components/layout/ResizedComponent";
 import NavBar from "./components/layout/NavBar";
 import MainView from "./components/layout/MainView";
-import { Alert } from "antd";
-import Alerts from "./views/IndexSections/Alerts";
 import SnsRegistration from "./components/sns/SnsRegistration";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
+import PayMgmt from "./components/payment/PayMgmt";
 
 const theme = createTheme({
   typography: {
@@ -45,12 +45,12 @@ const theme = createTheme({
   }
 });
 
-
-
 function App() {
   
-  const userInfo = jwt_decode(localStorage.getItem("ACCESS_TOKEN"));
-  window.user =  userInfo.sub;
+  // if (localStorage.getItem("ACCESS_TOKEN")) {
+  //   const userInfo = jwt_decode();
+  //   window.user = userInfo.sub;
+  // }
 
   return (
     <>
@@ -143,6 +143,7 @@ function App() {
             </Route>
             <Route path="/payment/gpay_register" component={PayRegister} />
             <Route path="/payment/accnt_register" component={AccountRegister} />
+            <Route path="/payment/payMgmt" component={PayMgmt} />
 
           <Route path="/chat" exact>
             <ChatApp />

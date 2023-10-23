@@ -1,13 +1,13 @@
 /**
  * @author ahrayi
  * @create date 2023-09-26 13:20:05
- * @modify date 2023-10-18 14:53:10
+ * @modify date 2023-10-20 19:06:25
  * 그린페이 가입 - 2. 문자인증 처리
  */
 
 import React, { useState } from "react";
 
-const RegisterStep2 = ({ inputAuthNum,handleVerifySms, onText, handleSendSms,authBtnFlag }) => {
+const RegisterStep2 = ({ handleVerifySms, onText, handleSendSms,authBtnFlag }) => {
 
   return (
     <div>
