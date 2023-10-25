@@ -1,16 +1,19 @@
 /**
  * @author ahrayi
  * @create date 2023-10-10 11:13:25
- * @modify date 2023-10-23 09:22:14
+ * @modify date 2023-10-23 16:29:41
  */
 
 package com.newus.traders.payment.controller;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,15 +25,26 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.newus.traders.exception.CustomException;
+import com.newus.traders.exception.ErrorCode;
 import com.newus.traders.payment.dto.DepositResponseDto;
 import com.newus.traders.payment.dto.InquiryRcvResponseDto;
 import com.newus.traders.payment.dto.PayAccountDto;
 import com.newus.traders.payment.dto.PaymentDto;
 import com.newus.traders.payment.dto.RegisterResponseDto;
 import com.newus.traders.payment.dto.TokenResponseDto;
+import com.newus.traders.payment.dto.TransactionHistoryDto;
+import com.newus.traders.payment.dto.TransferDto;
+import com.newus.traders.payment.dto.WithdrawRequestDto;
+import com.newus.traders.payment.dto.WithdrawResponseDto;
+import com.newus.traders.payment.entity.PayAccount;
 import com.newus.traders.payment.entity.Payment;
+import com.newus.traders.payment.entity.TransactionHistory;
+import com.newus.traders.payment.repository.TransactionHistoryRepository;
 import com.newus.traders.payment.service.PaymentService;
 import com.newus.traders.payment.service.RestTemplateService;
+import com.newus.traders.product.dto.ProductDto;
+import com.newus.traders.product.entity.Product;
 import com.newus.traders.user.jwt.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -43,6 +57,9 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final RestTemplateService restTemplateService;
     private final TokenProvider tokenProvider;
+
+    @Autowired
+    private TransactionHistoryRepository transactionHistoryRepository;
 
     // 최초등록
     @Transactional
@@ -136,6 +153,7 @@ public class PaymentController {
 
         // ClientInfo 추출
         Long clientInfo = paymentService.getClientInfo(userName).get();
+        Payment payment = paymentService.getPaymentInfo(clientInfo).get();
 
         // 그린페이 가입 상태 확인
         if (!(paymentService.checkPayMember(clientInfo))) {
@@ -145,6 +163,7 @@ public class PaymentController {
         }
 
         payAccountDto.setClientInfo(clientInfo);
+        payAccountDto.setUserName(payment.getUserName());
 
         System.out.println(payAccountDto.toString());
 
@@ -201,70 +220,276 @@ public class PaymentController {
         }
     }
 
-    // // 그린페이 페이지 로드 시 페이정보 응답
-    // @PostMapping(value = "/payment/payMgmt")
-    // public ResponseEntity<?> getPayinfo(@RequestHeader("token") String
-    // accessToken) {
-    // // header: nickName
-    // // response: 계좌번호, 은행번호, 닉네임, 본명, 페이잔액
-    // }
+    // 그린페이 페이지 로드 시 페이정보 응답
+    @PostMapping(value = "/payment/payMgmt")
+    public ResponseEntity<?> getPayinfo(@RequestHeader("token") String accessToken) {
+        // header: nickName
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+        Object principal = authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String nickName = userDetails.getUsername();
+        System.out.println("유효계좌확인 - 토큰에서 추출한 nickName: " + nickName);
+        //
+        Long clientInfo = paymentService.getClientInfo(nickName).get();
 
-    // // 그린페이 충전
-    // @Transactional
-    // @PostMapping(value = "/payment/add")
-    // public ResponseEntity<?> addPayMoney(@RequestBody PayAccountDto
-    // payAccountDto,
-    // @RequestHeader("token") String accessToken) {
-    // // header: nickName, body: 충전금액, 페이비밀번호
-    // // userName -> 유저정보 추출
-    // // 페이비밀번호 대조 후 (불일치 시 예외 처리)
-    // // 일치 시 출금 API 호출
-    // WithdrawRequestDto request = new WithdrawRequestDto();
-    // // api 정상 처리되면 payAccount의 paybalance + 처리,
-    // // 거래 내역에 데이터 추가
+        try {
+            // response: 계좌번호, 은행번호, 닉네임, 페이잔액
+            PayAccount payAccount = paymentService.getPayAccountInfo(clientInfo).get();
 
-    // // 응답 반환
-    // }
+            System.out.println(payAccount.toString());
 
-    // // 그린페이 인출(내 계좌로 송금)
-    // @Transactional
-    // @PostMapping(value = "/payment/withdraw")
-    // public ResponseEntity<?> withdrawPayMoney() {
-    // // header: nickName, body: 인출금액, 페이비밀번호
-    // // userName -> 유저정보 추출
-    // // 페이비밀번호 대조 후 (불일치 시 예외 처리)
-    // // 일치 시 (수취조회 API 호출 생략)
-    // // 입급 API 호출
-    // ReqList reqList = new ReqList(0, null, null, null, null, null, 0, null, null,
-    // null, null, null, null, null);
-    // DepositRequestDto request = new DepositRequestDto();
-    // // api 정상 처리되면 payAccount의 paybalance - 처리,
-    // // 거래 내역에 데이터 추가
+            return new ResponseEntity<>(payAccount, HttpStatus.OK);
 
-    // // 응답 반환
-    // }
+        } catch (Exception e) {
+            return new ResponseEntity<>(Collections.singletonMap("message", "등록계좌조회 오류"), HttpStatus.BAD_REQUEST);
+        }
 
-    // // 거래(송금하기)
-    // @Transactional
-    // @PostMapping(value = "/payment/transfer")
-    // public ResponseEntity<?> transferPayMoney() {
-    // // header: nickname, body: 판매자nickname, 상품명, 상품가격, (글id?), 부족금액, payPassword
+    }
 
-    // // userName -> 유저정보 추출
-    // // 페이비밀번호 대조 후 (불일치 시 예외 처리)
-    // // 일치 시 (수취조회 API 호출 생략)
+    // 그린페이 충전
+    @Transactional
+    @PostMapping(value = "/payment/add")
+    public ResponseEntity<?> addPayMoney(@RequestBody TransferDto transferDto,
+            @RequestHeader("token") String accessToken) {
+        // header: nickName, body: 충전금액, 페이비밀번호
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+        Object principal = authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String nickName = userDetails.getUsername();
+        System.out.println("유효계좌확인 - 토큰에서 추출한 nickName: " + nickName);
+        //
+        // userName -> 유저정보 추출
+        Long clientInfo = paymentService.getClientInfo(nickName).get();
+        Payment payment = paymentService.getPaymentInfo(clientInfo).get();
+        PayAccount payAccount = paymentService.getPayAccountInfo(clientInfo).get();
+        // 페이비밀번호 대조 후 (불일치 시 예외 처리)
+        System.out.println("받은비번" + transferDto.getPayPwd());
+        System.out.println("내비번" + payment.getPayPassword());
 
-    // // 부족금액 값이 있으면,
-    // // // 출금 API 호출
-    // // // WithdrawRequestDto request = new WithdrawRequestDto();
-    // // // api 정상 처리되면 payAccount의 paybalance + 처리,
-    // // // 거래 내역에 데이터 추가
+        if (transferDto.getPayPwd().isEmpty() || !(transferDto.getPayPwd().equals(payment.getPayPassword()))) {
+            System.out.println("비번 불일치");
+            throw new CustomException(ErrorCode.PASSWORD_NOT_MATCHED);
+        }
+        // 일치 시 출금 API 호출
+        if (transferDto.getPayPwd().equals(payment.getPayPassword())) {
 
-    // // 구매자 paybalance -처리
-    // // 판매자 paybalance +처리
-    // // 거래 내역에 데이터 추가
+            try {
+                WithdrawRequestDto withdrawRequestDto = new WithdrawRequestDto();
+                withdrawRequestDto.setDpsPrintContent("충전:" + payment.getClientInfo().toString());
+                withdrawRequestDto.setTranAmt(transferDto.getTransferAmt());
+                withdrawRequestDto.setWdPrintContent("그린페이충전");
+                withdrawRequestDto.setTransferPurpose("RC");
 
-    // // 응답 반환
-    // }
+                WithdrawResponseDto withdrawResponseDto = restTemplateService.transferWithdraw(withdrawRequestDto,
+                        payment, payAccount);
+
+                System.out.println("응답코드:" + withdrawResponseDto.getRsp_code());
+
+                // api 정상 처리되면 payAccount의 paybalance + 처리,
+                if (withdrawResponseDto.getRsp_code().equals("A0000")) {
+
+                    payAccount.setPayBalance(payAccount.getPayBalance() + transferDto.getTransferAmt());
+                    paymentService.updatePayBalanceToDb(payAccount);
+
+                    // 거래 내역에 데이터 추가
+                    TransactionHistoryDto transactionHistoryDto = new TransactionHistoryDto();
+                    transactionHistoryDto.setBuyer(clientInfo);
+                    transactionHistoryDto.setType("충전/환급");
+                    transactionHistoryDto.setContent("그린페이_충전");
+                    transactionHistoryDto.setTranAmt(transferDto.getTransferAmt());
+                    paymentService.saveTransactionHistoryToDb(transactionHistoryDto);
+
+                } else {
+                    throw new CustomException(ErrorCode.TRANSFER_NOT_COMPLETED);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(Collections.singletonMap("message", "충전 실패"),
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        return new ResponseEntity<>(Collections.singletonMap("message", "충전 성공"), HttpStatus.OK);
+    }
+
+    // 그린페이 인출(내 계좌로 송금)
+    @Transactional
+    @PostMapping(value = "/payment/withdraw")
+    public ResponseEntity<?> withdrawPayMoney(@RequestBody TransferDto transferDto,
+            @RequestHeader("token") String accessToken) {
+        // header: nickName, body: 인출금액, 페이비밀번호
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+        Object principal = authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String nickName = userDetails.getUsername();
+        System.out.println("유효계좌확인 - 토큰에서 추출한 nickName: " + nickName);
+        //
+        // userName -> 유저정보 추출
+        Long clientInfo = paymentService.getClientInfo(nickName).get();
+        Payment payment = paymentService.getPaymentInfo(clientInfo).get();
+        PayAccount payAccount = paymentService.getPayAccountInfo(clientInfo).get();
+
+        // 페이비밀번호 대조 후 (불일치 시 예외 처리)
+        System.out.println("받은비번" + transferDto.getPayPwd());
+        System.out.println("내비번" + payment.getPayPassword());
+
+        if (transferDto.getPayPwd().isEmpty() || !(transferDto.getPayPwd().equals(payment.getPayPassword()))) {
+            System.out.println("비번 불일치");
+            throw new CustomException(ErrorCode.PASSWORD_NOT_MATCHED);
+        }
+
+        // 일치 시 입급 API 호출
+        if (transferDto.getPayPwd().equals(payment.getPayPassword())) {
+            try {
+                // 입금(TR)
+                DepositResponseDto depositResponseDto = restTemplateService.transferDeposit(payAccount, "TR",
+                        transferDto.getTransferAmt());
+                System.out.println("응답코드:" + depositResponseDto.getRsp_code());
+
+                // api 정상 처리되면 payAccount의 paybalance - 처리,
+                if (depositResponseDto.getRsp_code().equals("A0000")) {
+                    payAccount.setPayBalance(payAccount.getPayBalance() - transferDto.getTransferAmt());
+                    paymentService.updatePayBalanceToDb(payAccount);
+
+                    // 거래 내역에 데이터 추가
+                    TransactionHistoryDto transactionHistoryDto = new TransactionHistoryDto();
+                    transactionHistoryDto.setSeller(clientInfo);
+                    transactionHistoryDto.setType("충전/환급");
+                    transactionHistoryDto.setContent("그린페이_환급");
+                    transactionHistoryDto.setTranAmt(transferDto.getTransferAmt());
+                    paymentService.saveTransactionHistoryToDb(transactionHistoryDto);
+                } else {
+                    throw new CustomException(ErrorCode.TRANSFER_NOT_COMPLETED);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(Collections.singletonMap("message", "송금 실패"),
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        return new ResponseEntity<>(Collections.singletonMap("message", "송금 성공"), HttpStatus.OK);
+    }
+
+    // 거래(송금하기)
+    @Transactional
+    @PostMapping(value = "/payment/transfer")
+    public ResponseEntity<?> transferPayMoney(@RequestBody TransferDto transferDto,
+            @RequestHeader("token") String accessToken) {
+        // header: nickname, body: 판매자nickname(|| id), payPassword, tranAmt, prpduct
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+        Object principal = authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String nickName = userDetails.getUsername();
+
+        // userName -> 유저정보 추출
+        Long clientInfo = paymentService.getClientInfo(nickName).get();
+        // 구매자 clientInfo도 필요@@@@@@@@@@
+        Payment payment = paymentService.getPaymentInfo(clientInfo).get();
+        PayAccount payAccount = paymentService.getPayAccountInfo(clientInfo).get();
+        ProductDto product = transferDto.getProduct();
+        Long sellerClientInfo = paymentService.getClientInfo(product.getSeller()).get();
+        PayAccount sellerPayAccount = paymentService.getPayAccountInfo(sellerClientInfo).get();
+
+        // 페이비밀번호 대조 후 (불일치 시 예외 처리)
+        System.out.println("받은비번" + transferDto.getPayPwd());
+        System.out.println("내비번" + payment.getPayPassword());
+
+        if (transferDto.getPayPwd().isEmpty() || !(transferDto.getPayPwd().equals(payment.getPayPassword()))) {
+            System.out.println("비번 불일치");
+            throw new CustomException(ErrorCode.PASSWORD_NOT_MATCHED);
+        }
+
+        // 부족금액 값이 있으면,
+        if (payAccount.getPayBalance() < transferDto.getTransferAmt()) {
+            // 출금 API 호출(구매자->트레이더스 부족금액만큼)
+            try {
+                WithdrawRequestDto withdrawRequestDto = new WithdrawRequestDto();
+                withdrawRequestDto.setDpsPrintContent("거래:" + payment.getClientInfo().toString());
+                withdrawRequestDto.setTranAmt(transferDto.getTransferAmt() - payAccount.getPayBalance());
+                withdrawRequestDto.setWdPrintContent("트레이더스_" + product.getName());
+                withdrawRequestDto.setTransferPurpose("TR");
+
+                WithdrawResponseDto withdrawResponseDto = restTemplateService.transferWithdraw(withdrawRequestDto,
+                        payment, payAccount);
+
+                System.out.println("응답코드:" + withdrawResponseDto.getRsp_code());
+
+                // api 정상 처리되면 payAccount의 paybalance + 처리,
+                if (withdrawResponseDto.getRsp_code().equals("A0000")) {
+
+                    payAccount.setPayBalance(transferDto.getTransferAmt());
+                    paymentService.updatePayBalanceToDb(payAccount);
+
+                } else {
+                    throw new CustomException(ErrorCode.TRANSFER_NOT_COMPLETED);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(Collections.singletonMap("message", "충전 실패"),
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        // 입금 API 호출(트레이더스 -> 판매자 상품가격만큼)
+        try {
+            // 입금(TR)
+            DepositResponseDto depositResponseDto = restTemplateService.transferDeposit(sellerPayAccount, "TR",
+                    transferDto.getTransferAmt(), product);
+            System.out.println("응답코드:" + depositResponseDto.getRsp_code());
+
+            // api 정상 처리되면
+            if (depositResponseDto.getRsp_code().equals("A0000")) {
+                // 구매자 paybalance 상품금액만큼 -처리,
+                payAccount.setPayBalance(payAccount.getPayBalance() - transferDto.getTransferAmt());
+                paymentService.updatePayBalanceToDb(payAccount);
+                // 판매자 paybalance 상품금액만큼 +처리,
+                sellerPayAccount.setPayBalance(sellerPayAccount.getPayBalance() + transferDto.getTransferAmt());
+                paymentService.updatePayBalanceToDb(sellerPayAccount);
+
+                // 거래내역 저장
+                TransactionHistoryDto transactionHistoryDto = new TransactionHistoryDto();
+                transactionHistoryDto.setBuyer(clientInfo);
+                transactionHistoryDto.setSeller(sellerClientInfo);
+                transactionHistoryDto.setContent("트레이드_" + product.getName());
+                transactionHistoryDto.setTranAmt(transferDto.getTransferAmt());
+                transactionHistoryDto.setType("거래");
+
+                paymentService.saveTransactionHistoryToDb(transactionHistoryDto);
+
+            } else {
+                System.out.println("거래 DB저장 오류");
+                throw new CustomException(ErrorCode.TRANSFER_NOT_COMPLETED);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(Collections.singletonMap("message", "결제 실패"),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        // 응답 반환
+        return new ResponseEntity<>(Collections.singletonMap("message", "결제 성공"), HttpStatus.OK);
+    }
+
+    // 거래 내역 조회
+    @PostMapping("/payment/transactionHistory")
+    public ResponseEntity<List<TransactionHistory>> getTransactionHistory(@RequestHeader("token") String accessToken) {
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+        Object principal = authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String nickName = userDetails.getUsername();
+
+        // userName -> 유저정보 추출
+        Long clientInfo = paymentService.getClientInfo(nickName).get();
+        try {
+            List<TransactionHistory> transactionHistoryDto = paymentService.getTransactionHistory(clientInfo);
+            if (transactionHistoryDto.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.ALREADY_REPORTED)
+                        .body(Collections.emptyList());
+            }
+            return ResponseEntity.ok(transactionHistoryDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
+        }
+    }
 
 }

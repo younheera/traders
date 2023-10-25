@@ -9,6 +9,8 @@
 package com.newus.traders.payment.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,12 +25,12 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class TransactionHistory {
     @Id
-    private String transactionId;
-
-    private String productId;
-    private String seller;
-    private String buyer;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long transactionId;
+    private String type;
+    private Long seller;
+    private Long buyer;
+    private String content;
+    private int tranAmt;
     private String transactionDtime;
-    private int price;
-    private String productName;
 }

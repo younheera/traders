@@ -36,8 +36,12 @@ public enum ErrorCode {
 
     NOTIFICATION_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "알림이 존재하지 않습니다"),
 
-    PAYMENT_NOT_FOUND(HttpStatus.BAD_REQUEST, "페이 가입 정보가 존재하지 않습니다.");
-    ;
+    PAYMENT_NOT_FOUND(HttpStatus.BAD_REQUEST, "페이 가입 정보가 존재하지 않습니다"),
+    PAYACCOUNT_NOT_FOUND(HttpStatus.BAD_REQUEST, "등록 계좌 정보가 존재하지 않습니다"),
+    PASSWORD_NOT_MATCHED(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다"),
+    TRANSFER_NOT_COMPLETED(HttpStatus.INTERNAL_SERVER_ERROR, "거래 오류"),
+    HISTORY_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "조회 실패");
+
     private final HttpStatus httpStatus;
     private final String message;
 }

@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.newus.traders.payment.entity.PayAccount;
 
-public interface PayAccountRepository extends JpaRepository<PayAccount, String> {
+public interface PayAccountRepository extends JpaRepository<PayAccount, Long> {
 
     Optional<PayAccount> findByClientInfo(Long clientInfo);
 
