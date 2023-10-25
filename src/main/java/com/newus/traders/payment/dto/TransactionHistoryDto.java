@@ -17,11 +17,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TransactionHistoryDto {
     @Id
-    private String transactionId;
-    // private String productId;
-    private String seller;
-    private String buyer;
+    private Long transactionId;
+    private String productId;
+    private String type;
+    private Long seller;
+    private Long buyer;
+    private String content;
+    private int tranAmt;
     private String transactionDtime;
-    private int price;
-    private String productName;
+
 }

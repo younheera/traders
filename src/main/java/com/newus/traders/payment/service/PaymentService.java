@@ -9,21 +9,28 @@ package com.newus.traders.payment.service;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
 import com.newus.traders.payment.dto.PayAccountDto;
 import com.newus.traders.payment.dto.PaymentDto;
+import com.newus.traders.payment.dto.TransactionHistoryDto;
 import com.newus.traders.payment.entity.PayAccount;
 import com.newus.traders.payment.entity.Payment;
+import com.newus.traders.payment.entity.TransactionHistory;
 import com.newus.traders.payment.repository.PayAccountRepository;
 import com.newus.traders.payment.repository.PaymentRepository;
+import com.newus.traders.payment.repository.TransactionHistoryRepository;
 import com.newus.traders.redis.service.RedisService;
 import com.newus.traders.user.entity.User;
 import com.newus.traders.user.repository.UserRepository;
@@ -35,6 +42,7 @@ import lombok.RequiredArgsConstructor;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final PayAccountRepository payAccountRepository;
+    private final TransactionHistoryRepository transactionHistoryRepository;
     private final UserRepository userRepository;
     private ConcurrentHashMap<String, String> authNums = new ConcurrentHashMap<>();
 
@@ -69,6 +77,17 @@ public class PaymentService {
         }
     }
 
+    // clientInfo로 PayAccount 정보 반환
+    public Optional<PayAccount> getPayAccountInfo(Long clientInfo) {
+        Optional<PayAccount> payAccount = payAccountRepository.findByClientInfo(clientInfo);
+
+        if (!payAccount.isPresent()) {
+            throw new CustomException(ErrorCode.PAYACCOUNT_NOT_FOUND);
+        } else {
+            return payAccount;
+        }
+    }
+
     // clientInfo로 페이가입여부 확인
     public boolean checkPayMember(Long ClientInfo) {
         Optional<Payment> payment = paymentRepository.findByClientInfo(ClientInfo);
@@ -90,7 +109,7 @@ public class PaymentService {
     }
 
     // 사용자인증타입(auth_type) 판별(최초등록:0, 재인증:2)
-    public int getAuthType(String clientInfo) {
+    public int getAuthType(Long clientInfo) {
         Optional<Payment> optionalPayment = paymentRepository.findById(clientInfo);
 
         if (!optionalPayment.isPresent()) {
@@ -99,7 +118,7 @@ public class PaymentService {
         return 2;
     }
 
-    // 신규 등록
+    // 페이 신규 등록
     @Transactional
     public Payment savePaymentDtoToDb(PaymentDto paymentDto, String userName) {
 
@@ -123,6 +142,7 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
+    // 페이 계좌 등록
     public PayAccount savePayAccountDtoToDb(PayAccountDto payAccountDto) {
         PayAccount payAccount = new PayAccount();
         payAccount.setClientInfo(payAccountDto.getClientInfo());
@@ -136,6 +156,38 @@ public class PaymentService {
         return payAccountRepository.save(payAccount);
     }
 
+    public PayAccount updatePayBalanceToDb(PayAccount payAccount) {
+        return payAccountRepository.save(payAccount);
+    }
+
+    // 거래내역 저장
+    public TransactionHistory saveTransactionHistoryToDb(TransactionHistoryDto transactionHistoryDto) {
+        TransactionHistory transactionHistory = new TransactionHistory();
+        transactionHistory.setType(transactionHistoryDto.getType());
+        transactionHistory.setContent(transactionHistoryDto.getContent());
+        transactionHistory.setTranAmt(transactionHistoryDto.getTranAmt());
+        transactionHistory.setSeller(transactionHistoryDto.getSeller());
+        transactionHistory.setBuyer(transactionHistoryDto.getBuyer());
+        transactionHistory.setTransactionDtime(getDateTimeString());
+
+        return transactionHistoryRepository.save(transactionHistory);
+    }
+
+    // 거래내역 조회
+    public List<TransactionHistory> getTransactionHistory(Long clientInfo) {
+        // buyer 또는 seller와 clientInfo를 비교하여 필터링
+        List<TransactionHistory> filteredTransactions = transactionHistoryRepository.findByBuyerOrSeller(clientInfo,
+                clientInfo);
+        // 날짜 내림차순으로 정렬
+        // filteredTransactions.sort(Comparator.comparing(TransactionHistory::getTransactionDtime).reversed());
+
+        if (filteredTransactions.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "건에 대한 거래 내역을 찾을 수 없습니다");
+        }
+        return filteredTransactions;
+    }
+
+    // 문자 전송
     public void sendSms(String rphone) {
 
         String authNum = getSmsAuthNum();
@@ -180,6 +232,10 @@ public class PaymentService {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYYMMddHHmmssSSS"));
     }
 
+    private String getDateTimeString() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm"));
+    }
+
     // 문자인증번호 생성
     public String getSmsAuthNum() {
         SecureRandom random = new SecureRandom();
@@ -200,7 +256,6 @@ public class PaymentService {
     // 출석체크 지급
     public void addBalanceForAttendance(String username) {
         User user = getUser(username);
-
     }
 
 }

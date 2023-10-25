@@ -29,6 +29,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.newus.traders.exception.CustomException;
+import com.newus.traders.exception.ErrorCode;
 import com.newus.traders.payment.dto.DepositRequestDto;
 import com.newus.traders.payment.dto.DepositResponseDto;
 import com.newus.traders.payment.dto.InquiryRcvRequestDto;
@@ -42,6 +44,9 @@ import com.newus.traders.payment.dto.TokenRequestDto;
 import com.newus.traders.payment.dto.TokenResponseDto;
 import com.newus.traders.payment.dto.WithdrawRequestDto;
 import com.newus.traders.payment.dto.WithdrawResponseDto;
+import com.newus.traders.payment.entity.PayAccount;
+import com.newus.traders.payment.entity.Payment;
+import com.newus.traders.product.dto.ProductDto;
 
 @Service
 public class RestTemplateService {
@@ -216,7 +221,7 @@ public class RestTemplateService {
         return response.getBody();
     }
 
-    // 입금 이체 API(트레이더스 -> 고객)
+    // 입금 이체 API(트레이더스 -> 고객)_인증
     public DepositResponseDto transferDeposit(PayAccountDto payAccountDto, String transferPurpose, int tran_amt,
             int ranNum) {
 
@@ -256,7 +261,116 @@ public class RestTemplateService {
             request.setWdPrintContent(payAccountDto.getUserName() + "환급");
         }
         request.setNameCheckOption("on");
-        request.setTran_dtime(getDateTime());
+        request.setTran_dtime(getDateTime14());
+        request.setReqCnt(1);
+        request.setReqList(reqList);
+
+        RequestEntity<DepositRequestDto> requestEntity = RequestEntity
+                .post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + accessTokenSa)
+                .body(request);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<DepositResponseDto> response = restTemplate.exchange(requestEntity, DepositResponseDto.class);
+
+        System.out.println(response.getStatusCode());
+        System.out.println(response.getBody());
+
+        return response.getBody();
+    }
+
+    // 입금 이체 API(트레이더스 -> 고객)_환급
+    public DepositResponseDto transferDeposit(PayAccount payAccount, String transferPurpose, int tran_amt) {
+
+        URI uri = UriComponentsBuilder
+                .fromUriString(base_uri)
+                .path("/v2.0/transfer/deposit/acnt_num")
+                .encode(Charsets.toCharset("UTF-8"))
+                .build()
+                .toUri();
+
+        String bankTranId = clientUseCode + "U" + generateRandomBankTranId();
+        // {db(memory)에 저장하는 코드}
+
+        ReqList reqList = new ReqList();
+        reqList.setTranNo(1);
+        reqList.setBankTranId(bankTranId);
+        reqList.setBankCodeStd(payAccount.getBankCodeStd().trim());
+        reqList.setAccountNum(payAccount.getAccountNum().trim());
+        reqList.setAccountHolderName(payAccount.getUserName());
+        reqList.setTranAmt(tran_amt);
+        reqList.setReqClientName(payAccount.getUserName());
+        reqList.setReqClientBankCode(payAccount.getBankCodeStd().trim());
+        reqList.setReqClientAccountNum(payAccount.getAccountNum().trim());
+        reqList.setReqClientNum(payAccount.getClientInfo().toString());
+        reqList.setTransferPurpose(transferPurpose);
+        reqList.setCmsNum(cmsNum);
+
+        DepositRequestDto request = new DepositRequestDto();
+        request.setCtrAccountType("N");
+        request.setCtrAccountNum(ctrAccountNum);
+        request.setWdPassPhrase(wdPassPhrase);
+        reqList.setPrintContent("그린페이환급");
+        request.setWdPrintContent(payAccount.getUserName() + "환급");
+
+        request.setNameCheckOption("on");
+        request.setTran_dtime(getDateTime14());
+        request.setReqCnt(1);
+        request.setReqList(reqList);
+
+        RequestEntity<DepositRequestDto> requestEntity = RequestEntity
+                .post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + accessTokenSa)
+                .body(request);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<DepositResponseDto> response = restTemplate.exchange(requestEntity, DepositResponseDto.class);
+
+        System.out.println(response.getStatusCode());
+        System.out.println(response.getBody());
+
+        return response.getBody();
+    }
+
+    // 입금 이체 API(트레이더스 -> 고객)_거래
+    public DepositResponseDto transferDeposit(PayAccount payAccount, String transferPurpose, int tran_amt,
+            ProductDto productDto) {
+
+        URI uri = UriComponentsBuilder
+                .fromUriString(base_uri)
+                .path("/v2.0/transfer/deposit/acnt_num")
+                .encode(Charsets.toCharset("UTF-8"))
+                .build()
+                .toUri();
+
+        String bankTranId = clientUseCode + "U" + generateRandomBankTranId();
+        // {db(memory)에 저장하는 코드}
+
+        ReqList reqList = new ReqList();
+        reqList.setTranNo(1);
+        reqList.setBankTranId(bankTranId);
+        reqList.setBankCodeStd(payAccount.getBankCodeStd().trim());
+        reqList.setAccountNum(payAccount.getAccountNum().trim());
+        reqList.setAccountHolderName(payAccount.getUserName());
+        reqList.setTranAmt(tran_amt);
+        reqList.setReqClientName(payAccount.getUserName());
+        reqList.setReqClientBankCode(payAccount.getBankCodeStd().trim());
+        reqList.setReqClientAccountNum(payAccount.getAccountNum().trim());
+        reqList.setReqClientNum(payAccount.getClientInfo().toString());
+        reqList.setTransferPurpose(transferPurpose);
+        reqList.setCmsNum(cmsNum);
+
+        DepositRequestDto request = new DepositRequestDto();
+        request.setCtrAccountType("N");
+        request.setCtrAccountNum(ctrAccountNum);
+        request.setWdPassPhrase(wdPassPhrase);
+        reqList.setPrintContent("트레이더스_" + productDto.getName());
+        request.setWdPrintContent(payAccount.getUserName() + "거래");
+
+        request.setNameCheckOption("on");
+        request.setTran_dtime(getDateTime14());
         request.setReqCnt(1);
         request.setReqList(reqList);
 
@@ -276,7 +390,7 @@ public class RestTemplateService {
     }
 
     // 출금 이체 API (고객 -> 트레이더스)
-    public WithdrawResponseDto transferWithdraw(WithdrawRequestDto withdrawRequestDto) {
+    public WithdrawResponseDto transferWithdraw(WithdrawRequestDto request, Payment payment, PayAccount payAccount) {
         URI uri = UriComponentsBuilder
                 .fromUriString(base_uri)
                 .path("/v2.0/transfer/withdraw/acnt_num")
@@ -284,8 +398,20 @@ public class RestTemplateService {
                 .build()
                 .toUri();
 
-        WithdrawRequestDto request = new WithdrawRequestDto();
-        // request 값 세팅
+        request.setBankTranId(generateRandomBankTranId());
+        request.setCtrAccountType("N");
+        request.setWdBankCodeStd(payAccount.getBankCodeStd());
+        request.setWdAccountNum(payAccount.getAccountNum());
+        request.setUserSeqNo(payment.getUserSeqNo());
+        request.setTran_dtime(getDateTime14());
+        request.setReqClientName(payment.getUserName());
+        request.setReqClientBankCode(payAccount.getBankCodeStd());
+        request.setReqClientAccountNum(payAccount.getAccountNum());
+        request.setReqClientNum(payment.getClientInfo().toString());
+
+        request.setRecvClientName("트레이더스");
+        request.setRecvClientBankCode(bankCodeStd);
+        request.setRecvClientAccountNum(ctrAccountNum);
 
         RequestEntity<WithdrawRequestDto> requestEntity = RequestEntity
                 .post(uri)
@@ -294,10 +420,12 @@ public class RestTemplateService {
                 .body(request);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<WithdrawResponseDto> response = restTemplate.exchange(requestEntity, WithdrawResponseDto.class);
+
+        ResponseEntity<WithdrawResponseDto> response = restTemplate.exchange(requestEntity,
+                WithdrawResponseDto.class);
 
         System.out.println(response.getStatusCode());
-        System.out.println("결제금액: " + response.getBody().getTranAmt());
+        System.out.println("충전금액: " + response.getBody().getTran_amt());
 
         return response.getBody();
     }
@@ -342,9 +470,9 @@ public class RestTemplateService {
         return secureRandom.nextInt(max - min + 1) + min;
     }
 
-    // dtm(YYYYMMddHHmmssSSS)
-    private String getDateTime() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYYMMddHHmmssSSS"));
+    // dtm(YYYYMMddHHmmss)
+    private String getDateTime14() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYYMMddHHmmss"));
     }
 
     // --임의-- userCI 생성
@@ -353,14 +481,10 @@ public class RestTemplateService {
         String text = userSeqNo + clientUseCode;
         byte[] textToByte = text.getBytes();
 
-        // 자바 8 기본 Base64 Encoder
         Encoder encode = Base64.getEncoder();
 
         // Base64 인코딩
         byte[] encodeByte = encode.encode(textToByte);
-
-        System.out.println("인코딩 전: " + text);
-        System.out.println("인코딩: " + new String(encodeByte));
 
         return new String(encodeByte);
     }

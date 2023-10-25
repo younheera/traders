@@ -6,10 +6,12 @@
 
 package com.newus.traders.payment.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.newus.traders.payment.entity.TransactionHistory;
 
-public interface TransactionHistoryRepository extends JpaRepository<TransactionHistory, String> {
-
+public interface TransactionHistoryRepository extends JpaRepository<TransactionHistory, Long> {
+    List<TransactionHistory> findByBuyerOrSeller(Long buyer, Long seller);
 }
