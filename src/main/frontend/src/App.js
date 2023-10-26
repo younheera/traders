@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import GreenPay from "./components/payment/GreenPay";
 import PayRegister from "./components/payment/PayRegister";
@@ -9,10 +9,8 @@ import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import jwt_decode from "jwt-decode";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoadingLeaf from "./assets/LoadingLeaf";
 import { OfficialLoading } from "./assets/OfficialLoading";
 import Attendance from "./components/Attendance";
-import ChatApp from "./components/chat/ChatApp";
 import ChatBox from "./components/chat/ChatBox";
 import ChatList from "./components/chat/ChatList";
 import Elasticsearch from "./components/elasticsearch/Elasticsearch";
@@ -31,13 +29,14 @@ import Confetti from "./components/payment/Confetti";
 import PayMgmt from "./components/payment/PayMgmt";
 import RegisterComplete from "./components/payment/RegisterComplete";
 import RegisterStep4 from "./components/payment/RegisterStep4";
+import TransferGpay from "./components/payment/TransferGpay";
 import ProductListHeader from "./components/product/ProductListHeader";
 import ProductUpdate from "./components/product/ProductUpdate";
-import CampaignDatails from "./components/sns/CampaignDatails";
 import CampaignList from "./components/sns/CampaignList";
 import NewsList from "./components/sns/NewsList";
-import SnsRegistration from "./components/sns/SnsRegistration";
 import Youtube from "./components/sns/Youtube";
+import LoadingLeaf from "./components/util/LoadingLeaf";
+import PrivateRoute from "./components/util/PrivateRoute";
 import "./styles/global.css";
 
 const theme = createTheme({
@@ -47,17 +46,16 @@ const theme = createTheme({
 });
 
 function App() {
-  useEffect(() => {
-    if (localStorage.getItem("REFRESH_TOKEN")) {
-      const userInfo = jwt_decode(localStorage.getItem("REFRESH_TOKEN"));
-      window.user = userInfo.sub;
-      console.log("로그인 된 사용자:", window.user);
-    }
-  });
+  const user = localStorage.getItem("REFRESH_TOKEN")
+    ? jwt_decode(localStorage.getItem("REFRESH_TOKEN")).sub
+    : null;
+  window.user = user;
+  console.log("Main User", user);
   return (
     <>
       <ResizedComponent>
-        <NavBar />
+        <NavBar user={user} />
+        <Notification />
         <MainView />
         <ThemeProvider theme={theme}>
           <ToastContainer />
@@ -108,6 +106,7 @@ function App() {
               <li>
                 <Link to="/Random">RegisterComplete</Link>
               </li>
+
               <hr />
               {/* :::::::::: chat 관련 :::::::::: */}
               <li>
@@ -143,35 +142,56 @@ function App() {
                 {/* <MainView /> */}
               </Route>
 
-              <Route path="/search" exact>
-                <Elasticsearch />
-              </Route>
-              <Route path="/attendance" exact>
-                <Attendance />
-              </Route>
-              <Route path="/notification">
-                <Notification />
-              </Route>
+              <Route component={Login} path="/login" exact />
 
-              <Route path="/products" exact>
-                <ProductListHeader />
-              </Route>
-              <Route path="/products/register" exact>
-                <ProductRegistration />
-              </Route>
-              <Route path="/products/:id" exact>
-                <ProductDetails />
-              </Route>
-              <Route path="/products/update/:id" exact>
-                <ProductUpdate />
-              </Route>
+              <Route component={SignUp} path="/signup" exact />
 
-              <Route path="/login" exact>
-                <Login />
-              </Route>
-              <Route path="/signup" exact>
-                <SignUp />
-              </Route>
+              <Route component={Elasticsearch} path="/search/:keyword" exact />
+
+              <Route component={ProductListHeader} path="/products" exact />
+
+              <Route component={(Youtube, NewsList)} path="/news" exact />
+
+              <Route component={CampaignList} path="/campaign" exact />
+
+              {/* 회원 관련 */}
+
+              <PrivateRoute component={Attendance} path="/attendance" exact />
+
+              <PrivateRoute component={Notification} path="/notification" />
+
+              <PrivateRoute component={Mypage} path="/mypage" />
+
+              {/* 물품 관련 */}
+
+              <PrivateRoute
+                component={ProductRegistration}
+                path="/products/register"
+                exact
+              />
+              <PrivateRoute
+                component={ProductUpdate}
+                path="/products/update/:id"
+                exact
+              />
+
+              <PrivateRoute
+                component={ProductDetails}
+                path="/products/:id"
+                exact
+              />
+
+              {/* 채팅 관련 */}
+
+              <PrivateRoute
+                component={ChatBox}
+                path="/chat/roomNum/:roomNum"
+                exact
+              />
+
+              <PrivateRoute component={ChatList} path="/chat/list" exact />
+
+              {/* 결제 관련 */}
 
               <Route path="/payment" exact>
                 <GreenPay />
@@ -185,36 +205,16 @@ function App() {
               <Route path="/pay3">
                 <RegisterStep4 />
               </Route>
+              <Route path="/payment/transfer/:id">
+                <TransferGpay />
+              </Route>
 
-              <Route path="/chat" exact>
-                <ChatApp />
-              </Route>
-              <Route
-                path="/chat/roomNum/:roomNum"
-                component={ChatBox}
-                exact
-              ></Route>
-              <Route path="/chat/list" component={ChatList} exact></Route>
 
-              <Route path="/news" exact>
-                <Youtube />
-                <NewsList />
-              </Route>
-              <Route path="/campaign" exact>
-                <CampaignList />
-              </Route>
-              <Route path="/campaign/:id" exact>
-                <CampaignDatails />
-              </Route>
-              <Route path="/sns" exact></Route>
-              <Route path="/sns/snsRegistration" exact>
-                <SnsRegistration />
-              </Route>
+              
+
 
               <Route path="/progress" exact></Route>
-              <Route path="/mypage">
-                <Mypage />
-              </Route>
+
               <Route path="/loading1">
                 <LoadingLeaf />
               </Route>

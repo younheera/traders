@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-08 22:08:34
- * @modify date 2023-10-23 15:16:29
+ * @modify date 2023-10-25 13:42:20
  */
 
 import React, { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useHistory, withRouter } from "react-router-dom";
 import "../../assets/css/ProductRegistration.css";
 import "../../styles/global.css";
-import TokenRefresher from "../member/TokenRefresher";
+import TokenRefresher from "../util/TokenRefresher";
 import KakaoMapModal from "./KakaoMapModal";
 import UpdateImage from "./UpdateImage";
 
@@ -128,7 +128,7 @@ const ProductUpdate = (props) => {
   };
 
   return (
-    <body>
+    <body className="basefont">
       <Container
         className="product"
         style={{ maxWidth: "1040px", height: "1500px" }}

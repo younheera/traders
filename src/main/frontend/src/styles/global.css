@@ -39,6 +39,11 @@ code {
   font-family: 'NanumSquareNeo' !important;
 }
 
+.scrollable-container {
+  height: 7000px; 
+  overflow: auto; 
+
+}
 
 .saveButton-1{
   margin: auto;
@@ -67,7 +72,22 @@ code {
 .cancelButton-1:hover{
 background-color: rgb(131, 131, 131) !important;
 }
+.saveButton-2{
+  margin: auto;
+  width: 200px;
+  background-color: #fff;
+  font-size: 17px;
+  font-weight: bolder;
+  background-color:#d8d8d8;
+  color: #fff;
 
+}
+
+.saveButton-2:active,
+.saveButton-2:hover,
+.saveButton-2:focus {
+  background-color:#333333 !important;
+}
 
 .saveButton{
     margin: auto;
@@ -137,6 +157,13 @@ background-color: rgb(131, 131, 131) !important;
  .cancelButton:hover{
   background-color: rgb(131, 131, 131) !important;
   }
+  .chargeButton{
+    margin: 5px;
+    width: 100px;
+    background-color: rgb(230, 229, 229);
+    border-radius: 4px;
+    
+ }
 
   .necessarytext{
    color: #167146 !important;

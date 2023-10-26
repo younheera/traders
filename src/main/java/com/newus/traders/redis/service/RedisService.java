@@ -16,11 +16,12 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
+import com.newus.traders.payment.service.PaymentService;
+import com.newus.traders.product.dto.ProductDto;
 import com.newus.traders.product.entity.Product;
 import com.newus.traders.product.repository.ProductRepository;
 import com.newus.traders.user.entity.RefreshToken;
@@ -36,6 +37,7 @@ public class RedisService {
     private final RedisTemplate<String, String> redisTemplate;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final PaymentService paymentService;
 
     public Long getUserId(String username) {
         User user = userRepository.findByUsername(username)
@@ -60,8 +62,6 @@ public class RedisService {
         String productKey = "productId:" + productId;
 
         if (checkIfLiked(productId, username)) {
-            System.out.println("::::::::::::::::::::redisservice removeLikes::::::::::::::::::::");
-            System.out.println("::::::::::::::::::::redisservice removeLikes::::::::::::::::::::");
             removeLikes(productId, username);
             return;
         }
@@ -105,6 +105,10 @@ public class RedisService {
         return weeklyAttendance;
     }
 
+    public boolean allTrue(List<Boolean> list) {
+        return list.stream().allMatch(element -> element);
+    }
+
     public String updateAttendance(LocalDate currentDate, String username) {
         if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY
                 || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
@@ -117,15 +121,16 @@ public class RedisService {
         }
 
         operationsForValue().setBit(dateKey, getUserId(username), true);
+        if (currentDate.getDayOfWeek() == DayOfWeek.FRIDAY) {
+            if (allTrue(getWeeklyAttendance(currentDate, username))) {
+                paymentService.addBalanceForAttendance(username, 100);
+                return "5일 연속 출석체크 - 100 지급!";
+            }
 
-        List<Boolean> check = getWeeklyAttendance(currentDate, username);
-        System.out.println(":::::::::::::::::: 일주일치 출첵 :::::::::::::::::::");
-
-        for (Boolean b : check) {
-            System.out.println(":::::::::::::::::::" + b + "::::::::::::::::::::::;");
         }
 
-        return "오늘 출석체크 완료";
+        paymentService.addBalanceForAttendance(username, 50);
+        return "오늘 출석체크 완료 50 지급!!!!!";
     }
 
     public boolean checkAttendance(LocalDate currentDate, String username) {
@@ -136,7 +141,7 @@ public class RedisService {
     }
 
     // @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
-    @Scheduled(fixedRate = 10 * 60 * 1000)
+    // @Scheduled(fixedRate = 10 * 60 * 1000)
     public void updateLikesInDB() {
 
         Set<String> productKeySet = redisTemplate.keys("productId*");
@@ -193,6 +198,30 @@ public class RedisService {
 
         String productKey = "productId:" + productId;
         operationsForValue().getAndDelete(productKey);
+    }
+
+    public List<ProductDto> getMyLikes(String username) {
+
+        Set<String> productKeySet = redisTemplate.keys("productId*");
+        List<ProductDto> productDtoList = new ArrayList<>();
+        if (productKeySet.isEmpty()) {
+            System.out.println("ProductKeySet is Empty");
+            return new ArrayList<ProductDto>();
+        }
+
+        Iterator<String> it = productKeySet.iterator();
+        while (it.hasNext()) {
+
+            String productKey = it.next();
+            Long productId = Long.parseLong(productKey.split(":")[1]);
+
+            if (checkIfLiked(productId, username)) {
+                productDtoList.add(new ProductDto(productRepository.findById(productId).get()));
+            }
+
+        }
+        return productDtoList;
+
     }
 
 }

@@ -1,3 +1,8 @@
+/**
+ * @author wheesunglee
+ * @create date 2023-10-06 18:48:12
+ * @modify date 2023-10-06 18:48:12
+ */
 package com.newus.traders.image.service;
 
 import java.io.File;

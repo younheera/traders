@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,19 +38,15 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-// 채팅 메세지 생성, 조회 및 스트리밍
-//@SpringBootApplication
 @RequiredArgsConstructor
 @RestController // 데이터 리턴 서버
 @RequestMapping("/api")
-// @CrossOrigin(origins = "http://localhost:3000")
 public class ChatController {
 
     private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
     private final ChatService chatService;
     private final NotificationService notificationService;
     private final TokenProvider tokenProvider;
-    private ApplicationEventPublisher eventPublisher;
 
     public String getUserDetails(String accessToken) {
         Authentication authentication = tokenProvider.getAuthentication(accessToken);

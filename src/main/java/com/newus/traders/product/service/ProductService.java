@@ -3,6 +3,12 @@
  * @create date 2023-09-19 08:19:20
  * @modify date 2023-10-22 13:29:10
  */
+/**
+* @author jeongyearim
+* @create date 2023-09-26 17:33:07
+* @modify date 2023-09-26 17:33:07
+* @desc [주어진 중심 위도와 경도를 기준으로 3km 반경 내의 상품 리스트를 뽑아옵니다.]
+*/
 package com.newus.traders.product.service;
 
 import java.util.ArrayList;
@@ -14,6 +20,8 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.newus.traders.chat.dto.ChatDto;
+import com.newus.traders.chat.repository.ChatRepository;
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
 import com.newus.traders.image.service.ImageService;
@@ -36,6 +44,7 @@ public class ProductService {
     private final UserRepository userRepository;
     private final RedisService redisService;
     private final ImageService imageService;
+    private final ChatRepository chatRepository;
 
     public User getUser(String username) {
         return userRepository.findByUsername(username)
@@ -154,12 +163,12 @@ public class ProductService {
         productRepository.save(product);
 
         try {
-            if (newFiles.size() != 0) {
+            if (newFiles != null && newFiles.size() != 0) {
                 System.out.println("saveImage시작");
                 imageService.saveImage(newFiles, product);
             }
 
-            if (removedFiles.size() != 0) {
+            if (removedFiles != null && removedFiles.size() != 0) {
                 System.out.println("deleteImage시작");
 
                 imageService.updateImage(removedFiles);
@@ -202,7 +211,19 @@ public class ProductService {
         return "물품 삭제를 완료하였습니다.";
     }
 
-    public String purchaseProduct(Long productId) {
+    public void updateAfterTransaction(ProductDto product, Long clientInfo) {
+        
+        purchaseProduct(product.getId());
+
+        String roomNum = "";
+        ChatDto chatDto = new ChatDto();
+        chatDto.setText("거래완료");
+        chatDto.setRoomNum(roomNum);
+        chatRepository.save(chatDto);
+
+    }
+
+    public void purchaseProduct(Long productId) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
@@ -211,15 +232,8 @@ public class ProductService {
 
         productRepository.save(product);
 
-        return "물품이 판매되었습니다.";
     }
 
-    /**
-     * @author jeongyearim
-     * @create date 2023-09-26 17:33:07
-     * @modify date 2023-09-26 17:33:07
-     * @desc [주어진 중심 위도와 경도를 기준으로 3km 반경 내의 상품 리스트를 뽑아옵니다.]
-     */
     public List<ProductDto> getNearestProducts(double latitude, double longitude) {
         // 3km 반경
         double distance = 3.0;

@@ -11,8 +11,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +36,7 @@ public class Campaign {
     private int id;
 
     private Date dueDate;
+    private Date createdDate;
     private String organizer;
     private String title;
 
@@ -56,6 +55,7 @@ public class Campaign {
     @Builder
     public Campaign(CampaignForm campaignForm) {
         this.dueDate = campaignForm.getDueDate();
+        this.createdDate = campaignForm.getCreatedDate();
         this.organizer = campaignForm.getOrganizer();  
 	    this.title = campaignForm.getTitle();  
 	    this.description = campaignForm.getDescription();  

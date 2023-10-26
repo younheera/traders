@@ -1,3 +1,9 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-25 14:18:09
+ * @modify date 2023-10-25 14:18:23
+ * @desc [Loading Page]
+ */
 import React from 'react';
 import styled from 'styled-components';
 

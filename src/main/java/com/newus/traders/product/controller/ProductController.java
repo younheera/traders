@@ -3,6 +3,12 @@
  * @create date 2023-09-19 08:18:21
  * @modify date 2023-10-11 16:47:48
  */
+/**
+ * @author jeongyearim
+ * @create date 2023-09-26 13:41:14
+ * @modify date 2023-09-26 13:41:14
+ * 현재 위치 정보를 기반으로 주변 물품 찾기
+ */
 package com.newus.traders.product.controller;
 
 import java.util.List;
@@ -58,7 +64,7 @@ public class ProductController {
 
     }
 
-    @GetMapping("mypage/products")
+    @GetMapping("/myproducts")
     public ResponseEntity<List<ProductDto>> getMyProducts(@RequestHeader("token") String accessToken) {
 
         return ResponseEntity.ok(productService.getMyProducts(getUserDetails(accessToken)));
@@ -89,17 +95,6 @@ public class ProductController {
         return ResponseEntity.ok(productService.deleteProduct(getUserDetails(accessToken), id));
     }
 
-    @PutMapping("/products/purchase/{id}")
-    public ResponseEntity<String> purchaseProduct(@PathVariable("id") Long id) {
-
-        return ResponseEntity.ok(productService.purchaseProduct(id));
-    }
-
-    /**
-     * @author jeongyearim
-     * @create date 2023-09-26 13:41:14
-     * @modify date 2023-09-26 13:41:14
-     */
     @GetMapping("/products/nearestProducts")
     public ResponseEntity<List<ProductDto>> getNearestProducts(@RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude) {

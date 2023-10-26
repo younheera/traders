@@ -1,9 +1,7 @@
 /**
  * @author heera youn
- * @email [example@mail.com]
  * @create date 2023-10-17 23:02:56
- * @modify date 2023-10-17 23:41:55
- * @desc [description]
+ * @modify date 2023-10-25 14:38:48
  */
 
 import React, { useState, useEffect } from 'react';

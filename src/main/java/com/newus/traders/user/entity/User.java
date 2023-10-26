@@ -50,9 +50,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    @Column(name = "point")
-    private int point;
-
     // @ManyToMany
     // @JoinTable(
     // name = "user_authority",

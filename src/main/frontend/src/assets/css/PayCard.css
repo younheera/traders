@@ -134,3 +134,46 @@ section {
   justify-content: center;
   align-items: center;
 }
+.paybutton-grid {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  text-align: center;
+}
+.paybutton {
+color: #555;
+margin: 2px;
+height: 40px;
+width: 50px;
+border-color: #f2f2f2;
+border-style: solid;
+text-shadow: 0 0.5px 2px #777, 0 2px 6px #f2f2f2;
+border-width: 1px;
+border-radius: 5px;
+background: -webkit-linear-gradient(
+  top,
+  #f9f9f9 0%,
+  #d2d2d2 80%,
+  #c0c0c0 100%
+);
+font-family: sans-serif;
+display: inline-block;
+transition: box-shadow 0.3s ease, transform 0.15s ease;
+
+&:hover,
+&:focus {
+  box-shadow: 0 0 1px #888, 0 1px 0 #fff, 0 4px 0 #c0c0c0,
+    0 2px 35px rgba(#444, 0.3), 2px 2px 4px rgba(#444, 0.25),
+    -2px 2px 4px rgba(#444, 0.25), 0 7px 4px rgba(#444, 0.1);
+  transform: translateY(2px);
+}
+
+&:active {
+  box-shadow: 0 0 1px #888, 0 1px 0 #fff, 0 0 0 #c0c0c0,
+    0 0px 30px rgba(#444, 0.15), 2px 2px 4px rgba(#444, 0.25),
+    -2px 2px 4px rgba(#444, 0.25), 0 0px 4px rgba(#444, 0.25);
+  transform: translateY(4px);
+}
+}
+

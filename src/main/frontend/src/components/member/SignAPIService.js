@@ -1,11 +1,11 @@
 /**
  * @author heera youn
  * @create date 2023-10-14 00:53:26
- * @modify date 2023-10-23 15:58:18
+ * @modify date 2023-10-24 11:40:35
  * @desc [회원가입 및 로그인 관련 API]
  */
-import { Error, Success } from "../toastify/Alert";
-import TokenRefresher from "./TokenRefresher";
+import { Error, Success } from "../util/Alert";
+import TokenRefresher from "../util/TokenRefresher";
 
 let backendHost;
 const hostname = window && window.location && window.location.hostname;
@@ -33,8 +33,10 @@ export function call(api, method, request) {
     .then((response) => {
       if (response.status === 200) {
         Success("🎉 회원가입 성공");
-        window.location.href = "/login";
       }
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 300);
     })
     .catch((error) => {
       console.log(error.sta);
@@ -63,12 +65,14 @@ export function signin(userRequestDTO) {
         //메인돌아갔을 때 헤더페이지에 로그아웃 + "&&&님 안녕하세요"
       }
 
-      window.location.href = "/";
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 300);
     })
     .catch((error) => {
       if (error.response.status === 401) {
         console.log("error: " + error);
-        Error("❌ 로그인 중 오류발생");
+        Error("❌ 비밀번호를 확인해주세요");
         // TokenRefresher(error);
         //  window.location.href = "/login";
       } else {

@@ -33,6 +33,7 @@ public class CampaignDto {
     private int id;
 
     private Date dueDate;
+    private Date createdDate;
     private String organizer;
     private String title;
 
@@ -47,6 +48,7 @@ public class CampaignDto {
     public CampaignDto(Campaign campaign) {
         this.id = campaign.getId();
         this.dueDate = campaign.getDueDate();
+        this.createdDate = campaign.getCreatedDate();
         this.organizer = campaign.getOrganizer();
         this.title = campaign.getTitle();
         this.description = campaign.getDescription();

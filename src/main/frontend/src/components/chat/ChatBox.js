@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-04 13:02:02
- * @modify date 2023-10-23 15:16:17
+ * @modify date 2023-10-25 17:36:43
  */
 
 /**
@@ -22,7 +22,7 @@ import { withRouter } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
 import "../../assets/css/ChatStyle.css";
 import { fetchProduct } from "../../assets/js/product";
-import TokenRefresher from "../member/TokenRefresher";
+import TokenRefresher from "../util/TokenRefresher";
 import ChatScheduleModal from "./ChatScheduleModal";
 
 // 채팅 내용
@@ -48,12 +48,14 @@ const ChatBox = (props) => {
   useEffect(() => {
     setInfo(roomNum, window.user);
     fetchPrevMessage();
+  }, []);
+  useEffect(() => {
     fetchProduct(productId).then((response) => {
       if (response) {
         setProduct(response.data);
       }
     });
-  }, []);
+  }, [productId]);
 
   ///////////////////////////////////////
 
@@ -84,10 +86,8 @@ const ChatBox = (props) => {
   };
 
   const handleSaveModal = async (data) => {
-    console.log("모달에서 받은 데이터:", data);
-
     const notice = {
-      text: "일정잡힘",
+      text: "[공지] 거래 일정이 잡혔습니다.",
       sender: sender,
       receiver: receiver,
       roomNum: roomNum,
@@ -161,6 +161,20 @@ const ChatBox = (props) => {
     );
   };
 
+  const traded = (data) => {
+    return (
+      <div>
+        <div className="notice-box">
+          <div className="notice-message">
+            <p className="notice-header">
+              <b style={{ color: "green" }}>거래</b>가 완료되었습니다!
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   useEffect(() => {
     if (reservedData) {
       setMessages((prevMessages) => [...prevMessages, reservedData]);
@@ -188,8 +202,7 @@ const ChatBox = (props) => {
   };
 
   const handleCardClick = () => {
-    
-    history.push("/");
+    history.push(`../../payment/transfer/${productId}`);
   };
   const fetchPrevMessage = async () => {
     try {
@@ -270,12 +283,13 @@ const ChatBox = (props) => {
                   size="20px"
                   onClick={handleBackButtonClick}
                 />
-                {/* <img
-                      src={Chatprofile}
-                      alt="프로필 이미지"
-                      className="list-content-img"
-                    /> */}
-                <div className="list-receiver">{receiver}</div>
+
+                <div
+                  className="list-receiver"
+                  style={{ fontSize: "15pt", marginLeft: "15px" }}
+                >
+                  {receiver}
+                </div>
                 <AiOutlineCalendar
                   className="icon-calendar"
                   size="35px"
@@ -301,8 +315,10 @@ const ChatBox = (props) => {
                 </div>
               </div>
               {messages.map((data, index) => {
-                if (data.text === "일정잡힘") {
+                if (data.text === "[공지] 거래 일정이 잡혔습니다.") {
                   return <div key={index}>{saveData(data)}</div>;
+                } else if (data.text === "거래완료") {
+                  return <div key={index}>{traded(data)}</div>;
                 } else if (data.sender === sender && !data.date) {
                   return <div key={index}>{getSendMsgBox(data)}</div>;
                 } else if (data.sender !== sender && !data.date) {

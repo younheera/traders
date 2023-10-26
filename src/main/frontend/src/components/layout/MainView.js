@@ -1,3 +1,8 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-25 14:38:18
+ * @modify date 2023-10-25 14:38:26
+ */
 import React from 'react';
 import MainCarousel from './MainCarousel';
 import { BsArrowUpCircle } from 'react-icons/bs';

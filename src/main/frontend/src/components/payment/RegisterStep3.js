@@ -1,38 +1,41 @@
 /**
+ * @author hyunseul
+ * @email [example@mail.com]
+ * @create date 2023-10-23 22:31:38
+ * @modify date 2023-10-25 16:35:12
+ * @desc [페이지 템플릿 css]
+ */
+/**
  * @author ahrayi
  * @create date 2023-09-26 14:00:35
- * @modify date 2023-10-23 18:31:26
+ * @modify date 2023-10-25 15:47:55
  * 그린페이 가입 - 3. 간편비밀번호 설정
  */
 
 import { TextField, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import "../../assets/css/AccountRegister.css";
+import '../../assets/css/AccountRegister.css';
 import "../../assets/css/PayRegister.css";
-import { Error } from "../toastify/Alert";
+import { Error } from "../util/Alert";
+
 
 const RegisterStep3 = ({ onNext, setGpayPwd }) => {
   const [password, setPassword] = useState("");
+  const [keypadRows, setKeypadRows] = useState([]);
 
-  // 0~9와 총 10개의 문자 배열을 랜덤하게 섞은 배열
-  const randomCharacters = shuffleArray([
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-  ]);
+  useEffect(() => {
+    const randomCharacters = shuffleArray([
+      "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    ]);
 
-  const keypadRows = [
-    ...chunkArray(randomCharacters.slice(0, 9), 3),
-    ["C", randomCharacters[9], "←"],
-  ];
+    const initialKeypadRows = [
+      ...chunkArray(randomCharacters.slice(0, 9), 3),
+      ["C", randomCharacters[9], "←"],
+    ];
+
+    setKeypadRows(initialKeypadRows);
+  }, []); // 빈 의존성 배열을 사용하여 초기 렌더링 시에만 실행
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -50,7 +53,6 @@ const RegisterStep3 = ({ onNext, setGpayPwd }) => {
     setPassword(password + character);
   };
 
-  // 배열을 랜덤하게 섞는 함수
   function shuffleArray(array) {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -63,7 +65,6 @@ const RegisterStep3 = ({ onNext, setGpayPwd }) => {
     return shuffledArray;
   }
 
-  // 배열을 지정된 크기로 나누는 함수
   function chunkArray(array, size) {
     const chunkedArray = [];
     for (let i = 0; i < array.length; i += size) {

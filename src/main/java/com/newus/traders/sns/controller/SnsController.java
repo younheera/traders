@@ -28,6 +28,7 @@ import com.newus.traders.product.form.ProductForm;
 import com.newus.traders.sns.dto.CampaignDto;
 import com.newus.traders.sns.dto.NewsDto;
 import com.newus.traders.sns.dto.SnsDto;
+import com.newus.traders.sns.entity.Sns;
 import com.newus.traders.sns.form.CampaignForm;
 import com.newus.traders.sns.form.SnsForm;
 import com.newus.traders.sns.service.SnsService;
@@ -108,15 +109,32 @@ public class SnsController {
     }
 
 
-    //게시물 삭제
-    @GetMapping("/sns/delete/{id}")
-    public ResponseEntity<String> deleteSns(@PathVariable("id") Long id) {
 
-        return ResponseEntity.ok(snsService.deleteSns(id));
+
+    // //가장 최근의 data를 불러옴
+    // @GetMapping("/sns/latest")
+    // public ResponseEntity<SnsDto> getLatestSnsData() {
+    //     SnsDto latestSnsData = snsService.getLatestSnsData();
+
+    //     System.out.println(latestSnsData.getContent());
+        
+    //     return ResponseEntity.ok(latestSnsData);
+        
+    // }
+
+    @GetMapping("/sns/latestImage")
+    public ResponseEntity<SnsDto> getLatestImage() {
+        SnsDto latestImage = snsService.getLatestImage();
+        System.out.println(latestImage.getContent());
+        return ResponseEntity.ok(latestImage);
     }
-
-
     
-
+    @GetMapping("/sns/latestTagImage")
+    public ResponseEntity<SnsDto> getLatestImage(@RequestParam(required = false) String tag) {
+        
+        SnsDto tagImage = snsService.getLatestImageByTag(tag);
+        System.out.println(tagImage.getContent());
+        return ResponseEntity.ok(tagImage);
+    }
     
 }

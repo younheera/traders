@@ -1,17 +1,23 @@
 /**
+ * @author heera youn
+ * @create date 2023-10-25 16:09:59
+ * @modify date 2023-10-25 16:26:33
+ */
+/**
  * @author ahrayi
  * @create date 2023-10-13 12:56:57
- * @modify date 2023-10-23 18:28:22
+ * @modify date 2023-10-25 16:09:55
  * @desc 그린페이 계좌등록 프로세스
  */
 
 import React, { useState } from "react";
 
-import TokenRefresher from "../member/TokenRefresher";
 import AccountRegister1 from "./AccountRegister1";
 import AccountRegister2 from "./AccountRegister2";
 import AccountRegister3 from "./AccountRegister3";
-import AccountRegister4 from "./AccountRegister4";
+import TokenRefresher from "../util/TokenRefresher";
+import Mypage from "../member/Mypage";
+import { Success } from "../util/Alert";
 
 const AccountRegister = () => {
   const [step, setStep] = useState(1);
@@ -56,10 +62,10 @@ const AccountRegister = () => {
       .then((Response) => {
         if (Response.status === 200) {
           console.log(Response.data);
-          alert("계좌등록성공");
+          Success("계좌등록성공");
           onNext();
         } else {
-          alert("계좌등록실패");
+          Error("계좌등록실패");
         }
       })
       .catch((error) => {
@@ -86,7 +92,7 @@ const AccountRegister = () => {
         />
       )}
       {step === 3 && <AccountRegister3 postAccountInfo={postAccountInfo} />}
-      {step === 4 && <AccountRegister4 onNext={onNext} />}
+      {step === 4 && <Mypage/>}
     </div>
   );
 };

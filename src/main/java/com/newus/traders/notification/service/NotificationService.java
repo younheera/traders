@@ -5,17 +5,16 @@
  */
 package com.newus.traders.notification.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.newus.traders.chat.dto.ChatDto;
 import com.newus.traders.notification.entity.Notification;
 import com.newus.traders.notification.repository.NotificationRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.codec.ServerSentEvent;
-import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 
-import java.time.Duration;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 
 @Service
 @RequiredArgsConstructor
@@ -28,23 +27,20 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
-    public Flux<ServerSentEvent<String>> getNotifications(String username) {
-        return Flux.interval(Duration.ofSeconds(1)) // 일정 간격으로 데이터를 전송할 수 있도록 설정
-                .flatMap(seq -> {
-                    List<Notification> notifications = notificationRepository.findAllByReceiverAndIsDeliveredTrue(username);
-                    for (Notification notification : notifications) {
-                        notification.setIsDelivered(true);
-                        notificationRepository.save(notification);
-                    }
-                    return Flux.fromIterable(notifications)
-                            .map(notification -> ServerSentEvent.builder(
-                                            notification.getSender() + "님이 메세지를 보내셨습니다. " +
-                                                    notification.getCreatedAt()+
-                                                    "\n")
-                                    .build());
-                });
+    public Flux<Notification> getNotificationsByReceiverAsFlux(String receiver) {
+        // List<Notification> notifications =
+        // notificationRepository.findAllByReceiver(receiver);
+        List<Notification> notifications = notificationRepository.findAllByReceiverAndIsDeliveredFalse(receiver);
+        for (Notification notification : notifications) {
+            notification.setIsDelivered(true);
+            notificationRepository.save(notification);
+        }
+
+        // Flux<Notification> stringFlux = Flux.fromIterable(notifications);
+        // stringFlux.count().subscribe(count ->
+        // System.out.println(":::::::::::::::Count: " + count));
+
+        return Flux.fromIterable(notifications);
     }
 
-
 }
-

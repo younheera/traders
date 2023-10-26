@@ -1,4 +1,10 @@
 /**
+ * @author heera youn
+ * @create date 2023-10-25 13:59:36
+ * @modify date 2023-10-25 15:18:27
+ * @desc [그린페이 가입 인증 및 input FE]
+ */
+/**
  * @author ahrayi
  * @create date 2023-09-26 10:32:10
  * @modify date 2023-10-21 10:33:55

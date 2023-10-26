@@ -1,16 +1,10 @@
 /**
  * @author heera youn
- * @email [example@mail.com]
  * @create date 2023-10-18 21:57:51
- * @modify date 2023-10-23 19:50:32
- * @desc [description]
+ * @modify date 2023-10-25 16:07:45
+ * @desc [그린페이 가입절차 시작]
  */
 
-/**
- * @author ahrayi
- * @create date 2023-09-25 15:01:56
- * @modify date 2023-10-23 11:23:37
- */
 
 import React from "react";
 import { Col, Container } from "react-bootstrap";

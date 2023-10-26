@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-30 13:38:26
- * @modify date 2023-10-23 15:16:32
+ * @modify date 2023-10-25 13:41:07
  */
 
 /**
@@ -16,7 +16,7 @@ import Row from "react-bootstrap/Row";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import "../../assets/css/ProductRegistration.css";
 import "../../styles/global.css";
-import TokenRefresher from "../member/TokenRefresher";
+import TokenRefresher from "../util/TokenRefresher";
 import ImagePreview from "./ImagePreview";
 import KakaoMapModal from "./KakaoMapModal";
 
@@ -100,7 +100,7 @@ const ProductRegistration = () => {
   };
 
   return (
-    <body>
+    <body className="basefont">
       <Container
         className="product"
         style={{ maxWidth: "1040px", height: "1500px" }}
@@ -141,7 +141,7 @@ const ProductRegistration = () => {
               name="price"
               value={price}
               onChange={changeInput}
-              placeholder="　가격을 입력해 주세요.　　　　　　　　　　원"
+              placeholder="　가격을 입력해 주세요.　　　　　　　원"
               id="custom-placeholder-1"
               className="sm-input-price"
             />
@@ -326,13 +326,13 @@ const ProductRegistration = () => {
                   history.push("/products");
                 }, 500)
               }
-              className="saveButton"
+              className="saveButton-2"
               style={{ backgroundColor: "#d0d0d0", color: "rgb(88, 88, 88)" }}
             >
               뒤로가기
             </button>
 
-            <button onClick={submitData} className="saveButton">
+            <button onClick={submitData} className="saveButton-1">
               등록하기
             </button>
           </Col>

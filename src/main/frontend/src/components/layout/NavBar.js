@@ -1,7 +1,7 @@
 /**
  * @author heera youn
  * @create date 2023-10-22 23:35:51
- * @modify date 2023-10-23 16:06:46
+ * @modify date 2023-10-25 16:50:27
  * @desc [로고 회전 및 메뉴명 수정]
  */
 import React from "react";
@@ -13,6 +13,8 @@ import { PiUserPlusLight } from "react-icons/pi";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../assets/css/NavBar.css";
 import NavLogo1 from "../../assets/img/NavLogo1.png";
+import { Link } from "react-router-dom";
+import { BsBagPlus } from "react-icons/bs";
 
 const NavBar = () => {
   const user = window.user;
@@ -34,7 +36,16 @@ const NavBar = () => {
                   Something
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="캠페인" id="collapsible-nav-dropdown">
+              
+              <Nav.Link href="/products/register">
+                {/* <BsBagPlus style={{fontSize:'17pt'}} onClick={()=>{
+                  history.push("./products/register")
+                }}/> */}
+                  <span >상품등록</span>
+              </Nav.Link>
+
+              
+              {/* <NavDropdown title="캠페인" id="collapsible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
@@ -46,15 +57,17 @@ const NavBar = () => {
                 <NavDropdown.Item href="#action/3.4">
                   Separated link
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
+              
               <NavDropdown
                 title="마이페이지"
                 id="collapsible-nav-dropdown"
                 style={{ marginRight: "0px" }}
               >
-                <NavDropdown.Item href="#action/3.1">
-                  포인트 충전
+                <NavDropdown.Item href="../member/CardPoint.js">
+                  그린페이 충전/환급
                 </NavDropdown.Item>
+                
                 <NavDropdown.Item href="#action/3.2">
                   나의 관심상품
                 </NavDropdown.Item>
@@ -76,18 +89,13 @@ const NavBar = () => {
             </Navbar.Brand>
             <Nav>
               {/* 로그인 상태에 따른 이름 출력 */}
-              <div className="usernickname">
-                <span style={{ color: "#167146" }}>
+              <div className="usernickname" style={{marginTop:'11px'}}>
+                <span style={{ color: "#167146" , marginTop:'11px'}}>
                   {user ? <p>{user}님 안녕하세요!</p> : null}
                 </span>
               </div>
 
-              {/* <Nav.Link href="/products/register" className='navbar-icons' >
-                <BsBagPlus style={{fontSize:'17pt'}} onClick={()=>{
-                  history.push("./products/register")
-                }}/>
-                  <span style={{marginLeft:'5px',position:'relative',top:'3px',fontSize:'12pt'}}>판매하기</span>
-              </Nav.Link> */}
+              
 
               <NavDropdown
                 title={<PiUserPlusLight style={{ fontSize: "23pt" }} />}

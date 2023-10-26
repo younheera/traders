@@ -2,7 +2,7 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-04 13:01:44
- * @modify date 2023-10-23 14:44:27
+ * @modify date 2023-10-25 13:47:35
  * @desc [거래 장소 선택 모달(처음에는 현위치, 마커 이동해서 선택), ProcuctRegistaration의 하위 컴포넌트]
  */
 
@@ -50,7 +50,7 @@ const KakaoMapModal = ({ onMapSubmit }) => {
   };
 
   return (
-    <div>
+    <div className="basefont">
       <Button onClick={openModal}>거래 장소 선택</Button>
       <Modal
         title="거래 장소 선택"

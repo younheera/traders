@@ -5,15 +5,19 @@
  */
 package com.newus.traders.notification.controller;
 
-import com.newus.traders.notification.service.NotificationService;
-import com.newus.traders.user.jwt.TokenProvider;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.codec.ServerSentEvent;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.newus.traders.notification.entity.Notification;
+import com.newus.traders.notification.service.NotificationService;
+import com.newus.traders.user.jwt.TokenProvider;
+
+import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 
 @RequiredArgsConstructor
@@ -31,14 +35,9 @@ public class NotificationController {
         return userDetails.getUsername();
     }
 
-
-    @GetMapping(value = "/notification")
-//    public SseEmitter getAllNotifications(@RequestHeader("token") String accessToken) {
-    public Flux<ServerSentEvent<String>> getAllNotifications() {
-        System.out.println("::::::::::::::::::::::::::::::::: getAllNotifications ::::::::::::::::::::::::::::: yeji");
-//        return notificationService.getNotifications(getUserDetails(accessToken));
-        return notificationService.getNotifications("inna");
+    @GetMapping(value = "/notifications/{user}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Notification> getNotifications(@PathVariable String user) {
+        return notificationService.getNotificationsByReceiverAsFlux(user);
     }
-
 
 }

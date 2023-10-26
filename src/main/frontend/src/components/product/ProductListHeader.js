@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../assets/css/Product.css";
-import TokenRefresher from "../member/TokenRefresher";
+import TokenRefresher from "../util/TokenRefresher";
 import ProductList from "./ProductList";
 
 const ProductListHeader = () => {
@@ -81,10 +81,10 @@ const ProductListHeader = () => {
 
   return (
     <>
-      <Container style={{ maxWidth: "1040px" }}>
+      <Container style={{ maxWidth: "1040px" }} className="basefont">
         <Row>
           <Col md="12" className="text-center mb-4">
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%" }} className="basefont">
               <button className="category-btn ">여성의류</button>
               <button className="category-btn ">남성의류</button>
               <button className="category-btn ">신발</button>
@@ -99,7 +99,7 @@ const ProductListHeader = () => {
           </Col>
         </Row>
 
-        <Row>
+        <Row className="basefont">
           <Col className="col-left-align bold-colored-font ">
             {showAvailable ? "전체 보기" : "거래 가능한 물품"}
             <input
@@ -121,7 +121,7 @@ const ProductListHeader = () => {
         </Row>
       </Container>
 
-      <Container style={{ maxWidth: "1040px", marginTop: "15px" }}>
+      <Container style={{ maxWidth: "1040px", marginTop: "15px" }} className="basefont">
         <Row className="justify-content-center" style={{ margin: "0px" }}>
           <Col md="12" style={{ margin: "0px" }}>
             <Row>
