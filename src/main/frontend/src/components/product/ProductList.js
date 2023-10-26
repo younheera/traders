@@ -1,38 +1,28 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:19:28
- * @modify date 2023-10-23 16:24:37
+ * @modify date 2023-10-26 12:04:34
  */
 
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, Col, Row } from "react-bootstrap";
 import { IoIosHeart } from "react-icons/io";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { getAddress } from "../../assets/js/product";
 
 const ProductList = ({ product }) => {
   const [images, setImages] = useState();
   const history = useHistory();
-  const { kakao } = window;
   const [address, setAddress] = useState();
 
-  const getAddress = (lat, lng) => {
-    const geocoder = new kakao.maps.services.Geocoder();
-    const coord = new kakao.maps.LatLng(lat, lng);
-    const callback = function (result, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        setAddress(result[0].address.region_3depth_name);
-      }
-    };
-    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-  };
-
   useEffect(() => {
-    setTimeout(() => {
-      setImages(product.images);
-      getAddress(product.latitude, product.longitude);
-    }, 100);
-  }, [images]);
-
+    setImages(product.images);
+    getAddress(product.latitude, product.longitude)
+      .then((addressInfo) =>
+        setAddress(addressInfo.region1 + " " + addressInfo.region3)
+      )
+      .catch((error) => console.error(error));
+  }, [product]);
   return (
     <>
       <Card className="product-card-list">
@@ -74,10 +64,8 @@ const ProductList = ({ product }) => {
                 원
               </span>
             </Col>
-            {/* 주소 찍히는 곳 */}
             <Col sm={5} className="product-addr">
-              {/* {product.longitude} */}
-              역삼동
+              {address}
             </Col>
           </Row>
         </CardBody>

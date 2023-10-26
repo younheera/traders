@@ -1,40 +1,54 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-22 13:13:41
- * @modify date 2023-10-22 23:54:44
+ * @modify date 2023-10-26 12:05:19
  */
 import React, { useEffect, useState } from "react";
-
+import { Success } from "./toastify/Alert";
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
+  const user = window.user;
 
   useEffect(() => {
     const eventSource = new EventSource(
-      "http://localhost:8080/api/notification"
+      `http://localhost:8080/api/notifications/${user}`
     );
 
     eventSource.onmessage = (event) => {
-      const newNotification = event.data; // 문자열 그대로 저장
-      console.log(newNotification, "newNotification");
-      setNotifications((prevNotifications) => [
-        ...prevNotifications,
-        newNotification,
-      ]);
-      eventSource.close(); // 메시지를 받은 후에 연결 닫기
+      const newNotification = JSON.parse(event.data);
+      if (
+        !notifications.some(
+          (notification) => notification.id === newNotification.id
+        )
+      ) {
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          newNotification,
+        ]);
+      }
     };
 
     return () => {
       eventSource.close();
     };
-  },[] );
+  }, [notifications, user]);
 
   return (
     <div>
-      <h2>Notifications</h2>
       <ul>
-        {notifications.map((notification, index) => (
-          <li key={index}>{notification}</li>
-        ))}
+        {notifications.map((notification, index) =>
+          Success(
+            notification.sender +
+              "님이 메세지를 보냈습니다! \n" +
+              notification.createdAt.slice(0, 10) +
+              " " +
+              notification.createdAt.slice(11, 16)
+          )
+        )}
+        {notifications.map((notification, index) => {
+          console.log(notification);
+          console.log("notification", notification.sender);
+        })}
       </ul>
     </div>
   );
