@@ -1,10 +1,17 @@
 /**
+ * @author hyunseul
+ * @create date 2023-10-23 22:28:08
+ * @modify date 2023-10-25 13:15:09
+ */
+/**
  * @author wheesunglee
  * @create date 2023-10-17 19:29:09
  * @modify date 2023-10-20 19:52:12
  */
 
-.justify-content-center {
+ 
+
+ .justify-content-center {
   justify-content: center;
 }
 .text-justify {
@@ -121,11 +128,6 @@
 
 /* productList.css */
 
-
-
-
-
-
 #product-col-md-3{
   margin-right: auto;
   padding:0px !important;
@@ -214,3 +216,46 @@
   color:#494949;
 }
 
+/* productDetails(imgeView) */
+.product-detail-row-1{
+  padding-top: 30px;
+}
+
+.product-detail-col-1{
+  width: 450px;
+  height: 420px;
+  margin: auto;
+  margin-right: 80px;
+}
+
+@media (min-width: 768px)
+{
+  .col-md-6  {
+    flex: 0 0 auto;
+    width: 450px !important;
+    height: 420px !important;
+    display: block !important;
+  }   
+}
+
+.product-detail-col-2{
+  width: 500px !important;
+  
+}
+
+#pay-popup{
+  border-radius: 3px !important;
+  margin-left: 10px;
+  width: 80px !important;
+  height: 35px;
+  font-size: 12pt;
+  padding: 0px;
+  
+}
+
+.vertical-line {
+  border-left: 1px solid #999;
+  height: 500px;
+  margin: 0 30px;
+
+}

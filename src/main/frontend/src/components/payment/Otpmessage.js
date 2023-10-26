@@ -1,4 +1,10 @@
-import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap CSS를 임포트하세요.
+/**
+ * @author heera youn
+ * @create date 2023-10-25 16:06:05
+ * @modify date 2023-10-25 16:06:16
+
+ */
+import "bootstrap/dist/css/bootstrap.min.css"; 
 import React, { useState } from "react";
 import { Row } from "react-bootstrap";
 import OtpInput from "react-otp-input";

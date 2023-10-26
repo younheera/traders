@@ -2,7 +2,7 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-06 17:44:23
- * @modify date 2023-10-23 12:27:40
+ * @modify date 2023-10-25 12:32:33
  * @desc [환경 관련 뉴스기사 출력]
  */
 
@@ -56,7 +56,7 @@ function NewsList() {
             <Col key={index} sm={6} md={4}>
               <div className="news-item" ref={index === displayedNews.length - 1 ? scrollRef : null}>
                 <img src={news.imageUrl} alt={news.articleTitle} className="news-img" />
-                <a href={news.articleLink}><p className="news-title">{news.articleTitle}</p></a>
+                <a href={news.articleLink} style={{ textDecoration: 'none', color : 'black', fontFamily: 'Pretendard-Regular'}}><p className="news-title">{news.articleTitle}</p></a>
               </div>
             </Col>
           ))}

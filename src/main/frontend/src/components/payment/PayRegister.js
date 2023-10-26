@@ -1,7 +1,7 @@
 /**
  * @author heera youn
  * @create date 2023-10-22 23:30:04
- * @modify date 2023-10-23 12:13:29
+ * @modify date 2023-10-25 16:32:09
  * @desc [CSS 및 Toastify알림 추가]
  */
 /**
@@ -19,8 +19,9 @@ import RegisterStep3 from "./RegisterStep3";
 import RegisterStep4 from "./RegisterStep4";
 import RegisterComplete from "./RegisterComplete";
 import LoadingModal from "./LoadingModal";
-import { Success } from "../toastify/Alert";
-import TokenRefresher from "../member/TokenRefresher";
+
+import TokenRefresher from "../util/TokenRefresher";
+import { Success } from "../util/Alert";
 
 
 const PayRegister = () => {
@@ -153,10 +154,10 @@ const PayRegister = () => {
       TokenRefresher.post('http://localhost:8080/api/payment/verify-sms',smsRequest)
         .then(Response=>{
           if(Response.status===200){
-            alert('문자 인증 성공')
+            Success('📩 문자 인증 성공')
             onNext();
           }else if(Response.status===208){
-            alert('문자 인증 실패')
+            Error('❌ 문자 인증 실패')
             return
           }
         })

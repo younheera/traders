@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class CampaignForm {
 
     private Date dueDate;
+    private Date createdDate;
     private String organizer;
     private String title;
 

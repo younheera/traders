@@ -1,3 +1,8 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-23 23:22:21
+ * @modify date 2023-10-25 13:54:54
+ */
 import React, { useState, useRef, useEffect } from 'react';
 
 function Card() {

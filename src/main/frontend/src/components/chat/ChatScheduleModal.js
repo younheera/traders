@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:30:19
- * @modify date 2023-10-23 14:37:22
+ * @modify date 2023-10-25 16:21:28
  */
 
 import React, { useState } from 'react';
@@ -25,9 +25,9 @@ const ChatScheduleModal = ({show, handleClose, onsave}) => {
 
     const handleLocationFieldClick = () => {
         if (isMapModalVisible) {
-            setMapModalVisible(false); // 맵 모달이 이미 열려있으면 닫기
+            setMapModalVisible(false); 
         } else {
-            setMapModalVisible(true); // 맵 모달이 닫혀있으면 열기
+            setMapModalVisible(true); 
         }
     };
 
@@ -38,9 +38,9 @@ const ChatScheduleModal = ({show, handleClose, onsave}) => {
 
     const handleDatePickerClick = () => {
         if (isMapModalVisible) {
-            setMapModalVisible(false); // 맵 모달이 이미 열려있으면 닫기
+            setMapModalVisible(false); 
         } else {
-            setMapModalVisible(true); // 맵 모달이 닫혀있으면 열기
+            setMapModalVisible(true); 
         }
     };
 
@@ -78,7 +78,7 @@ const ChatScheduleModal = ({show, handleClose, onsave}) => {
                         />
                         {isMapModalVisible && (
                             <ChatMap onAddressChange={handleAddressChange}/>
-                            // <KakaoMapModal className='map' handleClose={handleCloseMapModal} />
+                           
                         )}
                     </Form.Group>
 

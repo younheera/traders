@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-17 00:06:52
- * @modify date 2023-10-17 11:18:23
+ * @modify date 2023-10-25 13:47:16
  */
 
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ const ImageView = ({ imageList }) => {
   };
 
   return (
-    <div style={{ marginLeft: "1.5rem" }}>
+    <div className="basefont" style={{ marginLeft: "1.5rem" }}>
       {main && (
         <img
           src={main.filepath}

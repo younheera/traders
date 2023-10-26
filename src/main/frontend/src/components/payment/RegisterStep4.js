@@ -1,7 +1,14 @@
 /**
+ * @author hyunseul
+ * @email [example@mail.com]
+ * @create date 2023-10-23 22:31:49
+ * @modify date 2023-10-25 16:32:26
+ * @desc [페이지 템플릿 css]
+ */
+/**
  * @author ahrayi
  * @create date 2023-09-26 14:00:35
- * @modify date 2023-10-23 18:31:33
+ * @modify date 2023-10-25 15:45:01
  * 그린페이 가입 - 4. 간편비밀번호 확인(리팩필수)
  */
 
@@ -10,28 +17,34 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import "../../assets/css/AccountRegister.css";
 import "../../assets/css/PayRegister.css";
-import { Error } from "../toastify/Alert";
+import { Error } from "../util/Alert";
+
 
 const RegisterStep4 = ({ gpayPwd2, setGpayPwd2, confirmGpayPwd }) => {
   const [password2, setPassword2] = useState("");
+  const [keypadRows, setKeypadRows] = useState([]);
 
-  const randomCharacters = shuffleArray([
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-  ]);
+  useEffect(() => {
+    const randomCharacters = shuffleArray([
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+    ]);
 
-  const keypadRows = [
-    ...chunkArray(randomCharacters.slice(0, 9), 3),
-    ["C", randomCharacters[9], "←"],
-  ];
+    const initialKeypadRows = [
+      ...chunkArray(randomCharacters.slice(0, 9), 3),
+      ["C", randomCharacters[9], "←"],
+    ];
+
+    setKeypadRows(initialKeypadRows);
+  }, []); // 빈 의존성 배열을 사용하여 초기 렌더링 시에만 실행
 
   const handlePasswordChange = (e) => {
     setPassword2(e.target.value);

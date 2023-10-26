@@ -1,3 +1,9 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-23 23:22:32
+ * @modify date 2023-10-25 13:55:29
+ * @desc [계좌 등록 절차 시 약관동의]
+ */
 import React, { useState } from "react";
 
 export default function JoinTerms({ allAgreedState }) {

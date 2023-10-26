@@ -1,8 +1,8 @@
 /**
  * @author heera youn
  * @create date 2023-10-22 02:25:19
- * @modify date 2023-10-23 19:51:01
- * @desc [마이페이지 TAB1.포인트 전환 및 충전]
+ * @modify date 2023-10-25 16:35:40
+ * @desc [마이페이지 TAB1.그린페이 전환/충전, 내역테이블 ]
  */
 import {
   Table,
@@ -12,20 +12,57 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
+import TransferGpay from "../payment/TransferGpay";
+import TokenRefresher from "../util/TokenRefresher";
+import WithdrawGpay from "./WithdrawGpay";
 import PointCharge from "./PointCharge";
 
+
 const CardPoint = (props) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showChargeModal, setShowChargeModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const handleShowModal = () => {
-    setShowModal(true);
-  };
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const handleShowChargeModal = () => {
+    setShowChargeModal(true);
+};
 
+const handleCloseChargeModal = () => {
+  setShowChargeModal(false);
+};
+
+const handleShowWithdrawModal = () => {
+  setShowWithdrawModal(true);
+};
+
+const handleCloseWithdrawModal = () => {
+  setShowWithdrawModal(false);
+};
+
+  useEffect(() => {
+    setUser(window.user);
+  }, []);
+  
+  const [data, setData] = useState({
+    nickName: '',
+    accountNum:'',
+    bankCodeStd:'',
+    payBalance:'',
+    // + 최근이용내역관련 data
+})
+
+    useEffect(() => {
+        TokenRefresher.post('http://localhost:8080/api/payment/payMgmt')
+        .then(response => {
+            setData(response.data);
+        })
+        .catch(error => {
+            console.error('데이터 가져오기 실패:', error);
+        });
+    }, []); 
+    
   if (props.tab === 0) {
     return (
       <>
@@ -35,12 +72,12 @@ const CardPoint = (props) => {
         >
           <div class="paycard">
             <div class="cardtop">
-              <scan>유저이름</scan>
+            {user && <scan>{user}</scan>}<br/>
               <img src="https://cdn-icons-png.flaticon.com/512/1436/1436392.png" />
             </div>
             <div class="infos">
               <section class="card-number">
-                <p className="paycardtext">Card Number</p>
+                <p className="paycardtext">Account Number</p>
                 <h1 style={{ fontSize: "20px" }}>5495 9549 2883 2434</h1>
               </section>
               <div class="cardbottom">
@@ -76,8 +113,7 @@ const CardPoint = (props) => {
           }}
         >
           <span className="titleterms" style={{ textAlign: "center" }}>
-            {" "}
-            @@@님의 그린페이 잔액 @@@ 원
+          {user ? `🌿${user}🌿님의 그린페이` : '@@@'} 원
           </span>
         </Row>
 
@@ -92,20 +128,27 @@ const CardPoint = (props) => {
           <button
             className="checkButton"
             style={{ width: "200px" }}
-            onClick={handleShowModal}
+            onClick={handleShowChargeModal}
           >
             충전하기
           </button>
 
-          <button className="backButton" style={{ width: "200px" }}>
-            환급하기
+          <button className="backButton" 
+          style={{ width: "200px" }}
+          onClick={handleShowWithdrawModal}
+          >
+            계좌송금
           </button>
         </Row>
 
         <PointCharge
-          showModal={showModal}
-          handleCloseModal={handleCloseModal}
+          showModal={showChargeModal}
+          handleCloseModal={handleCloseChargeModal}
         />
+        <WithdrawGpay
+        showModal={showWithdrawModal}
+        handleCloseModal={handleCloseWithdrawModal}
+      />
 
         {/* 포인트 내역 테이블 */}
         <TableContainer style={{ width: "80%", margin: "auto" }}>
@@ -113,14 +156,19 @@ const CardPoint = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell align="center" component="th">
-                  포인트적립내역
+                  최근 이용 내역
                 </TableCell>
                 <TableCell align="center" component="th">
-                  환급 포인트
+                  구분아이콘
+                {/* (판매/구매/충전/환급) */}
                 </TableCell>
                 <TableCell align="center" component="th">
-                  포인트 잔액
+                  거래일시
                 </TableCell>
+                <TableCell align="center" component="th">
+                  거래품목
+                </TableCell>
+                {/* 비고(후기작성/작성완료) */}
               </TableRow>
             </TableHead>
 

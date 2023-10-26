@@ -1,7 +1,13 @@
 /**
+ * @author hyunseul
+ * @create date 2023-10-23 22:31:18
+ * @modify date 2023-10-25 16:26:59
+ * @desc [페이지 전체 템플릿 css]
+ */
+ /**
  * @author ahrayi
  * @create date 2023-10-13 16:44:23
- * @modify date 2023-10-23 12:28:49
+ * @modify date 2023-10-25 16:10:54
  */
 
 import React, { useState } from 'react';
@@ -15,7 +21,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {PiNumberCircleOne} from 'react-icons/pi';
-import TokenRefresher from '../member/TokenRefresher';
+import TokenRefresher from "../util/TokenRefresher";
 
 
 const AccountRegister1 = ({form, onText, onNext, setRanNum}) => {

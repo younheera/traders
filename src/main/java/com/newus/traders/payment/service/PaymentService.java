@@ -9,7 +9,6 @@ package com.newus.traders.payment.service;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.newus.traders.chat.dto.ChatDto;
+import com.newus.traders.chat.repository.ChatRepository;
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
 import com.newus.traders.payment.dto.PayAccountDto;
@@ -31,7 +32,8 @@ import com.newus.traders.payment.entity.TransactionHistory;
 import com.newus.traders.payment.repository.PayAccountRepository;
 import com.newus.traders.payment.repository.PaymentRepository;
 import com.newus.traders.payment.repository.TransactionHistoryRepository;
-import com.newus.traders.redis.service.RedisService;
+import com.newus.traders.product.dto.ProductDto;
+import com.newus.traders.product.service.ProductService;
 import com.newus.traders.user.entity.User;
 import com.newus.traders.user.repository.UserRepository;
 
@@ -246,16 +248,23 @@ public class PaymentService {
         return verNum;
     }
 
-    private final RedisService redisservice;
+    public void addBalanceForAttendance(String userName, int pointAmt) {
+        Long clientInfo = getClientInfo(userName).get();
+        PayAccount payAccount = getPayAccountInfo(clientInfo).get();
 
-    public User getUser(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        payAccount.setPayBalance(payAccount.getPayBalance() + pointAmt);
+        updatePayBalanceToDb(payAccount);
+
+        TransactionHistoryDto transactionHistoryDto = new TransactionHistoryDto();
+        transactionHistoryDto.setSeller(clientInfo);
+        transactionHistoryDto.setContent("포인트_출석체크");
+        transactionHistoryDto.setTranAmt(pointAmt);
+        transactionHistoryDto.setTransactionDtime(getDateTimeString());
+        transactionHistoryDto.setType("포인트");
+
+        saveTransactionHistoryToDb(transactionHistoryDto);
     }
 
-    // 출석체크 지급
-    public void addBalanceForAttendance(String username) {
-        User user = getUser(username);
-    }
+   
 
 }

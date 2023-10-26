@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:30:32
- * @modify date 2023-10-21 19:36:15
+ * @modify date 2023-10-25 17:13:42
  */
 /**
  * @author wheesunglee
@@ -10,11 +10,11 @@
  * @desc 백엔드 연결
  */
 
-import axios from "axios";
+import TokenRefresher from "../util/TokenRefresher";
 
 const fetchLastMessages = async (roomNum) => {
   try {
-    const response = await axios.get(
+    const response = await TokenRefresher.get(
       `http://localhost:8080/api/chat/roomNum/${roomNum}`
     );
     const chatData = response.data || {};
@@ -30,7 +30,7 @@ const fetchLastMessages = async (roomNum) => {
       .slice(-1)[0]
       .split(",")[5]
       .split(":");
-    console.log("lastMsg", lastMsg);
+
     if (lastMsg[1] && sender[1] && receiver) {
       const lastText = lastMsg[1].replace(/"/g, "");
 
@@ -44,7 +44,6 @@ const fetchLastMessages = async (roomNum) => {
         receiver: lastReceiver,
       };
     } else {
-      console.log("마지막 메시지 형식이 잘못되었습니다.");
       return null;
     }
   } catch (error) {

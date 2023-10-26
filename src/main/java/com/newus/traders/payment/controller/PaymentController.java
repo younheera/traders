@@ -6,7 +6,6 @@
 
 package com.newus.traders.payment.controller;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +43,7 @@ import com.newus.traders.payment.repository.TransactionHistoryRepository;
 import com.newus.traders.payment.service.PaymentService;
 import com.newus.traders.payment.service.RestTemplateService;
 import com.newus.traders.product.dto.ProductDto;
-import com.newus.traders.product.entity.Product;
+import com.newus.traders.product.service.ProductService;
 import com.newus.traders.user.jwt.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -55,6 +54,7 @@ import lombok.RequiredArgsConstructor;
 public class PaymentController {
 
     private final PaymentService paymentService;
+    private final ProductService productService;
     private final RestTemplateService restTemplateService;
     private final TokenProvider tokenProvider;
 
@@ -464,6 +464,10 @@ public class PaymentController {
             return new ResponseEntity<>(Collections.singletonMap("message", "결제 실패"),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+
+        productService.updateAfterTransaction(product, clientInfo);
+
         // 응답 반환
         return new ResponseEntity<>(Collections.singletonMap("message", "결제 성공"), HttpStatus.OK);
     }

@@ -4,7 +4,7 @@
  * @modify date 2023-10-23 15:24:29
  */
 
-import TokenRefresher from "../../components/member/TokenRefresher";
+import TokenRefresher from "../../components/util/TokenRefresher";
 
 const fetchProduct = (id) => {
   return TokenRefresher.get(`http://localhost:8080/api/products/${id}`)

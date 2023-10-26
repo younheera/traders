@@ -1,15 +1,10 @@
 /**
  * @author heera youn
  * @create date 2023-10-22 23:28:10
- * @modify date 2023-10-23 11:10:13
- * @desc CSS구현
+ * @modify date 2023-10-25 15:50:11
+ * @desc 등록완료 시 FE + CSS(애니메이션 효과) 
  */
-/**
- * @author ahrayi
- * @create date 2023-09-27 17:20:16
- * @modify date 2023-10-22 22:26:57
- * 그린페이 가입 완료 페이지(AccountRegister 연결)
- */
+
 
 import React from 'react';
 import PayRegister from '../../assets/css/PayRegister.css';
@@ -22,8 +17,7 @@ import Confetti from './Confetti';
 const RegisterComplete = () => {
     
     return (
-        <>
-        <Confetti/>
+        <div className='basefont'>
       <div className="js-container container" style={{ top: '0px !important' }}></div>
       <div style={{ textAlign: 'center', marginTop: '30px', width: '100%', height: '100%' }}>
         <div className="checkmark-circle">
@@ -35,7 +29,7 @@ const RegisterComplete = () => {
                 <button className='submit-btn'>계좌 등록</button>
             </Link>
             </div>
-    </>
+    </div>
   );
 };
 

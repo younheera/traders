@@ -1,4 +1,23 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-25 13:50:13
+ * @modify date 2023-10-25 13:50:13
+ */
+/**
+ * @author wheesunglee
+ * @create date 2023-10-25 13:50:08
+ * @modify date 2023-10-25 13:50:08
+ * refreshtoken 레디스 저장
+ */
+
 package com.newus.traders.user.service;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
@@ -10,14 +29,10 @@ import com.newus.traders.user.dto.UserResponseDTO;
 import com.newus.traders.user.entity.RefreshToken;
 import com.newus.traders.user.entity.User;
 import com.newus.traders.user.jwt.TokenProvider;
+import com.newus.traders.user.repository.RefreshTokenRepository;
 import com.newus.traders.user.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +42,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RedisService redisService;
-    // private final RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
     public UserResponseDTO signup(UserRequestDTO userRequestDTO) {
@@ -48,7 +63,7 @@ public class AuthService {
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         // authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername
         // 메서드가 실행됨
-        
+
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
@@ -60,7 +75,7 @@ public class AuthService {
                 .value(tokenDTO.getRefreshToken())
                 .expiration(tokenDTO.getRefreshTokenExpiresIn())
                 .build();
-        // refreshTokenRepository.save(refreshToken);
+        refreshTokenRepository.save(refreshToken);
         // 레디스에 저장
         redisService.saveRefreshToken(refreshToken);
 

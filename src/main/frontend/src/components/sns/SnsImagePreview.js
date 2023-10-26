@@ -2,12 +2,13 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-20 11:17:11
- * @modify date 2023-10-20 11:25:57
+ * @modify date 2023-10-22 03:29:58
  * @desc [SnsRegistration의 상위 항목]
  */
 
 import React, { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 
 const SnsImagePreview = ({ files, deleteFile }) => {
   const [preview, setPreview] = useState([]);
@@ -33,11 +34,13 @@ const SnsImagePreview = ({ files, deleteFile }) => {
   return (
     <Container style={{maxWidth:"1040px"}}> 
       <div>
-        <h1>미리보기</h1>
         {preview.map((image, index) => (
           <div key={index}>
             <img src={image} width={200} />
-            <button onClick={() => deletePreview(index)}>삭제</button>
+            {/* <button onClick={() => deletePreview(index)}>삭제</button> */}
+            <Button onClick={() => deletePreview(index)} variant="secondary" size="sm">
+              삭제
+            </Button>
           </div>
         ))}
       </div>

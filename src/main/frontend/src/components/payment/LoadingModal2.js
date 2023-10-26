@@ -1,8 +1,7 @@
 /**
  * @author heera youn
- * @email [example@mail.com]
  * @create date 2023-10-22 01:45:46
- * @modify date 2023-10-22 23:29:28
+ * @modify date 2023-10-23 23:51:14
  * @desc [Loading Page CSS 및 애니메이션 이펙트]
  */
 
