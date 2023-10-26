@@ -1,3 +1,8 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-18 14:11:33
+ * @modify date 2023-10-20 15:28:51
+ */
 package com.newus.traders.user.exception;
 
 public class NotFoundMemberException extends RuntimeException {

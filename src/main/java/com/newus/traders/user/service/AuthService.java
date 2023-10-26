@@ -112,7 +112,7 @@ public class AuthService {
 
         // String stringRefreshToken = refreshToken.getValue();
 
-        // 5. 새로운 토큰 생성//////////
+        // 5. 새로운 토큰 생성
         // TokenDTO tokenDTO =
         // tokenProvider.reissueAccessToken(authentication,stringRefreshToken);
         TokenDTO tokenDTO = tokenProvider.generateTokenDto(authentication);
@@ -130,8 +130,8 @@ public class AuthService {
         redisService.saveRefreshToken(newRefreshToken);
 
         // 토큰 발급
-        System.out.println("TokenDTO의 AT: " + tokenDTO.getAccessToken());
-        System.out.println("TokenDTO의 RT: " + tokenDTO.getRefreshToken());
+        System.out.println("TokenDTO의 AccessToken: " + tokenDTO.getAccessToken());
+        System.out.println("TokenDTO의 RefreshToken: " + tokenDTO.getRefreshToken());
         return tokenDTO;
     }
 }

@@ -1,3 +1,8 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-12 12:23:43
+ * @modify date 2023-10-16 22:02:35
+ */
 package com.newus.traders.user.jwt;
 
 import org.springframework.security.core.AuthenticationException;

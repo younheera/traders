@@ -2,6 +2,7 @@
  * @author heera youn
  * @create date 2023-10-16 10:47:46
  * @modify date 2023-10-16 10:47:46
+ * @desc [회원가입, 로그인, 만료 rt 토큰 재발급 controller]
  */
 
 package com.newus.traders.user.controller;
@@ -45,9 +46,6 @@ public class AuthController {
      @PostMapping("/auth/reissue")
     public ResponseEntity<TokenDTO> reissue(@RequestBody TokenRequestDTO tokenRequestDTO, HttpServletRequest request) {
         String refreshToken = request.getHeader("Refresh"); // Refresh 헤더 가져오기
-        System.out.println("Refresh 헤더 값: " + refreshToken);
-        System.out.println("넘어온 AT:" + tokenRequestDTO.getAccessToken());
-        System.out.println("넘어온 RT: " + tokenRequestDTO.getRefreshToken());
         return ResponseEntity.ok(authService.reissue(tokenRequestDTO));
     }
 }

@@ -1,3 +1,8 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-13 10:39:38
+ * @modify date 2023-10-16 14:29:15
+ */
 package com.newus.traders.user.dto;
 
 import com.newus.traders.user.entity.User;
