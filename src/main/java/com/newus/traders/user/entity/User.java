@@ -1,3 +1,8 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-16 10:39:38
+ * @modify date 2023-10-16 10:39:38
+ */
 package com.newus.traders.user.entity;
 
 import javax.persistence.Column;
@@ -41,21 +46,11 @@ public class User {
     @Column(name = "activated")
     private boolean activated;
 
-    @Column(name = "pictureurl")
-    private String pictureurl;
-
     @Column(name = "local")
     private String local;// 관심지역
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    // @ManyToMany
-    // @JoinTable(
-    // name = "user_authority",
-    // joinColumns = {@JoinColumn(name = "user_id", referencedColumnName =
-    // "user_id")},
-    // inverseJoinColumns = {@JoinColumn(name = "authority_name",
-    // referencedColumnName = "authority_name")})
-    // private Set<Authority> authorities;
+
 }

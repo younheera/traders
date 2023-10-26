@@ -1,3 +1,8 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-20 15:42:11
+ * @modify date 2023-10-24 13:01:25
+ */
 package com.newus.traders.user.service;
 
 import lombok.RequiredArgsConstructor;
@@ -23,8 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {//UserDetai
 
    //시큐리티 내용 외 파라미터 추가하고 싶을 때 사용
    //제약조건: Controller에서 Auth점검 시 UserCustom으로 받기
-   // 예) (변경 전) @AuthenticationPrincipal User user => (변경 후) @AuthenticationPrincipal UserCustom user
-
+   
    @Override
    @Transactional
    //loadUserByUsername 메소드를 오버라이드 => 넘겨받은 UserDetails 와 Authentication 의 패스워드를 비교, 검증 로직

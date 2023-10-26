@@ -1,3 +1,8 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-12 15:32:56
+ * @modify date 2023-10-16 20:11:44
+ */
 package com.newus.traders.user.jwt;
 
 import org.springframework.security.access.AccessDeniedException;

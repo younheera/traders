@@ -1,3 +1,9 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-10 12:13:45
+ * @modify date 2023-10-16 18:56:43
+ * @desc [JWT 및 필터 + Security 환경설정]
+ */
 package com.newus.traders.user.config;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
