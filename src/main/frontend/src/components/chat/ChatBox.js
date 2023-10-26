@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-04 13:02:02
- * @modify date 2023-10-25 17:36:43
+ * @modify date 2023-10-25 16:23:24
  */
 
 /**
@@ -48,8 +48,10 @@ const ChatBox = (props) => {
   useEffect(() => {
     setInfo(roomNum, window.user);
     fetchPrevMessage();
+
   }, []);
   useEffect(() => {
+    
     fetchProduct(productId).then((response) => {
       if (response) {
         setProduct(response.data);
@@ -86,6 +88,7 @@ const ChatBox = (props) => {
   };
 
   const handleSaveModal = async (data) => {
+
     const notice = {
       text: "[공지] 거래 일정이 잡혔습니다.",
       sender: sender,
@@ -283,13 +286,8 @@ const ChatBox = (props) => {
                   size="20px"
                   onClick={handleBackButtonClick}
                 />
-
-                <div
-                  className="list-receiver"
-                  style={{ fontSize: "15pt", marginLeft: "15px" }}
-                >
-                  {receiver}
-                </div>
+               
+                <div className="list-receiver" style={{fontSize:'15pt',marginLeft:'15px'}}>{receiver}</div>
                 <AiOutlineCalendar
                   className="icon-calendar"
                   size="35px"

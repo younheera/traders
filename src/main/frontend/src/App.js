@@ -9,8 +9,6 @@ import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import jwt_decode from "jwt-decode";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { OfficialLoading } from "./assets/OfficialLoading";
-import Attendance from "./components/Attendance";
 import ChatBox from "./components/chat/ChatBox";
 import ChatList from "./components/chat/ChatList";
 import Elasticsearch from "./components/elasticsearch/Elasticsearch";
@@ -18,8 +16,11 @@ import MainFooter from "./components/layout/MainFooter";
 import MainView from "./components/layout/MainView";
 import NavBar from "./components/layout/NavBar";
 import ResizedComponent from "./components/layout/ResizedComponent";
+import Attendance from "./components/member/Attendance";
 import Login from "./components/member/Login";
+import MyLikes from "./components/member/MyLikes";
 import Mypage from "./components/member/Mypage";
+import MyProducts from "./components/member/MyProducts";
 import RandomEvent from "./components/member/RandomEvent";
 import { signout } from "./components/member/SignAPIService";
 import SignUp from "./components/member/SignUp";
@@ -36,6 +37,7 @@ import CampaignList from "./components/sns/CampaignList";
 import NewsList from "./components/sns/NewsList";
 import Youtube from "./components/sns/Youtube";
 import LoadingLeaf from "./components/util/LoadingLeaf";
+import { OfficialLoading } from "./components/util/OfficialLoading";
 import PrivateRoute from "./components/util/PrivateRoute";
 import "./styles/global.css";
 
@@ -56,17 +58,13 @@ function App() {
       <ResizedComponent>
         <NavBar user={user} />
         <Notification />
-        <MainView />
+        {/* <MainView /> */}
         <ThemeProvider theme={theme}>
           <ToastContainer />
           <RandomEvent />
           {/* <TokenRefresher/> */}
           <div className="Pretendard-Regular">
             <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <hr />
               {/* :::::::::: products 관련 :::::::::: */}
               <li>
                 <Link to="/products/register">ProductRegistration</Link>
@@ -87,12 +85,14 @@ function App() {
               {/* :::::::::: 로그인 관련 :::::::::: */}
 
               <li>
-                <Link to="/login">로그인테스트</Link>
+                <Link to="/login">로그인</Link>
               </li>
               <li>
-                <Link to="/signup">회원가입테스트</Link>
+                <Link to="/signup">회원가입</Link>
               </li>
-              <button onClick={signout}>로그아웃</button>
+              <li>
+                <Link to="/logout">로그아웃</Link>
+              </li>
               <hr />
               {/* :::::::::: pay 관련 :::::::::: */}
 
@@ -114,21 +114,13 @@ function App() {
               </li>
               <hr />
               {/* :::::::::: sns 관련 :::::::::: */}
-              <li>
-                <Link to="/news">News</Link>
-              </li>
+
               <li>
                 <Link to="/campaign">Campaign</Link>
               </li>
-              <li>
-                <Link to="/sns">sns</Link>
-              </li>
+
               <hr />
               {/* :::::::::: 기타 :::::::::: */}
-
-              <li>
-                <Link to="/mypage">Mypage</Link>
-              </li>
               <li>
                 <Link to="/loading1">Loading1</Link>
               </li>
@@ -139,12 +131,14 @@ function App() {
 
             <Switch>
               <Route path={["/", "/main"]} exact>
-                {/* <MainView /> */}
+                <MainView />
               </Route>
 
               <Route component={Login} path="/login" exact />
 
               <Route component={SignUp} path="/signup" exact />
+
+              <Route component={signout} path="/logout" exact />
 
               <Route component={Elasticsearch} path="/search/:keyword" exact />
 
@@ -154,11 +148,15 @@ function App() {
 
               <Route component={CampaignList} path="/campaign" exact />
 
-              {/* 회원 관련 */}
+              {/* 마이페이지 회원 관련 */}
 
               <PrivateRoute component={Attendance} path="/attendance" exact />
 
               <PrivateRoute component={Notification} path="/notification" />
+
+              <PrivateRoute component={MyLikes} path="/mylikes" exact />
+
+              <PrivateRoute component={MyProducts} path="/myproducts" exact />
 
               <PrivateRoute component={Mypage} path="/mypage" />
 
@@ -208,10 +206,6 @@ function App() {
               <Route path="/payment/transfer/:id">
                 <TransferGpay />
               </Route>
-
-
-              
-
 
               <Route path="/progress" exact></Route>
 

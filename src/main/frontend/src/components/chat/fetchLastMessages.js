@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:30:32
- * @modify date 2023-10-25 17:13:42
+ * @modify date 2023-10-25 16:21:50
  */
 /**
  * @author wheesunglee
@@ -10,11 +10,11 @@
  * @desc 백엔드 연결
  */
 
-import TokenRefresher from "../util/TokenRefresher";
+import axios from "axios";
 
 const fetchLastMessages = async (roomNum) => {
   try {
-    const response = await TokenRefresher.get(
+    const response = await axios.get(
       `http://localhost:8080/api/chat/roomNum/${roomNum}`
     );
     const chatData = response.data || {};
@@ -30,7 +30,7 @@ const fetchLastMessages = async (roomNum) => {
       .slice(-1)[0]
       .split(",")[5]
       .split(":");
-
+    
     if (lastMsg[1] && sender[1] && receiver) {
       const lastText = lastMsg[1].replace(/"/g, "");
 
@@ -44,6 +44,7 @@ const fetchLastMessages = async (roomNum) => {
         receiver: lastReceiver,
       };
     } else {
+      
       return null;
     }
   } catch (error) {

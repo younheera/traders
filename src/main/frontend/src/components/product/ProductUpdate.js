@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-08 22:08:34
- * @modify date 2023-10-25 13:42:20
+ * @modify date 2023-10-26 12:04:11
  */
 
 import React, { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import { useHistory, withRouter } from "react-router-dom";
 import "../../assets/css/ProductRegistration.css";
 import "../../styles/global.css";
 import TokenRefresher from "../util/TokenRefresher";
+import { Success } from "../util/Alert";
 import KakaoMapModal from "./KakaoMapModal";
 import UpdateImage from "./UpdateImage";
 
@@ -76,27 +77,28 @@ const ProductUpdate = (props) => {
 
   const removeFile = (indexToDelete) => {
     const removedFile = images.splice(indexToDelete, 1);
-    console.log(removedFile);
     setRemovedFiles([...removedFiles, removedFile[0].id]);
   };
 
   const deleteProduct = () => {
     try {
-      TokenRefresher.delete(`http://localhost:8080/api/products/delete/${id}`);
+      TokenRefresher.delete(
+        `http://localhost:8080/api/products/delete/${id}`
+      ).then((res) => {
+        Success(res.data);
+      });
     } catch (error) {
       if (error.response) {
         const errorResponse = error.response.data;
         console.log(errorResponse);
       }
     }
-    // setTimeout(() => {
-    //   history.push("../../products");
-    // }, 500);
-    history.push("../../products");
+    setTimeout(() => {
+      history.push("../../products");
+    }, 500);
   };
 
   const submitData = () => {
-    console.log(data);
     newFiles.forEach((file) => {
       form.append("files", file);
     });
@@ -114,7 +116,9 @@ const ProductUpdate = (props) => {
             "Content-Type": "multipart/form-data",
           },
         }
-      ).then((res) => console.log(res.data));
+      ).then((res) => {
+        Success(res.data);
+      });
     } catch (error) {
       if (error.response) {
         const errorResponse = error.response.data;
@@ -128,7 +132,7 @@ const ProductUpdate = (props) => {
   };
 
   return (
-    <body className="basefont">
+    <body>
       <Container
         className="product"
         style={{ maxWidth: "1040px", height: "1500px" }}
@@ -201,57 +205,52 @@ const ProductUpdate = (props) => {
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="femaleClothing"
+              id="여성의류"
               name="category"
-              value="femaleClothing"
+              value="여성의류"
               onChange={changeInput}
-              checked={category === "femaleClothing"}
             />
-            <label htmlFor="femaleClothing">여성의류</label>
+            <label htmlFor="여성의류">여성의류</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="maleClothing"
+              id="남성의류"
               name="category"
-              value="maleClothing"
+              value="남성의류"
               onChange={changeInput}
-              checked={category === "maleClothing"}
             />
-            <label htmlFor="maleClothing">남성의류</label>
+            <label htmlFor="남성의류">남성의류</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="shoes"
+              id="신발"
               name="category"
-              value="shoes"
+              value="신발"
               onChange={changeInput}
-              checked={category === "shoes"}
             />
-            <label htmlFor="shoes">신발</label>
+            <label htmlFor="신발">신발</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="bags"
+              id="가방/지갑"
               name="category"
-              value="bags"
+              value="가방/지갑"
               onChange={changeInput}
-              checked={category === "bags"}
             />
-            <label htmlFor="bags">가방/지갑</label>
+            <label htmlFor="가방/지갑">가방/지갑</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="pet"
+              id="반려동물용품"
               name="category"
-              value="pet"
+              value="반려동물용품"
               onChange={changeInput}
-              checked={category === "pet"}
             />
-            <label htmlFor="pet">반려동물용품</label>
+            <label htmlFor="반려동물용품">반려동물용품</label>
           </Col>
         </Row>
         <Row className="product-row-sm-1">
@@ -259,57 +258,52 @@ const ProductUpdate = (props) => {
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="digital"
+              id="디지털"
               name="category"
-              value="digital"
+              value="디지털"
               onChange={changeInput}
-              checked={category === "digital"}
             />
-            <label htmlFor="digital">디지털</label>
+            <label htmlFor="디지털">디지털</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="appliances"
+              id="가전제품"
               name="category"
-              value="appliances"
+              value="가전제품"
               onChange={changeInput}
-              checked={category === "appliances"}
             />
-            <label htmlFor="appliances">가전제품</label>
+            <label htmlFor="가전제품">가전제품</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="sports"
+              id="스포츠/레저"
               name="category"
-              value="sports"
+              value="스포츠/레저"
               onChange={changeInput}
-              checked={category === "sports"}
             />
-            <label htmlFor="sports">스포츠/레저</label>
+            <label htmlFor="스포츠/레저">스포츠/레저</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="culture"
+              id="도서/티켓/문구"
               name="category"
-              value="culture"
+              value="도서/티켓/문구"
               onChange={changeInput}
-              checked={category === "culture"}
             />
-            <label htmlFor="culture">도서/티켓/문구</label>
+            <label htmlFor="도서/티켓/문구">도서/티켓/문구</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="furniture"
+              id="가구/인테리어"
               name="category"
-              value="furniture"
+              value="가구/인테리어"
               onChange={changeInput}
-              checked={category === "furniture"}
             />
-            <label htmlFor="culture">가구/인테리어</label>
+            <label htmlFor="가구/인테리어">가구/인테리어</label>
           </Col>
         </Row>
         <Row className="product-row-sm-1">
