@@ -1,8 +1,7 @@
 /**
  * @author heera youn
  * @create date 2023-10-22 17:24:50
- * @modify date 2023-10-22 23:37:02
- * @desc [모달 간략화 ]
+ * @modify date 2023-10-27 15:08:33
  */
 /**
  * @author hyunseul

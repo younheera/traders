@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
+import { Col, Container, Row } from "react-bootstrap";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import "../../assets/css/Product.css";
+import ProductList from "../product/ProductList";
 import TokenRefresher from "../util/TokenRefresher";
-const Elasticsearch = (props) => {
-  const [data, setData] = useState();
 
+const Elasticsearch = () => {
+  const [data, setData] = useState();
+  const { keyword } = useParams();
   useEffect(() => {
-    const { location } = props;
-    const keyword = location.state;
-    TokenRefresher.get("http://localhost:8080/api/products")
+    TokenRefresher.get(`http://localhost:8080/api/search/${keyword}`)
       .then((res) => {
         setData(res.data);
       })
@@ -17,10 +19,29 @@ const Elasticsearch = (props) => {
           console.log(errorResponse);
         }
       });
-  }, []);
-
+  }, [keyword]);
   console.log(data);
-  return <div></div>;
+
+  return (
+    <>
+      <Container
+        style={{ maxWidth: "1040px", marginTop: "180px", height: "1500px" }}
+      >
+        <Row className="justify-content-center" style={{ margin: "0px" }}>
+          <Col md="12" style={{ margin: "0px" }}>
+            <Row>
+              {data &&
+                data.map((product, index) => {
+                  <Col md={3} key={index} style={{ marginBottom: "15px" }}>
+                    <ProductList product={product} />
+                  </Col>;
+                })}
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 };
 
-export default withRouter(Elasticsearch);
+export default Elasticsearch;

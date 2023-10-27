@@ -1,3 +1,9 @@
+/*
+ * @author heera youn
+ * @create date 2023-10-22 23:36:29
+ * @modify date 2023-10-27 15:03:38
+ * @desc [그린페이 비밀번호 입력창 FE+CSS]
+ */
 #PINform input:focus,
 #PINform select:focus,
 #PINform textarea:focus,

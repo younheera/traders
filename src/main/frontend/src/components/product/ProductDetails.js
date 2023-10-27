@@ -1,14 +1,15 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:21:07
- * @modify date 2023-10-26 12:04:43
+ * @modify date 2023-10-27 14:56:24
  */
 /**
- * @author jeongyearim
- * @create date 2023-09-19 17:22:45
- * @modify date 2023-09-19 17:22:45
- * [상세보기 페이지에서 카카오 지도 띄우기]
+ * @author hyunseul
+ * @create date 2023-10-24 19:13:49
+ * @modify date 2023-10-27 14:55:51
+ * @desc [페이지 전체 템플릿 css]
  */
+
 import jwt_encode from "jwt-encode";
 import React, { useEffect, useMemo, useState } from "react";
 import { Col, Container, Row, Stack } from "react-bootstrap";
@@ -20,7 +21,6 @@ import { BiUserCircle } from "react-icons/bi";
 import { BsChatHeart, BsDot } from "react-icons/bs";
 import { FiBookmark, FiMapPin } from "react-icons/fi";
 import { IoIosHeart } from "react-icons/io";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useHistory } from "react-router-dom/";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import "../../assets/css/Product.css";
@@ -54,9 +54,7 @@ const ProductDetails = () => {
     images,
     createdAt,
   } = data;
-  ////////////////////////////////////////
   const key = process.env.REACT_APP_JWT_KEY;
-  ///////////////////////////////////////
 
   useEffect(() => {
     setUser(window.user);
@@ -82,13 +80,7 @@ const ProductDetails = () => {
     if (data) {
       getAddress(latitude, longitude)
         .then((addressInfo) =>
-          setAddress(
-            addressInfo.region1 +
-              " " +
-              addressInfo.region2 +
-              " " +
-              addressInfo.region3
-          )
+          setAddress(addressInfo.region2 + " " + addressInfo.region3)
         )
         .catch((error) => console.error(error));
     }
@@ -124,19 +116,20 @@ const ProductDetails = () => {
   const MapComponent = ({ latitude, longitude }) => {
     return useMemo(
       () => (
-        <Map
-          className="myMap"
-          style={{
-            width: "100%",
-            height: "280px",
-            position: "relative",
-          }}
-          center={{ lat: latitude, lng: longitude }}
-          level={3}
-          draggable={false}
-        >
-          <MapMarker position={{ lat: latitude, lng: longitude }}></MapMarker>
-        </Map>
+        <></>
+        // <Map
+        //   className="myMap"
+        //   style={{
+        //     width: "100%",
+        //     height: "280px",
+        //     position: "relative",
+        //   }}
+        //   center={{ lat: latitude, lng: longitude }}
+        //   level={3}
+        //   draggable={false}
+        // >
+        //   <MapMarker position={{ lat: latitude, lng: longitude }}></MapMarker>
+        // </Map>
       ),
       [latitude, longitude]
     );
@@ -150,16 +143,17 @@ const ProductDetails = () => {
 
   return (
     <>
-      <Container style={{ maxWidth: "1040px", height: "830px" }}>
+      <Container
+        style={{ width: "850px", height: "830px", marginTop: "250px" }}
+      >
         <hr style={{ color: "#000" }}></hr>
-        <Row className="product-detail-row-1">
-          <Col xs={12} md={6} className="product-detail-col-1">
+        <Row style={{ width: "850px" }} className="product-detail-row-1">
+          <Col xs={12} className="product-detail-col-1">
             {images && <ImageView imageList={images} />}
           </Col>
           <Col
             xs={12}
-            md={6}
-            style={{ marginRight: "0px", marginLeft: "0px" }}
+            style={{ marginRight: "0px", marginLeft: "30px" }}
             className="product-detail-col-2"
           >
             <div style={{ fontSize: "23pt", fontWeight: "600" }}>{name}</div>
@@ -252,20 +246,13 @@ const ProductDetails = () => {
                 {address}
               </Col>
             </Row>
-            {/* <hr
-              style={{
-                height: " 0",
-                margin: "1rem 0.5rem 0.5rem 0rem",
-                overflow: "hidden",
-                borderTop: "1px solid #e9ecef",
-              }}
-            /> */}
+
             <Row>
               <Col md="10">
                 <div className="col-right-align">
                   {seller === user && (
                     <button
-                      className="btn-1 bold"
+                      className="saveButton-3"
                       onClick={() => {
                         history.push({
                           pathname: "/products/update/" + id,
@@ -330,24 +317,8 @@ const ProductDetails = () => {
             </Row>
           </Col>
         </Row>
-        <hr
-          style={{
-            marginTop: "40px",
-            height: " 0",
-            margin: "1rem 0.5rem 0.5rem 0.5rem",
-            overflow: "hidden",
-            borderTop: "1px solid #000",
-          }}
-        />
-        <Row style={{ marginTop: "40px" }}>
-          <Col md={11} style={{ margin: "auto" }}>
-            <MapComponent latitude={latitude} longitude={longitude} />
-          </Col>
-        </Row>
-      </Container>
-      <Container style={{ maxWidth: "1040px", height: "500px" }}>
         <hr style={{ color: "#000" }}></hr>
-        <Row style={{ height: "200px" }}>
+        <Row>
           <Col md="3" style={{ marginLeft: "0px", marginRight: "0px" }}>
             <div className="text-center">
               <div
@@ -386,7 +357,7 @@ const ProductDetails = () => {
                 >
                   판매자 정보
                 </span>
-                <span style={{ marginLeft: "10px", fontSize: "12pt" }}>
+                <span style={{ marginLeft: "20px", fontSize: "11pt" }}>
                   {seller}
                 </span>
               </div>
@@ -416,7 +387,7 @@ const ProductDetails = () => {
                 >
                   거래지역
                 </span>
-                <span style={{ marginLeft: "10px", fontSize: "12pt" }}>
+                <span style={{ marginLeft: "10px", fontSize: "10pt" }}>
                   {address}
                 </span>
               </div>
@@ -445,7 +416,7 @@ const ProductDetails = () => {
                 >
                   카테고리
                 </span>
-                <span style={{ marginLeft: "10px", fontSize: "12pt" }}>
+                <span style={{ marginLeft: "10px", fontSize: "10pt" }}>
                   {category}
                 </span>
               </div>

@@ -2,7 +2,7 @@
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-20 11:16:53
- * @modify date 2023-10-25 18:17:47
+ * @modify date 2023-10-27 11:33:01
  * @desc [CampaignDatails와 SnsManage의 상위 컴포넌트]
  */
 import React, { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/Stack";
-import TokenRefresher from "../member/TokenRefresher";
+import TokenRefresher from "../util/TokenRefresher";
 import CampaignDetails from "./CampaignDetails";
 import SnsManage from "./SnsManage";
 const CampaignList = () => {
@@ -52,16 +52,16 @@ const CampaignList = () => {
   // const isExpired = timeRemaining <= 0;
 
   return (
-    <Container style={{ maxWidth: "1040px", fontFamily: "Pretendard-Regular" }}>
+    <Container
+      style={{
+        width: "850px",
+        marginTop: "180px",
+        fontFamily: "Pretendard-Regular",
+      }}
+    >
       <div>
-        <h1>캠페인 목록</h1>
-
-        <br />
-        <br />
         <Button
           className="cancelButton-1"
-          variant="secondary"
-          size="sm"
           onClick={() => setShowExpired(!showExpired)}
         >
           {showExpired ? "진행 중인 캠페인" : "종료 캠페인 포함"}

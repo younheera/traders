@@ -1,34 +1,32 @@
-// /**
-//  * @author wheesunglee
-//  * @create date 2023-09-27 11:00:20
-//  * @modify date 2023-10-12 14:09:31
-//  */
+/**
+ * @author wheesunglee
+ * @create date 2023-09-27 11:00:20
+ * @modify date 2023-10-12 14:09:31
+ */
 
-// package com.newus.traders.elasticsearch.controller;
+package com.newus.traders.elasticsearch.controller;
 
-// import java.util.List;
+import com.newus.traders.elasticsearch.service.ElasticsearchService;
+import com.newus.traders.product.dto.ProductDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
-// import com.newus.traders.elasticsearch.service.ElasticsearchService;
-// import com.newus.traders.product.dto.ProductDto;
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api")
+public class ElasticsearchController {
 
-// import lombok.RequiredArgsConstructor;
+    private final ElasticsearchService elasticsearchService;
 
-// @RestController
-// @RequiredArgsConstructor
-// @RequestMapping("/api")
-// public class ElasticsearchController {
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<ProductDto>> getSearchResults(@PathVariable String keyword) {
+        return ResponseEntity.ok(elasticsearchService.getSearchResults(keyword));
+    }
 
-//     private final ElasticsearchService elasticsearchService;
-
-//     @GetMapping("/search/{keyword}")
-//     public ResponseEntity<List<ProductDto>> getSearchResults(@PathVariable String keyword) {
-//         return ResponseEntity.ok(elasticsearchService.getSearchResults(keyword));
-//     }
-
-// }
+}

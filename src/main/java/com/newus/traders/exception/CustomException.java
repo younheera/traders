@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CustomException extends RuntimeException {
-    
+
     // 에러 상태와 메세지를 모두 담고 있는 ErrorCode 클래스를 담음
     ErrorCode errorCode;
 }

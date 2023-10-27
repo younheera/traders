@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-30 13:38:26
- * @modify date 2023-10-26 12:04:19
+ * @modify date 2023-10-27 12:09:58
  */
 
 /**
@@ -17,9 +17,9 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import "../../assets/css/ProductRegistration.css";
 import "../../styles/global.css";
 import TokenRefresher from "../util/TokenRefresher";
-import { Success } from "../util/Alert";
 import ImagePreview from "./ImagePreview";
-import KakaoMapModal from "./KakaoMapModal";
+import ProductMap from "./ProductMap";
+
 const ProductRegistration = () => {
   const form = new FormData();
   const [files, setFiles] = useState([]);
@@ -86,9 +86,7 @@ const ProductRegistration = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }).then((res) => {
-        Success(res.data);
-      });
+      }).then((res) => console.log(res.data));
     } catch (error) {
       if (error.response) {
         const errorResponse = error.response.data;
@@ -102,10 +100,10 @@ const ProductRegistration = () => {
   };
 
   return (
-    <body>
+    <body className="basefont">
       <Container
         className="product"
-        style={{ maxWidth: "1040px", height: "1500px" }}
+        style={{ width: "850px", marginTop: "180px" }}
       >
         <Row className="product-header">
           기본정보
@@ -143,7 +141,7 @@ const ProductRegistration = () => {
               name="price"
               value={price}
               onChange={changeInput}
-              placeholder="　가격을 입력해 주세요.　　　　　　　　　　원"
+              placeholder="　가격을 입력해 주세요.　　　　　　　원"
               id="custom-placeholder-1"
               className="sm-input-price"
             />
@@ -177,52 +175,52 @@ const ProductRegistration = () => {
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="여성의류"
+              id="femaleClothing"
               name="category"
-              value="여성의류"
+              value="femaleClothing"
               onChange={changeInput}
             />
-            <label htmlFor="여성의류">여성의류</label>
+            <label htmlFor="femaleClothing">여성의류</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="남성의류"
+              id="maleClothing"
               name="category"
-              value="남성의류"
+              value="maleClothing"
               onChange={changeInput}
             />
-            <label htmlFor="남성의류">남성의류</label>
+            <label htmlFor="maleClothing">남성의류</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="신발"
+              id="shoes"
               name="category"
-              value="신발"
+              value="shoes"
               onChange={changeInput}
             />
-            <label htmlFor="신발">신발</label>
+            <label htmlFor="shoes">신발</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="가방/지갑"
+              id="bags"
               name="category"
-              value="가방/지갑"
+              value="bags"
               onChange={changeInput}
             />
-            <label htmlFor="가방/지갑">가방/지갑</label>
+            <label htmlFor="bags">가방/지갑</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="반려동물용품"
+              id="pet"
               name="category"
-              value="반려동물용품"
+              value="pet"
               onChange={changeInput}
             />
-            <label htmlFor="반려동물용품">반려동물용품</label>
+            <label htmlFor="pet">반려동물</label>
           </Col>
         </Row>
         <Row className="product-row-sm-1">
@@ -230,52 +228,52 @@ const ProductRegistration = () => {
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="디지털"
+              id="digital"
               name="category"
-              value="디지털"
+              value="digital"
               onChange={changeInput}
             />
-            <label htmlFor="디지털">디지털</label>
+            <label htmlFor="digital">디지털</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="가전제품"
+              id="appliances"
               name="category"
-              value="가전제품"
+              value="appliances"
               onChange={changeInput}
             />
-            <label htmlFor="가전제품">가전제품</label>
+            <label htmlFor="appliances">가전제품</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="스포츠/레저"
+              id="sports"
               name="category"
-              value="스포츠/레저"
+              value="sports"
               onChange={changeInput}
             />
-            <label htmlFor="스포츠/레저">스포츠/레저</label>
+            <label htmlFor="sports">스포츠/레저</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="도서/티켓/문구"
+              id="culture"
               name="category"
-              value="도서/티켓/문구"
+              value="culture"
               onChange={changeInput}
             />
-            <label htmlFor="도서/티켓/문구">도서/티켓/문구</label>
+            <label htmlFor="culture">도서/티켓</label>
           </Col>
           <Col sm={2} className="custom-radio">
             <input
               type="radio"
-              id="가구/인테리어"
+              id="furniture"
               name="category"
-              value="가구/인테리어"
+              value="furniture"
               onChange={changeInput}
             />
-            <label htmlFor="가구/인테리어">가구/인테리어</label>
+            <label htmlFor="culture">인테리어</label>
           </Col>
         </Row>
 
@@ -285,7 +283,7 @@ const ProductRegistration = () => {
           </Col>
 
           <Col sm={1} className="product-col-sm-1">
-            <KakaoMapModal
+            <ProductMap
               onMapSubmit={handleMapSubmit}
               className="modal-button"
             />
@@ -328,13 +326,17 @@ const ProductRegistration = () => {
                   history.push("/products");
                 }, 500)
               }
-              className="saveButton"
-              style={{ backgroundColor: "#d0d0d0", color: "rgb(88, 88, 88)" }}
+              className="saveButton-2"
+              style={{
+                backgroundColor: "#d0d0d0",
+                color: "rgb(88, 88, 88)",
+                marginRight: "30px",
+              }}
             >
               뒤로가기
             </button>
 
-            <button onClick={submitData} className="saveButton">
+            <button onClick={submitData} className="saveButton-1">
               등록하기
             </button>
           </Col>

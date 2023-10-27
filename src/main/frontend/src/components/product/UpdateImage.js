@@ -41,7 +41,7 @@ const UpdateImage = ({ images, removeFile, newFiles, deleteFile }) => {
         {preview.slice(i, i + 3).map((image, index) => (
           <Col sm={4} key={index}>
             <div className="square-box">
-              <img src={image} width={300} height={300} className="img-pre" />
+              <img src={image} width={250} height={250} className="img-pre" />
             </div>
             <AiOutlineCloseCircle
               onClick={() => deletePreview(i + index)}

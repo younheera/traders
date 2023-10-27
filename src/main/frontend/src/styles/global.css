@@ -1,62 +1,75 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-22 17:24:50
+ * @modify date 2023-10-27 15:12:56
+ */
 @font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
   font-weight: 400;
   font-style: normal;
 }
- @font-face {
-   font-family: 'MICEGothic';
-   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic.woff2') format('woff2');
-   font-weight: 400;
-   font-style: normal;
- }
- @font-face {
-   font-family: 'MICEGothic Bold';
-   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2') format('woff2');
-   font-weight: 700;
-   font-style: bold;
- }
- @font-face {
-   font-family: 'NanumSquareNeo';
-   src: url('../fonts/NanumSquareNeo-Variable.woff2') format('woff2');
-   font-weight: 400;
-   font-style: bold;
- }
- body {
+
+@font-face {
+  font-family: "MICEGothic";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MICEGothic Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: "NanumSquareNeo";
+  src: url("../fonts/NanumSquareNeo-Variable.woff2") format("woff2");
+  font-weight: 400;
+  font-style: bold;
+}
+html {
+  margin-top: 0;
+}
+body {
   margin: 0;
-  font-family: 'NanumSquareNeo','Pretendard-Regular', 'MICEGothic', 'MICEGothic Bold','BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    'sans-serif';
+  font-family: "NanumSquareNeo", "Pretendard-Regular", "MICEGothic",
+    "MICEGothic Bold", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    "sans-serif";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-.basefont{
-  font-family: 'NanumSquareNeo' !important;
+
+.basefont {
+  font-family: "NanumSquareNeo" !important;
 }
 
 .scrollable-container {
-  height: 7000px; 
-  overflow: auto; 
-
+  overflow: auto;
 }
 
-.saveButton-1{
+.saveButton-1 {
   margin: auto;
   width: 200px;
   background-color: #fff;
   font-size: 17px;
   font-weight: bolder;
-  background-color:#198754;
+  background-color: #198754;
   color: #fff;
-
 }
 
-.cancelButton-1{
+.cancelButton-1 {
   margin: auto;
   width: 190px;
   background-color: rgb(166, 166, 166);
@@ -65,167 +78,194 @@ code {
 
 .saveButton-1:active,
 .saveButton-1:hover {
-  background-color:#167146 !important;
+  background-color: #167146 !important;
 }
 
 .cancelButton-1:active,
-.cancelButton-1:hover{
-background-color: rgb(131, 131, 131) !important;
+.cancelButton-1:hover {
+  background-color: rgb(131, 131, 131) !important;
 }
-.saveButton-2{
+
+.saveButton-2 {
   margin: auto;
   width: 200px;
   background-color: #fff;
   font-size: 17px;
   font-weight: bolder;
-  background-color:#d8d8d8;
+  background-color: #d8d8d8;
   color: #fff;
-
 }
 
 .saveButton-2:active,
 .saveButton-2:hover,
 .saveButton-2:focus {
-  background-color:#333333 !important;
+  background-color: #333333 !important;
 }
 
-.saveButton{
-    margin: auto;
-    width: 200px;
-    font-size: 17px;
-    font-family: 'Pretendard-Regular' !important;
-    font-weight: bolder;
-    background-color:#198754;
-    color: #fff;
-    text-align: center;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
- }
- .checkButton{
-       margin: auto;
-       width: 80px;
-       height: 40px;
-       border-radius: 5px;
-       /* background-color: #fff; */
-       font-size: 14px;
-       font-family: 'MICEGothic' !important;
-       /* font-weight: lighter; */
-       background-color:#198754;
-       color: #fff;
-    }
- .backButton{
-       margin: auto;
-       width: 80px;
-       height: 40px;
-       border-radius: 5px;
-       /* background-color: #fff; */
-       font-size: 14px;
-       font-family: 'MICEGothic' !important;
-       /* font-weight: lighter; */
-       background-color:#a4a7a5;
-       color: #1a0101;
-    }
+.saveButton {
+  margin: auto;
+  width: 200px;
+  font-size: 17px;
+  font-family: "Pretendard-Regular" !important;
+  font-weight: bolder;
+  background-color: #198754;
+  color: #fff;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
 
- .cancelButton{
-    margin: auto;
-    width: 190px;
-    background-color: rgb(166, 166, 166);
-    font-weight: bolder;
- }
+.checkButton {
+  margin: auto;
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  /* background-color: #fff; */
+  font-size: 14px;
+  font-family: "MICEGothic" !important;
+  /* font-weight: lighter; */
+  background-color: #198754;
+  color: #fff;
+}
 
- .cancelButton, .saveButton {
-    /* 버튼의 기본 스타일 /
+.backButton {
+  margin: auto;
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  /* background-color: #fff; */
+  font-size: 14px;
+  font-family: "MICEGothic" !important;
+  /* font-weight: lighter; */
+  background-color: #a4a7a5;
+  color: #1a0101;
+}
+
+.cancelButton {
+  margin: auto;
+  width: 190px;
+  background-color: rgb(166, 166, 166);
+  font-weight: bolder;
+}
+
+.cancelButton,
+.saveButton {
+  /* 버튼의 기본 스타일 /
     border: none; / 테두리 없음 /
     padding: 10px 20px; / 안쪽 여백 /
     cursor: pointer; / 커서 타입을 포인터로 변경하여 버튼임을 나타냅니다. /
     transition: background-color 0.3s; / 호버 효과를 부드럽게 만듭니다. /
 
     / 호버 상태에 대한 스타일 */
-  }
+}
 
+.saveButton:active,
+.saveButton:hover {
+  background-color: #167146 !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-content: center !important;
+}
 
-  .saveButton:active,
-  .saveButton:hover {
-    background-color:#167146 !important;
-    justify-content: center !important;
-    align-items: center !important;
-    align-content: center !important;
-  }
-
- .cancelButton:active,
- .cancelButton:hover{
+.cancelButton:active,
+.cancelButton:hover {
   background-color: rgb(131, 131, 131) !important;
-  }
-  .chargeButton{
-    margin: 5px;
-    width: 100px;
-    background-color: rgb(230, 229, 229);
-    border-radius: 4px;
-    
- }
+}
 
-  .necessarytext{
-   color: #167146 !important;
-   font-family: 'MICEGothic' !important;
-   font-weight: bolder !important;
-  }
+.chargeButton {
+  margin: 5px;
+  width: 100px;
+  background-color: rgb(230, 229, 229);
+  border-radius: 4px;
+}
 
-  .choicetext{
-   color: #8f8f8f !important;
-   font-family: 'MICEGothic' !important;
-   font-weight: bolder;
-  }
-  .titleterms{
-   font-size: 30px;
-   font-weight: bold;
-   margin-bottom:20px;
-  }
-  .title1{
-   font-size: 50px;
-   font-weight: bolder;
-   font-family: 'MICEGothic' !important;
-   margin: 40px;
-   text-align: center;
-  }
-  .allterms{
-   margin-left: 10px;
-   font-size: 16px;
-   font-weight: bolder;
-  }
-  .customhr {
-   border: 0; /* 테두리 제거 */
-   border-top: 2px solid #9e9e9e; /* 수평선 스타일 및 색상 지정 */
-   margin: 10px 0; /* 위쪽 및 아래쪽 여백 설정 */
- }
- 
- .public-bottombutton{
+.necessarytext {
+  color: #167146 !important;
+  font-family: "MICEGothic" !important;
+  font-weight: bolder !important;
+}
+
+.choicetext {
+  color: #8f8f8f !important;
+  font-family: "MICEGothic" !important;
+  font-weight: bolder;
+}
+
+.titleterms {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.title1 {
+  font-size: 50px;
+  font-weight: bolder;
+  font-family: "MICEGothic" !important;
+  margin: 40px;
+  text-align: center;
+}
+
+.allterms {
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: bolder;
+}
+
+.customhr {
+  border: 0; /* 테두리 제거 */
+  border-top: 2px solid #9e9e9e; /* 수평선 스타일 및 색상 지정 */
+  margin: 10px 0; /* 위쪽 및 아래쪽 여백 설정 */
+}
+
+.public-bottombutton {
   position: fixed;
   color: rgb(15, 26, 95) !important;
   float: right;
-  z-index: 1;
+  z-index: 995;
   right: 70px;
-  top:700px;
+  top: 580px;
   display: flex;
   overflow-x: hidden;
   overflow-y: auto;
-};
+}
 
-.typotitle{
+.typotitle {
   font-size: 30px;
-  font-family: 'MICEGothic' !important;
-  text-align:center !important;
+  font-family: "MICEGothic" !important;
+  text-align: center !important;
   justify-content: center;
   font-weight: bold;
   margin-bottom: 10px;
 }
-.gpaymsg{
+
+.gpaymsg {
   align-items: center;
   justify-content: center;
   width: auto !important;
   height: auto !important;
 }
-.usernickname{
-  font-family: 'Pretendard-Regular' !important;
+
+.usernickname {
+  font-family: "Pretendard-Regular" !important;
   font-weight: bold;
+}
+
+/* chat-pay */
+.saveButton-3 {
+  border: none;
+  margin: auto;
+  height: 45px;
+  width: 200px;
+  background-color: #fff;
+  font-size: 17px;
+  font-weight: bolder;
+  background-color: #198754;
+  color: #fff;
+}
+
+.saveButton-3:active,
+.saveButton-3:hover,
+.saveButton-3:focus {
+  background-color: #167146 !important;
 }

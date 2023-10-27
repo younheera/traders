@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import TokenRefresher from "../member/TokenRefresher";
+import TokenRefresher from "../util/TokenRefresher";
 
 const CampaignDetails = ({ campaignId }) => {
   //const { id } = useParams();

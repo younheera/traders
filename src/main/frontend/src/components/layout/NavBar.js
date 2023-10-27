@@ -1,8 +1,13 @@
 /**
  * @author heera youn
  * @create date 2023-10-22 23:35:51
- * @modify date 2023-10-26 11:50:35
+ * @modify date 2023-10-27 14:52:49
  * @desc [로고 회전 및 메뉴명 수정]
+ */
+/**
+ * @author hyunseul
+ * @create date 2023-10-17 16:29:09
+ * @modify date 2023-10-27 11:24:25
  */
 import React from "react";
 import Container from "react-bootstrap/Container";
@@ -25,56 +30,36 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="nav-menu me-auto">
-              <NavDropdown title="상품" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">상품</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-              </NavDropdown>
-
+              <Nav.Link href="/products">
+                <span>구매하기</span>
+              </Nav.Link>
               <Nav.Link href="/products/register">
-                {/* <BsBagPlus style={{fontSize:'17pt'}} onClick={()=>{
-                  history.push("./products/register")
-                }}/> */}
-                <span>상품등록</span>
+                <span>판매하기</span>
               </Nav.Link>
 
-              {/* <NavDropdown title="캠페인" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown> */}
+              {/* <Nav.Link href="/campaign">
+                <span>캠페인</span>
+              </Nav.Link> */}
 
               <NavDropdown
                 title="마이페이지"
                 id="collapsible-nav-dropdown"
                 style={{ marginRight: "0px" }}
               >
-                <NavDropdown.Item href="/mypage">
+                <NavDropdown.Item className="item-nav" href="/payment">
                   그린페이 충전/환급
                 </NavDropdown.Item>
 
-                <NavDropdown.Item href="/mylikes">
+                <NavDropdown.Item className="item-nav" href="/mylikes">
                   나의 관심상품
                 </NavDropdown.Item>
 
-                <NavDropdown.Item href="/myproducts">
+                <NavDropdown.Item className="item-nav" href="/myproducts">
                   내 등록물품
                 </NavDropdown.Item>
 
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="/attendance">
+                <NavDropdown.Item className="item-nav" href="/attendance">
                   출석체크 이벤트
                 </NavDropdown.Item>
               </NavDropdown>
@@ -99,16 +84,16 @@ const NavBar = () => {
                 id="collapsible-nav-dropdown"
                 style={{ marginRight: "0px" }}
               >
-                <NavDropdown.Item href="/login">로그인</NavDropdown.Item>
-                <NavDropdown.Item href="/signup">회원가입</NavDropdown.Item>
-                <NavDropdown.Item href="/logout">로그아웃</NavDropdown.Item>
+                <NavDropdown.Item className="item-nav" href="/login">
+                  로그인
+                </NavDropdown.Item>
+                <NavDropdown.Item className="item-nav" href="/signup">
+                  회원가입
+                </NavDropdown.Item>
+                <NavDropdown.Item className="item-nav" href="/logout">
+                  로그아웃
+                </NavDropdown.Item>
               </NavDropdown>
-              {/* <Nav.Link eventKey={2} href="#memes">
-                <PiUserPlusLight></PiUserPlusLight>
-              </Nav.Link> */}
-              {/* <button className="logout-button" onClick={signout}>
-                로그아웃
-              </button> */}
             </Nav>
           </Navbar.Collapse>
         </Container>

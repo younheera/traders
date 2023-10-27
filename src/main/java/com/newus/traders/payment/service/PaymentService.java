@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.newus.traders.chat.dto.ChatDto;
+import com.newus.traders.chat.document.ChatDto;
 import com.newus.traders.chat.repository.ChatRepository;
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;

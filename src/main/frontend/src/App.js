@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import GreenPay from "./components/payment/GreenPay";
 import PayRegister from "./components/payment/PayRegister";
 import ProductDetails from "./components/product/ProductDetails";
@@ -16,14 +16,14 @@ import MainFooter from "./components/layout/MainFooter";
 import MainView from "./components/layout/MainView";
 import NavBar from "./components/layout/NavBar";
 import ResizedComponent from "./components/layout/ResizedComponent";
+import Login from "./components/login/Login";
+import { signout } from "./components/login/SignAPIService";
+import SignUp from "./components/login/SignUp";
 import Attendance from "./components/member/Attendance";
-import Login from "./components/member/Login";
 import MyLikes from "./components/member/MyLikes";
 import Mypage from "./components/member/Mypage";
 import MyProducts from "./components/member/MyProducts";
 import RandomEvent from "./components/member/RandomEvent";
-import { signout } from "./components/member/SignAPIService";
-import SignUp from "./components/member/SignUp";
 import Notification from "./components/Notification";
 import AccountRegister from "./components/payment/AccountRegister";
 import Confetti from "./components/payment/Confetti";
@@ -40,6 +40,8 @@ import LoadingLeaf from "./components/util/LoadingLeaf";
 import { OfficialLoading } from "./components/util/OfficialLoading";
 import PrivateRoute from "./components/util/PrivateRoute";
 import "./styles/global.css";
+import { BsArrowUpCircle } from "react-icons/bs";
+import { scrollToTop, TopButton } from "./components/layout/PublicComponents";
 
 const theme = createTheme({
   typography: {
@@ -62,166 +64,102 @@ function App() {
         <ThemeProvider theme={theme}>
           <ToastContainer />
           <RandomEvent />
-          {/* <TokenRefresher/> */}
-          <div className="Pretendard-Regular">
-            <ul>
-              {/* :::::::::: products 관련 :::::::::: */}
-              <li>
-                <Link to="/products/register">ProductRegistration</Link>
-              </li>
-              <li>
-                <Link to="/products">ProductList</Link>
-              </li>
-              <hr />
 
-              <li>
-                <Link to="/attendance">출석체크</Link>
-              </li>
-              <hr />
-              <li>
-                <Link to="/notification">알림보기</Link>
-              </li>
-              <hr />
-              {/* :::::::::: 로그인 관련 :::::::::: */}
+          <Switch>
+            <Route path={["/", "/main"]} exact>
+              <MainView />
+            </Route>
 
-              <li>
-                <Link to="/login">로그인</Link>
-              </li>
-              <li>
-                <Link to="/signup">회원가입</Link>
-              </li>
-              <li>
-                <Link to="/logout">로그아웃</Link>
-              </li>
-              <hr />
-              {/* :::::::::: pay 관련 :::::::::: */}
+            <Route component={Login} path="/login" exact />
 
-              <li>
-                <Link to="/payment">GreenPay</Link>
-              </li>
-              <br />
-              <li>
-                <Link to="/pay3">pay3</Link>
-              </li>
-              <li>
-                <Link to="/Random">RegisterComplete</Link>
-              </li>
+            <Route component={SignUp} path="/signup" exact />
 
-              <hr />
-              {/* :::::::::: chat 관련 :::::::::: */}
-              <li>
-                <Link to="/chat">chat</Link>
-              </li>
-              <hr />
-              {/* :::::::::: sns 관련 :::::::::: */}
+            <Route component={signout} path="/logout" exact />
 
-              <li>
-                <Link to="/campaign">Campaign</Link>
-              </li>
+            <Route component={Elasticsearch} path="/search/:keyword" exact />
 
-              <hr />
-              {/* :::::::::: 기타 :::::::::: */}
-              <li>
-                <Link to="/loading1">Loading1</Link>
-              </li>
-              <li>
-                <Link to="/loading2">Loading2</Link>
-              </li>
-            </ul>
+            <Route component={ProductListHeader} path="/products" exact />
 
-            <Switch>
-              <Route path={["/", "/main"]} exact>
-                <MainView />
-              </Route>
+            <Route component={(Youtube, NewsList)} path="/news" exact />
 
-              <Route component={Login} path="/login" exact />
+            <Route component={CampaignList} path="/campaign" exact />
 
-              <Route component={SignUp} path="/signup" exact />
+            {/* 마이페이지 회원 관련 */}
 
-              <Route component={signout} path="/logout" exact />
+            <PrivateRoute component={Attendance} path="/attendance" exact />
 
-              <Route component={Elasticsearch} path="/search/:keyword" exact />
+            <PrivateRoute component={Notification} path="/notification" />
 
-              <Route component={ProductListHeader} path="/products" exact />
+            <PrivateRoute component={MyLikes} path="/mylikes" exact />
 
-              <Route component={(Youtube, NewsList)} path="/news" exact />
+            <PrivateRoute component={MyProducts} path="/myproducts" exact />
 
-              <Route component={CampaignList} path="/campaign" exact />
+            <PrivateRoute component={Mypage} path="/mypage" />
 
-              {/* 마이페이지 회원 관련 */}
+            {/* 물품 관련 */}
 
-              <PrivateRoute component={Attendance} path="/attendance" exact />
+            <PrivateRoute
+              component={ProductRegistration}
+              path="/products/register"
+              exact
+            />
+            <PrivateRoute
+              component={ProductUpdate}
+              path="/products/update/:id"
+              exact
+            />
 
-              <PrivateRoute component={Notification} path="/notification" />
+            <PrivateRoute
+              component={ProductDetails}
+              path="/products/:id"
+              exact
+            />
 
-              <PrivateRoute component={MyLikes} path="/mylikes" exact />
+            {/* 채팅 관련 */}
 
-              <PrivateRoute component={MyProducts} path="/myproducts" exact />
+            <PrivateRoute
+              component={ChatBox}
+              path="/chat/roomNum/:roomNum"
+              exact
+            />
 
-              <PrivateRoute component={Mypage} path="/mypage" />
+            <PrivateRoute component={ChatList} path="/chat/list" exact />
 
-              {/* 물품 관련 */}
+            {/* 결제 관련 */}
 
-              <PrivateRoute
-                component={ProductRegistration}
-                path="/products/register"
-                exact
-              />
-              <PrivateRoute
-                component={ProductUpdate}
-                path="/products/update/:id"
-                exact
-              />
+            <Route path="/payment" exact>
+              <GreenPay />
+            </Route>
+            <Route path="/payment/gpay_register" component={PayRegister} />
+            <Route path="/payment/accnt_register" component={AccountRegister} />
+            <Route path="/payment/payMgmt" component={PayMgmt} />
+            <Route path="/pay3">
+              <RegisterStep4 />
+            </Route>
+            <Route path="/payment/transfer/:id">
+              <TransferGpay />
+            </Route>
 
-              <PrivateRoute
-                component={ProductDetails}
-                path="/products/:id"
-                exact
-              />
+            <Route path="/progress" exact></Route>
 
-              {/* 채팅 관련 */}
-
-              <PrivateRoute
-                component={ChatBox}
-                path="/chat/roomNum/:roomNum"
-                exact
-              />
-
-              <PrivateRoute component={ChatList} path="/chat/list" exact />
-
-              {/* 결제 관련 */}
-
-              <Route path="/payment" exact>
-                <GreenPay />
-              </Route>
-              <Route path="/payment/gpay_register" component={PayRegister} />
-              <Route
-                path="/payment/accnt_register"
-                component={AccountRegister}
-              />
-              <Route path="/payment/payMgmt" component={PayMgmt} />
-              <Route path="/pay3">
-                <RegisterStep4 />
-              </Route>
-              <Route path="/payment/transfer/:id">
-                <TransferGpay />
-              </Route>
-
-              <Route path="/progress" exact></Route>
-
-              <Route path="/loading1">
-                <LoadingLeaf />
-              </Route>
-              <Route path="/loading2">
-                <OfficialLoading />
-              </Route>
-              <Route path="/Random">
-                <RegisterComplete />
-                <Confetti />
-              </Route>
-            </Switch>
-          </div>
-
+            <Route path="/loading1">
+              <LoadingLeaf />
+            </Route>
+            <Route path="/loading2">
+              <OfficialLoading />
+            </Route>
+            <Route path="/Random">
+              <RegisterComplete />
+              <Confetti />
+            </Route>
+          </Switch>
+          <BsArrowUpCircle
+            onClick={scrollToTop}
+            type="button"
+            className="public-bottombutton"
+            size="50px"
+          />
+          <TopButton />
           <ChatList />
           <MainFooter />
         </ThemeProvider>

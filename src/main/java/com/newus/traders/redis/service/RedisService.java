@@ -5,19 +5,6 @@
  */
 package com.newus.traders.redis.service;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Service;
-
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
 import com.newus.traders.payment.service.PaymentService;
@@ -27,8 +14,20 @@ import com.newus.traders.product.repository.ProductRepository;
 import com.newus.traders.user.entity.RefreshToken;
 import com.newus.traders.user.entity.User;
 import com.newus.traders.user.repository.UserRepository;
-
+import com.newus.traders.user.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Service;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -38,10 +37,10 @@ public class RedisService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final PaymentService paymentService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     public Long getUserId(String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
         return user.getUserId();
     }
 
@@ -57,7 +56,8 @@ public class RedisService {
         redisTemplate.delete(key);
     }
 
-    public void addLikes(Long productId, String username) {
+    public void addLikes(Long productId, String accessToken) {
+        String username = customUserDetailsService.getUserDetails(accessToken);
 
         String productKey = "productId:" + productId;
 
@@ -68,7 +68,8 @@ public class RedisService {
         operationsForValue().setBit(productKey, getUserId(username), true);
     }
 
-    public void removeLikes(Long productId, String username) {
+    public void removeLikes(Long productId, String accessToken) {
+        String username = customUserDetailsService.getUserDetails(accessToken);
         String productKey = "productId:" + productId;
 
         operationsForValue().setBit(productKey, getUserId(username), false);
@@ -91,7 +92,8 @@ public class RedisService {
         return (Long) objectCount;
     }
 
-    public List<Boolean> getWeeklyAttendance(LocalDate currentDate, String username) {
+    public List<Boolean> getWeeklyAttendance(LocalDate currentDate, String accessToken) {
+        String username = customUserDetailsService.getUserDetails(accessToken);
         LocalDate startDate = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
         List<Boolean> weeklyAttendance = new ArrayList<>();
@@ -109,9 +111,9 @@ public class RedisService {
         return list.stream().allMatch(element -> element);
     }
 
-    public String updateAttendance(LocalDate currentDate, String username) {
-        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY
-                || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+    public String updateAttendance(LocalDate currentDate, String accessToken) {
+        String username = customUserDetailsService.getUserDetails(accessToken);
+        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
             return "주말은 출첵 이벤트 참여 불가";
         }
         String dateKey = currentDate.toString();
@@ -156,17 +158,9 @@ public class RedisService {
 
             String productKey = it.next();
             Long productId = Long.parseLong(productKey.split(":")[1]);
-            System.out.println(
-                    "::::::::::::::::::::::::::::updateLikesInDB 상품번호:" + productId + "::::::::::::::::::::::::::::");
-
             if (countLikes(productId) != null) {
 
-                Product product = productRepository.findById(productId)
-                        .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
-
-                System.out.println(
-                        "::::::::::::::::::::::::::::updateLikesInDB 좋아요 :" + countLikes(productId)
-                                + "::::::::::::::::::::::::::::");
+                Product product = productRepository.findById(productId).orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
 
                 product.setLikes((Long) countLikes(productId));
                 productRepository.save(product);
@@ -179,9 +173,7 @@ public class RedisService {
     }
 
     public void saveRefreshToken(RefreshToken refreshToken) {
-        operationsForValue()
-                .set("RT:" + refreshToken.getKey(), refreshToken.getValue(), refreshToken.getExpiration(),
-                        TimeUnit.MILLISECONDS);
+        operationsForValue().set("RT:" + refreshToken.getKey(), refreshToken.getValue(), refreshToken.getExpiration(), TimeUnit.MILLISECONDS);
 
     }
 
@@ -200,7 +192,8 @@ public class RedisService {
         operationsForValue().getAndDelete(productKey);
     }
 
-    public List<ProductDto> getMyLikes(String username) {
+    public List<ProductDto> getMyLikes(String accessToken) {
+        String username = customUserDetailsService.getUserDetails(accessToken);
 
         Set<String> productKeySet = redisTemplate.keys("productId*");
         List<ProductDto> productDtoList = new ArrayList<>();

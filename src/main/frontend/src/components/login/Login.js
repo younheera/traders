@@ -1,7 +1,7 @@
 /**
  * @author heera youn
  * @create date 2023-10-23 23:22:54
- * @modify date 2023-10-25 14:42:07
+ * @modify date 2023-10-27 10:48:24
  * @desc [로그인 BE,FE 연결 + Refresh Token 적용, 유효성 검사 등]
  */
 import React, { useState } from "react";
@@ -23,19 +23,28 @@ function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs" style={{ marginTop: "8%" }}>
+    <Container component="main" maxWidth="xs" style={{ marginTop: "250px" }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography style={{ fontSize: '30px', textAlign: 'center', fontWeight: 'bold' }}
-            component="h1" variant="h5">
+          <Typography
+            style={{
+              fontSize: "30px",
+              textAlign: "center",
+              fontWeight: "bold",
+            }}
+            component="h1"
+            variant="h5"
+          >
             로그인
-          </Typography><br />
-        </Grid><br />
+          </Typography>
+          <br />
+        </Grid>
+        <br />
       </Grid>
       <form noValidate onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <CustomTextField 
+            <CustomTextField
               variant="outlined"
               required
               fullWidth

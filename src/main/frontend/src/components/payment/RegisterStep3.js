@@ -2,7 +2,7 @@
  * @author hyunseul
  * @email [example@mail.com]
  * @create date 2023-10-23 22:31:38
- * @modify date 2023-10-25 16:35:12
+ * @modify date 2023-10-27 11:54:43
  * @desc [페이지 템플릿 css]
  */
 /**
@@ -15,10 +15,9 @@
 import { TextField, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import '../../assets/css/AccountRegister.css';
+import "../../assets/css/AccountRegister.css";
 import "../../assets/css/PayRegister.css";
 import { Error } from "../util/Alert";
-
 
 const RegisterStep3 = ({ onNext, setGpayPwd }) => {
   const [password, setPassword] = useState("");
@@ -26,7 +25,16 @@ const RegisterStep3 = ({ onNext, setGpayPwd }) => {
 
   useEffect(() => {
     const randomCharacters = shuffleArray([
-      "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
     ]);
 
     const initialKeypadRows = [
@@ -84,7 +92,10 @@ const RegisterStep3 = ({ onNext, setGpayPwd }) => {
 
   return (
     <>
-      <Container style={{ width: "1040px" }} className="account-container-2">
+      <Container
+        style={{ width: "850px", marginTop: "180PX" }}
+        className="account-container-2"
+      >
         <Row>
           <Typography
             style={{

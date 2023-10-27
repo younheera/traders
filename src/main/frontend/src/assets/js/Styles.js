@@ -1,3 +1,9 @@
+/*
+ * @author heera youn
+ * @create date 2023-10-22 23:36:29
+ * @modify date 2023-10-27 15:08:04
+ * [로딩페이지 java script]
+ */
 import React from 'react';
 import styled from 'styled-components';
 

@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-04 13:02:02
- * @modify date 2023-10-25 16:23:24
+ * @modify date 2023-10-27 14:31:44
  */
 
 /**
@@ -48,10 +48,8 @@ const ChatBox = (props) => {
   useEffect(() => {
     setInfo(roomNum, window.user);
     fetchPrevMessage();
-
   }, []);
   useEffect(() => {
-    
     fetchProduct(productId).then((response) => {
       if (response) {
         setProduct(response.data);
@@ -88,7 +86,6 @@ const ChatBox = (props) => {
   };
 
   const handleSaveModal = async (data) => {
-
     const notice = {
       text: "[공지] 거래 일정이 잡혔습니다.",
       sender: sender,
@@ -205,7 +202,8 @@ const ChatBox = (props) => {
   };
 
   const handleCardClick = () => {
-    history.push(`../../payment/transfer/${productId}`);
+    // history.push(`../../payment/transfer/${productId}`);
+    history.push("/");
   };
   const fetchPrevMessage = async () => {
     try {
@@ -272,7 +270,7 @@ const ChatBox = (props) => {
 
   return (
     <>
-      <Container style={{ maxWidth: "1040px" }}>
+      <Container style={{ width: "750px", marginTop: "150px" }}>
         <ChatScheduleModal
           show={isModalVisible}
           handleClose={toggleModal}
@@ -286,8 +284,13 @@ const ChatBox = (props) => {
                   size="20px"
                   onClick={handleBackButtonClick}
                 />
-               
-                <div className="list-receiver" style={{fontSize:'15pt',marginLeft:'15px'}}>{receiver}</div>
+
+                <div
+                  className="list-receiver"
+                  style={{ fontSize: "15pt", marginLeft: "15px" }}
+                >
+                  {receiver}
+                </div>
                 <AiOutlineCalendar
                   className="icon-calendar"
                   size="35px"

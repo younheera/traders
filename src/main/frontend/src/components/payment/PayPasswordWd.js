@@ -1,16 +1,15 @@
 /**
  * @author ahrayi
  * @create date 2022-10-23 03:45:27
- * @modify date 2023-10-25 16:38:32
+ * @modify date 2023-10-27 15:10:46
  * @desc 페이비밀번호 입력창
  */
 
 /**
  * @author heera youn
- * @email [example@mail.com]
  * @create date 2023-10-24 10:12:21
  * @modify date 2023-10-24 11:14:17
- * @desc [충전 페이 자식 모달 비밀번호 입력창 구현 FE + CSS]
+ * @desc [페이 충전 모달 비밀번호 입력창 구현 FE + CSS]
  */
 
 import React, { useEffect, useState } from 'react';

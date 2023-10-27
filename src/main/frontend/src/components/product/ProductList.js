@@ -1,9 +1,14 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:19:28
- * @modify date 2023-10-26 12:04:34
+ * @modify date 2023-10-27 14:56:28
  */
-
+/**
+ * @author hyunseul
+ * @create date 2023-10-24 19:13:49
+ * @modify date 2023-10-27 14:55:51
+ * @desc [페이지 전체 템플릿 css]
+ */
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, Col, Row } from "react-bootstrap";
 import { IoIosHeart } from "react-icons/io";
@@ -64,7 +69,7 @@ const ProductList = ({ product }) => {
                 원
               </span>
             </Col>
-            <Col sm={5} className="product-addr">
+            <Col sm={6} className="product-addr">
               {address}
             </Col>
           </Row>
