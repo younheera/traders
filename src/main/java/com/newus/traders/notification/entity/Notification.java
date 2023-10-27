@@ -5,7 +5,7 @@
  */
 package com.newus.traders.notification.entity;
 
-import com.newus.traders.chat.dto.ChatDto;
+import com.newus.traders.chat.document.ChatDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,11 +24,11 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String sender;
     private String receiver;
     private LocalDateTime createdAt;
     private boolean isDelivered;
-    private boolean read;
 
     @Builder
     public Notification(ChatDto chatDto) {

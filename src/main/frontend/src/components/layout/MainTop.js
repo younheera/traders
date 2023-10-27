@@ -1,7 +1,12 @@
 /**
+ * @author heera youn
+ * @create date 2023-10-22 17:24:50
+ * @modify date 2023-10-27 15:08:44
+ */
+/**
  * @author hyunseul
  * @create date 2023-10-17 16:30:56
- * @modify date 2023-10-23 15:02:12
+ * @modify date 2023-10-27 14:34:54
  */
 
 import React, { useState } from "react";
@@ -40,13 +45,7 @@ const MainTop = () => {
             />
             <button
               className="search-btn btn btn-outline-success"
-              type="submit"
-              onClick={() =>
-                history.push({
-                  pathname: "./search",
-                  state: keyword,
-                })
-              }
+              onClick={() => history.push(`./search/${keyword}`)}
             >
               Search
             </button>

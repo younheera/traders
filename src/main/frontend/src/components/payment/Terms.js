@@ -1,8 +1,7 @@
 /**
  * @author heera youn
- * @email [example@mail.com]
  * @create date 2023-10-25 15:51:00
- * @modify date 2023-10-25 15:52:19
+ * @modify date 2023-10-27 15:11:14
  * @desc [그린페이 계좌개설 동의/비동의 항목란]
  */
 import React, { useState, useEffect } from "react";

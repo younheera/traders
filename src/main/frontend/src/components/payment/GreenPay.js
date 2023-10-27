@@ -1,23 +1,22 @@
 /**
  * @author heera youn
  * @create date 2023-10-18 21:57:51
- * @modify date 2023-10-25 16:07:45
+ * @modify date 2023-10-27 14:29:44
  * @desc [그린페이 가입절차 시작]
  */
-
 
 import React from "react";
 import { Col, Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
+import "../../assets/css/payment.css";
 import greenpay1 from "../../assets/img/greenpay1.jpg";
 import greenpay2 from "../../assets/img/greenpay2.jpg";
 import greenpay3 from "../../assets/img/greenpay3.jpg";
-import "../../styles/payment.css";
 
 const GreenPay = () => {
   return (
-    <Container style={{ width: "1040px" }}>
+    <Container style={{ width: "850px", marginTop: "180px" }}>
       <Row className="basefont">
         <span className="title1">그린페이 가입 시 혜택</span>
 
@@ -85,20 +84,11 @@ const GreenPay = () => {
         </Col>
       </Row>
 
-      <div>
-        <br />
-        <Link to="/payment/gpay_register">시작하기</Link>
-        <br />
-        <Link to="/payment/accnt_register">계좌등록</Link>
-        <br />
-        <Link to="/payment/payMgmt">페이관리</Link>
-      </div>
       <Row style={{ marginLeft: "800px", textAlign: "center", margin: "auto" }}>
-        <Link to="/payment/gpay_register">
-          <button
-            className="saveButton"
-            style={{ justifyContent: "center" }}
-          ></button>
+        <Link to="/">
+          <button className="saveButton-3" style={{ justifyContent: "center" }}>
+            가입하기
+          </button>
         </Link>
       </Row>
     </Container>

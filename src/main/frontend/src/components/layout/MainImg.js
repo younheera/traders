@@ -1,3 +1,8 @@
+/**
+ * @author hyunseul
+ * @create date 2023-10-17 16:29:09
+ * @modify date 2023-10-27 14:52:26
+ */
 import React from 'react';
 import main1 from  '../../assets/img/main1.png';
 import '../../assets/css/MainTop.css'

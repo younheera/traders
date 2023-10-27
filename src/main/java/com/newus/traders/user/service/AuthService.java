@@ -2,6 +2,10 @@
  * @author heera youn
  * @create date 2023-10-25 13:50:13
  * @modify date 2023-10-25 13:50:13
+ * @author wheesunglee
+ * @create date 2023-10-25 13:50:08
+ * @modify date 2023-10-25 13:50:08
+ * refreshtoken 레디스 저장
  */
 /**
  * @author wheesunglee
@@ -11,13 +15,6 @@
  */
 
 package com.newus.traders.user.service;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
@@ -31,8 +28,13 @@ import com.newus.traders.user.entity.User;
 import com.newus.traders.user.jwt.TokenProvider;
 import com.newus.traders.user.repository.RefreshTokenRepository;
 import com.newus.traders.user.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,9 +42,9 @@ public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TokenProvider tokenProvider;
     private final RedisService redisService;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final TokenProvider tokenProvider;
 
     @Transactional
     public UserResponseDTO signup(UserRequestDTO userRequestDTO) {
@@ -97,31 +99,18 @@ public class AuthService {
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDTO.getAccessToken());
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
-        // RefreshToken refreshToken =
-        // refreshTokenRepository.findByKey(authentication.getName())
-        // .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
         String refreshTokenValue = (String) redisService.getRefreshToken(authentication.getName());
 
         // 4. Refresh Token 일치하는지 검사
-        // if (!refreshToken.getValue().equals(tokenRequestDTO.getRefreshToken())) {
-        // throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
-        // }
         if (!refreshTokenValue.equals(tokenRequestDTO.getRefreshToken())) {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
 
-        // String stringRefreshToken = refreshToken.getValue();
-
         // 5. 새로운 토큰 생성
-        // TokenDTO tokenDTO =
-        // tokenProvider.reissueAccessToken(authentication,stringRefreshToken);
         TokenDTO tokenDTO = tokenProvider.generateTokenDto(authentication);
         System.out.println("새로 발급받은 RT : " + tokenDTO.getRefreshToken());
 
         // 6. 저장소 정보 업데이트
-        // RefreshToken newRefreshToken =
-        // refreshToken.updateValue(tokenDTO.getRefreshToken());
-        // refreshTokenRepository.save(newRefreshToken);
         RefreshToken newRefreshToken = RefreshToken.builder()
                 .key(authentication.getName())
                 .value(tokenDTO.getRefreshToken())
@@ -134,4 +123,6 @@ public class AuthService {
         System.out.println("TokenDTO의 RefreshToken: " + tokenDTO.getRefreshToken());
         return tokenDTO;
     }
+
+
 }

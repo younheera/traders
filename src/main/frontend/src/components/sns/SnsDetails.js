@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import user from '../../assets/img/Chatprofile.png';
-import TokenRefresher from '../member/TokenRefresher';
+import React, { useState, useEffect } from "react";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import user from "../../assets/img/Chatprofile.png";
+import TokenRefresher from "../util/TokenRefresher";
 
 const SnsDetails = ({ selectedImage, selectedTag, selectedEntire }) => {
   // if (!selectedImage) {
@@ -17,8 +17,7 @@ const SnsDetails = ({ selectedImage, selectedTag, selectedEntire }) => {
 
   const [latestImage, setLatestImage] = useState(null);
   const fetchData = async () => {
-    TokenRefresher
-      .get('http://localhost:8080/api/sns/latestImage') // Axios로 API 호출
+    TokenRefresher.get("http://localhost:8080/api/sns/latestImage") // Axios로 API 호출
       .then((res) => {
         console.log(res.data);
         setLatestImage(res.data);
@@ -34,8 +33,9 @@ const SnsDetails = ({ selectedImage, selectedTag, selectedEntire }) => {
   const fetchDataByTag = async () => {
     if (selectedTag) {
       const encodedTag = encodeURIComponent(selectedTag); // 선택한 태그를 URL로 인코딩
-      TokenRefresher
-        .get(`http://localhost:8080/api/sns/latestTagImage?tag=${encodedTag}`)
+      TokenRefresher.get(
+        `http://localhost:8080/api/sns/latestTagImage?tag=${encodedTag}`
+      )
         .then((res) => {
           console.log(res.data);
           setLatestImage(res.data);
@@ -54,7 +54,6 @@ const SnsDetails = ({ selectedImage, selectedTag, selectedEntire }) => {
         });
     }
   };
-
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때 DB에서 가장 최근의 데이터를 가져오는 로직
@@ -77,25 +76,21 @@ const SnsDetails = ({ selectedImage, selectedTag, selectedEntire }) => {
   }, [selectedImage]);
 
   useEffect(() => {
-
-
     fetchData();
-
   }, [selectedEntire]);
 
   useEffect(() => {
     // 선택한 태그가 변경될 때마다 데이터 다시 가져오도록 함
     fetchDataByTag();
-    console.log('태그 변화 발생했을 때의 latestImage' + latestImage);
+    console.log("태그 변화 발생했을 때의 latestImage" + latestImage);
   }, [selectedTag]);
-
 
   const displayImage = selectedImage || latestImage;
 
-  let formattedDate = '';
+  let formattedDate = "";
   if (displayImage && displayImage.createdDate) {
     const date = new Date(displayImage.createdDate);
-    formattedDate = date.toISOString().split('T')[0];
+    formattedDate = date.toISOString().split("T")[0];
   }
 
   console.log("displayImage: " + displayImage);
@@ -104,29 +99,40 @@ const SnsDetails = ({ selectedImage, selectedTag, selectedEntire }) => {
 
   return (
     <Container style={{ maxWidth: "1040px" }}>
-      <Card style={{ width: '18rem', borderRadius: '100px' }}>
-        {displayImage && displayImage.images && displayImage.images.map((image, index) => (
-          <Card.Img
-            variant="top"
-            key={index}
-            src={image.filepath}
-            alt={`Image ${index}`}
-            style={{ height: '30rem' }}
-          />
-        ))}
+      <Card style={{ width: "18rem", borderRadius: "100px" }}>
+        {displayImage &&
+          displayImage.images &&
+          displayImage.images.map((image, index) => (
+            <Card.Img
+              variant="top"
+              key={index}
+              src={image.filepath}
+              alt={`Image ${index}`}
+              style={{ height: "30rem" }}
+            />
+          ))}
         {displayImage && (
-          <Card.Body style={{ backgroundColor: '#cccccc', border: '10px solid #cccccc' }}>
-            <Card.Title>
-
-            </Card.Title>
+          <Card.Body
+            style={{ backgroundColor: "#cccccc", border: "10px solid #cccccc" }}
+          >
+            <Card.Title></Card.Title>
             <Card.Text>
               {/* <div style={{ display: 'flex', alignItems: 'center' }}> */}
-              <br/>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <img src={user} alt="userAlt" style={{ width: '40px', height: '40px', marginLeft: '50px', marginRight: '20px'}} />
+              <br />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img
+                  src={user}
+                  alt="userAlt"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    marginLeft: "50px",
+                    marginRight: "20px",
+                  }}
+                />
                 <p>{displayImage.author.username}</p>
               </div>
-              <br/>
+              <br />
               <p>{displayImage.content}</p>
               <p>{displayImage.tags}</p>
               <p>{formattedDate}</p>
@@ -136,8 +142,6 @@ const SnsDetails = ({ selectedImage, selectedTag, selectedEntire }) => {
       </Card>
     </Container>
   );
-
-
 };
 
 export default SnsDetails;

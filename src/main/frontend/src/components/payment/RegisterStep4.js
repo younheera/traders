@@ -2,7 +2,7 @@
  * @author hyunseul
  * @email [example@mail.com]
  * @create date 2023-10-23 22:31:49
- * @modify date 2023-10-25 16:32:26
+ * @modify date 2023-10-27 11:55:40
  * @desc [페이지 템플릿 css]
  */
 /**
@@ -18,7 +18,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import "../../assets/css/AccountRegister.css";
 import "../../assets/css/PayRegister.css";
 import { Error } from "../util/Alert";
-
 
 const RegisterStep4 = ({ gpayPwd2, setGpayPwd2, confirmGpayPwd }) => {
   const [password2, setPassword2] = useState("");
@@ -100,7 +99,10 @@ const RegisterStep4 = ({ gpayPwd2, setGpayPwd2, confirmGpayPwd }) => {
 
   return (
     <>
-      <Container style={{ width: "1040px" }} className="account-container-2">
+      <Container
+        style={{ width: "850px", marginTop: "180PX" }}
+        className="account-container-2"
+      >
         <Row>
           <Typography
             style={{

@@ -5,9 +5,8 @@
  */
 package com.newus.traders.image.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.newus.traders.image.entity.Image;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImageRepository extends JpaRepository<Image, Integer> {
 

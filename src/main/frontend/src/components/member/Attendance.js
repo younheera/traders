@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-22 00:24:58
- * @modify date 2023-10-26 12:03:54
+ * @modify date 2023-10-27 11:49:06
  */
 /**
  * @author hyunseul
@@ -10,15 +10,16 @@
  */
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import attendance from "../assets/img/attendance.jpg";
-import newus1 from "../assets/img/newus1.png";
-import newus2 from "../assets/img/newus2.png";
-import newus3 from "../assets/img/newus3.png";
-import newus4 from "../assets/img/newus4.png";
-import newus5 from "../assets/img/newus5.png";
-import TokenRefresher from "./member/TokenRefresher";
+import attendance from "../../assets/img/attendance.jpg";
+import newus1 from "../../assets/img/newus1.png";
+import newus2 from "../../assets/img/newus2.png";
+import newus3 from "../../assets/img/newus3.png";
+import newus4 from "../../assets/img/newus4.png";
+import newus5 from "../../assets/img/newus5.png";
+import TokenRefresher from "../util/TokenRefresher";
+import { Error, Success } from "../util/Alert";
 
-const Attendance = (props) => {
+const Attendance = () => {
   const user = window.user;
   const currentDay = new Date().getDay() - 1;
   const [weekly, setWeekly] = useState([]);
@@ -32,13 +33,13 @@ const Attendance = (props) => {
 
   const handleAttendance = (index) => {
     if (index !== currentDay) {
-      alert("오늘만 출첵 가능");
+      Error("오늘만 출첵 가능");
       return;
     }
     TokenRefresher.post("http://localhost:8080/api/redis/attendance").then(
       (res) => {
         console.log(res.data);
-        alert(res.data);
+        Success(res.data);
       }
     );
     setDaily(true);
@@ -63,42 +64,37 @@ const Attendance = (props) => {
     backgroundSize: "cover", // 이미지가 container를 완전히 덮도록 설정
     position: "relative", // 다른 요소를 위치시키기 위해 position 설정
     height: "700px",
+    marginTop: "180px"
   };
 
-  if (props.tab === 3) {
-    return (
-      <>
-        <Container style={rowStyle}>
-          <Row
-            style={{
-              margin: "auto",
-              width: "780px",
-              padding: "10px",
-              textAlign: "center",
-            }}
-          >
-            {Object.keys(images).map((day, index) => (
-              <Col
-                key={day}
-                style={{ marginTop: "550px", textAlign: "center" }}
-              >
-                <img
-                  width={90}
-                  height={100}
-                  src={images[day]}
-                  alt={day}
-                  style={{
-                    filter: weekly[index] ? "none" : "grayscale(100%)",
-                  }}
-                  onClick={() => handleAttendance(index)}
-                />
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </>
-    );
-  }
+  return (
+    <>
+      <Container style={rowStyle}>
+        <Row
+          style={{
+            margin: "auto",
+            width: "780px",
+            padding: "10px",
+            textAlign: "center",
+          }}
+        >
+          {Object.keys(images).map((day, index) => (
+            <Col key={day} style={{ marginTop: "550px", textAlign: "center" }}>
+              <img
+                width={90}
+                height={100}
+                src={images[day]}
+                alt={day}
+                style={{
+                  filter: weekly[index] ? "none" : "grayscale(100%)",
+                }}
+                onClick={() => handleAttendance(index)}
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </>
+  );
 };
-
 export default Attendance;

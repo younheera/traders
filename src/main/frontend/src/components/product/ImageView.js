@@ -1,7 +1,13 @@
 /**
+ * @author hyunseul
+ * @create date 2023-10-24 19:13:49
+ * @modify date 2023-10-27 14:56:06
+ * @desc [페이지 전체 템플릿 css]
+ */
+/**
  * @author wheesunglee
  * @create date 2023-10-17 00:06:52
- * @modify date 2023-10-25 13:47:16
+ * @modify date 2023-10-27 14:56:06
  */
 
 import { useEffect, useState } from "react";
@@ -25,10 +31,10 @@ const ImageView = ({ imageList }) => {
         <img
           src={main.filepath}
           style={{
-            width: "400px",
-            height: "300px",
-            maxWidth: "400px",
-            maxHeight: "300px",
+            width: "250px",
+            height: "280px",
+            maxWidth: "250px",
+            maxHeight: "280px",
             objectFit: "contain",
             backgroundColor: "#fff",
           }}

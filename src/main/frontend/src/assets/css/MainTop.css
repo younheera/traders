@@ -1,211 +1,205 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:29:43
- * @modify date 2023-10-21 11:24:32
+ * @modify date 2023-10-27 13:47:07
  */
 
- @media (max-width: 768px) {
-    .logo-img {
-      display: none !important; 
-    }  
-    .text1 {
-        font-size: 50px !important; 
-        width: 100% !important;
-        align-items: center !important;
-    }
-    .text2 {
-        font-size: 18px !important;  
-        width: 100% !important; 
-        align-items: center !important;
-    }
+@media (max-width: 768px) {
+  .logo-img {
+    display: none !important;
+  }
+  .text1 {
+    font-size: 50px !important;
+    width: 100% !important;
+    align-items: center !important;
+  }
+  .text2 {
+    font-size: 18px !important;
+    width: 100% !important;
+    align-items: center !important;
+  }
+}
 
-    
+@media (max-height: 720px) {
+  .main {
+    height: 710px !important;
   }
 
-@media (max-height:721px){
-    .main {
-        height:720px !important;
-    }
+  .container-fluid {
+    left: 60px !important;
+    top: 300px !important;
+    max-width: 45% !important;
+  }
 
-    .container-fluid{
-        left: 60px !important; 
-        top: 300px !important;
-        max-width: 45% !important;
-    
-    }
-
-    .text1{
+  .text1 {
     top: 200px !important;
     left: 30px !important;
-    
-    }
+  }
 
-    .text2{
+  .text2 {
     top: 210px !important;
-    left: 30px  !important;
+    left: 30px !important;
+  }
 
-    }
+  .logo-img {
+    top: 80px !important;
+    width: 45% !important;
+    max-width: 50% !important;
+    width: 580px !important;
+    float: right !important;
+    right: 50px !important;
+  }
 
-    .logo-img{
-        top:80px !important;
-        width: 45% !important;
-        max-width: 50% !important;
-        width: 580px !important;
-        float: right !important;
-        right: 50px !important;
-        
-        }
+  /* mainimg css */
+  .main-img {
+    float: left !important;
+    left: 100px !important;
+  }
 
-       /* mainimg css */
-    .main-img{
-        float: left !important;
-        left: 100px !important;
-    }
+  .text1,
+  .main-img-text-1,
+  .main-img-text-2,
+  .main-img-text-3,
+  .main-img-text-4 {
+    font-weight: 900 !important;
+    width: 50% !important;
+    margin-bottom: 0px !important;
+    position: relative !important;
+    text-align: center !important;
+  }
 
-    .text1,.main-img-text-1,.main-img-text-2, .main-img-text-3,.main-img-text-4 {
-        font-weight: 900 !important;
-        width:50% !important;
-        margin-bottom:0px !important;
-        position: relative !important;
-        text-align: center !important;
-    }
+  .main-img-text-1,
+  .main-img-text-2,
+  .main-img-text-3 {
+    top: 250px !important;
+    float: right !important;
+  }
 
-    .main-img-text-1,.main-img-text-2,.main-img-text-3{
-        top:250px !important;
-        float: right !important;
-    }
+  .main-img-text-1 {
+    font-size: 45pt !important;
+    color: #167952 !important;
+    margin-bottom: 10px !important;
+  }
 
-    .main-img-text-1{
-        font-size: 45pt !important;
-        color: #167952 !important;
-        margin-bottom: 10px !important;
-    }
+  .main-img-text-2 {
+    font-size: 13pt;
+  }
 
-    .main-img-text-2{ 
-        font-size: 13pt;
-    }
-
-    .main-img-text-4{
-        top:240px !important;
-
-    }
-    
-    
+  .main-img-text-4 {
+    top: 240px !important;
+  }
 }
-
 
 /* maintop css */
-.main{
-    background-color: rgb(255, 246, 234);
-    height: 931px;
-    overflow-y: auto;
-    /* color: rgb(170, 44, 44); */
+.main {
+  background-color: rgb(255, 246, 234);
+  height: 750px;
+  overflow-y: auto;
+  /* color: rgb(170, 44, 44); */
 }
 
-
-
-.container{
-   display: block;
-    max-width: 100%;
-    width: 100%;
-    height: 80%;
-    
+.container {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  height: 80%;
 }
 
-.container-fluid{
-    left: 150px;
-    float: left;
-    position: relative;
-    top: 450px;
-    max-width: 50%;
-    display: flex;
-
+.container-fluid {
+  left: 40px;
+  float: left;
+  position: relative;
+  top: 350px;
+  max-width: 50%;
+  display: flex;
 }
 
-.searchBar{
-    bottom: 50%;
-    width: 500px;
-    height: 45px;
-    border-radius: 50px;
-   
+.searchBar {
+  bottom: 80px;
+  width: 400px;
+  height: 45px;
+  border-radius: 50px;
 }
 
-.search-btn{
-    border-radius: 50px !important;
-    width: 120px !important;
+.search-btn {
+  border-radius: 50px !important;
+  width: 120px !important;
 }
 
-
-.logo-img{
-float: right;
-right: 100px;
-width: 700px;
+.logo-img {
+  float: right;
+  right: 50px;
+  width: 350px;
 }
 
-.logo-img , .main-img{
-top:150px;
-max-width: 50%;
-width: 45%;
-position: relative;
-
+.logo-img,
+.main-img {
+  top: 150px;
+  max-width: 50%;
+  width: 40%;
+  position: relative;
 }
 /* .text{
     max-width: 50%;
     text-align: center;
 } */
 
-.text1{
-    top: 330px;
-    left: 30px;
-    color:rgb(15, 26, 95);
-    font-size: 55px;
+.text1 {
+  top: 250px;
+  left: 30px;
+  color: rgb(15, 26, 95);
+  font-size: 50px;
 }
 
-.text2{
-    color: rgb(15, 26, 95);
-    font-size: 30px;
-    font-weight: 900;
-    width:50%;
-    margin-top: 0px;
-    margin-bottom:5px;
-    top: 350px;
-    left: 30px;
-    position: relative;
-    text-align: center;
+.text2 {
+  color: rgb(15, 26, 95);
+  font-size: 26px;
+  font-weight: 900;
+  width: 50%;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  top: 260px;
+  left: 30px;
+  position: relative;
+  text-align: center;
 }
-
 
 /* mainimg css */
-.main-img{
-    float: left;
-    left: 100px;
+.main-img {
+  float: left;
+  left: 50px;
 }
 
-.text1,.main-img-text-1,.main-img-text-2, .main-img-text-3,.main-img-text-4 {
-    font-weight: 900;
-    width:50%;
-    margin-bottom:0px;
-    position: relative;
-    text-align: center;
+.text1,
+.main-img-text-1,
+.main-img-text-2,
+.main-img-text-3,
+.main-img-text-4 {
+  font-weight: 900;
+  width: 50%;
+  margin-bottom: 0px;
+  position: relative;
+  text-align: center;
 }
 
-.main-img-text-1,.main-img-text-2,.main-img-text-3{
-    top:310px;
-    float: right;
+.main-img-text-1,
+.main-img-text-2,
+.main-img-text-3 {
+  top: 250px;
+  float: right;
 }
 
-.main-img-text-1{
-    font-size: 45pt;
-    color: #167952;
-    margin-bottom: 10px;
+.main-img-text-1 {
+  font-size: 35pt;
+  color: #167952;
+  margin-bottom: 10px;
 }
 
-.main-img-text-2{ 
-    font-size: 13pt;
+.main-img-text-2 {
+  font-size: 10pt;
 }
 
-.main-img-text-4{
-    top:290px;
-    float: right;
-
+.main-img-text-4 {
+  top: 240px;
+  float: right;
 }

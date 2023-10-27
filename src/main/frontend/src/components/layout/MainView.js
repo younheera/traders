@@ -1,7 +1,12 @@
 /**
  * @author heera youn
  * @create date 2023-10-25 14:38:18
- * @modify date 2023-10-25 14:38:26
+ * @modify date 2023-10-27 14:52:45
+ */
+/**
+ * @author hyunseul
+ * @create date 2023-10-17 16:29:09
+ * @modify date 2023-10-27 11:24:25
  */
 import React from 'react';
 import MainCarousel from './MainCarousel';
@@ -21,8 +26,7 @@ const MainView = () => {
                     <MainCarousel/>
                     <MainImg/>
                     <MainNews/>
-                    <BsArrowUpCircle onClick={scrollToTop} type='button' className='public-bottombutton' size='50px'/>
-                    <TopButton />
+                  
                 </ResizedComponent>
                 </div>
             </body>

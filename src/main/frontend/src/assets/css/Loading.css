@@ -1,3 +1,9 @@
+/**
+ * @author heera youn
+ * @create date 2023-10-22 23:36:29
+ * @modify date 2023-10-27 15:00:44
+ * @desc [로딩페이지 구현]
+ */
 .c-leaf { position: relative; overflow: hidden; width: 203px; height: 133px; margin: 0 auto; background: #eee; transform: scale(1); } 
  
  .c-leaf__icon { position: absolute; top: -1px; left: -1px; z-index: 1; width: 205px; height: 135px; fill: #fff; } 

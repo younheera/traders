@@ -1,21 +1,20 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:29:33
- * @modify date 2023-10-19 18:19:52
+ * @modify date 2023-10-27 13:35:34
  */
 
-
-@media (max-height:721px){
-    .carousel-inner-1{
-        height: 720px !important;
-    }
+@media (max-height: 721px) {
+  .carousel-inner-1 {
+    height: 720px !important;
+  }
 }
 
-.carousel-inner-1{
-    height: 931px;
-    width: 100%;
+.carousel-inner-1 {
+  height: 750px;
+  width: 100%;
 }
 
-.carousel-indicators [data-bs-target]{
-    color: black;
+.carousel-indicators [data-bs-target] {
+  color: black;
 }

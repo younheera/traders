@@ -1,7 +1,12 @@
 /**
  * @author heera youn
  * @create date 2023-10-25 14:37:50
- * @modify date 2023-10-25 14:37:57
+ * @modify date 2023-10-27 14:52:35
+ */
+/**
+ * @author hyunseul
+ * @create date 2023-10-17 16:29:09
+ * @modify date 2023-10-27 11:24:25
  */
 import React from 'react';
 import '../../assets/css/MainNews.css'

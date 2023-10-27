@@ -1,10 +1,14 @@
 /**
  * @author wheesunglee
  * @create date 2023-09-20 10:21:07
- * @modify date 2023-10-26 12:04:27
+ * @modify date 2023-10-27 14:56:34
  */
-
-
+/**
+ * @author hyunseul
+ * @create date 2023-10-24 19:13:49
+ * @modify date 2023-10-27 14:55:51
+ * @desc [페이지 전체 템플릿 css]
+ */
 import { React, useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -52,7 +56,19 @@ const ProductListHeader = () => {
 
   return (
     <>
-      <Container style={{ maxWidth: "1040px" }}>
+      <Container style={{ width: "850px", marginTop: "180px" }}>
+        <Row>
+          <Col md="12" style={{ position: "relative", left: "38px" }}>
+            <div style={{ width: "100%" }}>
+              <button
+                className="category-btn"
+                onClick={() => filterByCategory("")}
+              >
+                전체
+              </button>
+            </div>
+          </Col>
+        </Row>
         <Row>
           <Col md="12" className="text-center mb-4">
             <div style={{ width: "100%" }}>
@@ -84,7 +100,7 @@ const ProductListHeader = () => {
                 className="category-btn"
                 onClick={() => filterByCategory("반려동물용품")}
               >
-                반려동물용품
+                반려동물
               </button>
               <button
                 className="category-btn"
@@ -108,13 +124,13 @@ const ProductListHeader = () => {
                 className="category-btn"
                 onClick={() => filterByCategory("도서/티켓/문구")}
               >
-                도서/티켓/문구
+                도서/티켓
               </button>
               <button
                 className="category-btn"
                 onClick={() => filterByCategory("가구/인테리어")}
               >
-                가구/인테리어
+                인테리어
               </button>
             </div>
           </Col>
@@ -122,23 +138,22 @@ const ProductListHeader = () => {
 
         <Row>
           <Col className="col-left-align bold-colored-font ">
-            <Button
-              className="saveButton-1"
+            <button
+              className="saveButton-3"
               onClick={() => setShowAvailable(!showAvailable)}
             >
               {showAvailable ? "전체 보기" : "거래 가능한 물품"}
-            </Button>
-          </Col>
-          <Col className="col-right-align">
-            <Button className="saveButton-1" onClick={nearbyProducts}>
+            </button>
+            <button className="saveButton-3" onClick={nearbyProducts}>
               {viewNearby ? "전지역 물품보기" : "현위치 물품보기"}
-            </Button>
+            </button>
           </Col>
+          <Col className="col-right-align"></Col>
         </Row>
       </Container>
 
-      <Container style={{ maxWidth: "1040px", marginTop: "15px" }}>
-        <Row className="justify-content-center" style={{ margin: "0px" }}>
+      <Container style={{ width: "850px", marginTop: "15px" }}>
+        <Row className="justify-content-center" style={{ margin: "26px" }}>
           <Col md="12" style={{ margin: "0px" }}>
             <Row>
               {(categoryFilter === "" ? data : filteredData).map(

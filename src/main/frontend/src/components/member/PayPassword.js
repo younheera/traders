@@ -1,9 +1,8 @@
 /**
  * @author heera youn
- * @email [example@mail.com]
  * @create date 2023-10-24 10:12:21
- * @modify date 2023-10-25 16:31:53
- * @desc [충전 페이 자식 모달 비밀번호 입력창 구현 FE + CSS]
+ * @modify date 2023-10-27 15:09:24
+ * @desc [충전 페이 비밀번호 입력창 구현 FE + CSS]
  */
 /**
  * @author ahrayi

@@ -1,7 +1,7 @@
 /**
  * @author wheesunglee
  * @create date 2023-10-20 13:54:31
- * @modify date 2023-10-26 12:03:46
+ * @modify date 2023-10-26 17:25:12
  */
 
 /**
@@ -11,7 +11,9 @@
  * [현재 위치 위도, 경도 가져와서 서버로 전달]
  */
 
-import TokenRefresher from "../../components/member/TokenRefresher";
+import {useMemo} from "react";
+import {Error} from "../../components/util/Alert";
+import TokenRefresher from "../../components/util/TokenRefresher";
 
 const fetchAllProducts = () => {
   return TokenRefresher.get("http://localhost:8080/api/products")
@@ -24,7 +26,7 @@ const fetchAllProducts = () => {
     .catch((error) => {
       if (error.response) {
         const errorResponse = error.response.data;
-        Fail(errorResponse);
+        console.log(errorResponse);
       }
     });
 };
@@ -87,8 +89,8 @@ const changeLikes = (id) => {
     });
 };
 
+const { kakao } = window;
 const getAddress = (lat, lng) => {
-  const { kakao } = window;
   return new Promise((resolve, reject) => {
     const geocoder = new kakao.maps.services.Geocoder();
     const coord = new kakao.maps.LatLng(lat, lng);
@@ -170,6 +172,40 @@ const getLocation = () => {
       reject(error);
     }
   });
+};
+
+const MapComponent = (latitude, longitude) => {
+  const container = document.getElementById("map");
+  const options = {
+    center: new kakao.maps.LatLng(latitude, longitude),
+    level: 3,
+    draggable: false,
+  };
+  const map = new kakao.maps.Map(container, options);
+  return useMemo(
+    () => (
+      <div
+        className="myMap"
+        style={{
+          width: "100%",
+          height: "280px",
+          position: "relative",
+        }}
+      ></div>
+      // <Map
+      //   className="myMap"
+      // style={{
+      //   width: "100%",
+      //   height: "280px",
+      //   position: "relative",
+      // }}
+
+      // >
+      //   <MapMarker position={{ lat: latitude, lng: longitude }}></MapMarker>
+      // </Map>
+    ),
+    [latitude, longitude]
+  );
 };
 
 export {

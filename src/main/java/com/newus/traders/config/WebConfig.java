@@ -1,8 +1,7 @@
 /**
- * @author wheesunglee
- * @create date 2023-10-25 16:02:21
- * @modify date 2023-10-25 16:02:21
- * Interceptor 추가
+ * @author heera youn
+ * @create date 2023-10-22 17:24:50
+ * @modify date 2023-10-27 15:08:33
  */
 
 package com.newus.traders.config;

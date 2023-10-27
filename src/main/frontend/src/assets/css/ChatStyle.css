@@ -1,14 +1,12 @@
 /**
  * @author hyunseul
  * @create date 2023-10-17 16:29:09
- * @modify date 2023-10-20 20:01:35
+ * @modify date 2023-10-27 11:24:25
  */
-
-
 
 /* 채팅 메시지 컨테이너 */
 .message-container {
-  box-shadow: 1px 10px 10px 1px rgba(0, 0, 0, 0.1); 
+  box-shadow: 1px 10px 10px 1px rgba(0, 0, 0, 0.1);
   margin-top: 0px;
   width: 100%;
   height: 750px;
@@ -77,11 +75,13 @@
   clear: both;
 }
 
-.sent_msg, .received_withd_msg {
+.sent_msg,
+.received_withd_msg {
   margin-top: 5px;
 }
 
-.sent_msg p, .received_withd_msg p {
+.sent_msg p,
+.received_withd_msg p {
   margin: 3px 0;
 }
 
@@ -136,7 +136,8 @@
   border-radius: 50%;
 }
 
-.icon-calendar, .icon-card {
+.icon-calendar,
+.icon-card {
   margin-right: 10px;
   float: right;
   align-items: center;
@@ -186,8 +187,9 @@
   height: 180px;
   border-radius: 10px;
   text-align: center;
-  margin-right: auto; 
-  margin-left: auto; 
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 30px;
   position: relative;
   word-wrap: break-word;
   clear: both;
@@ -196,14 +198,14 @@
   align-items: center;
 }
 
-.notice-header{
+.notice-header {
   font-size: 13pt;
   font-weight: 900;
 }
 .notice-content {
   margin-top: 5px;
   color: #303030;
-  font-size: 11pt;
+  font-size: 10pt;
   text-align: left;
   font-weight: 600;
 }

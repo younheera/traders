@@ -1,3 +1,10 @@
+/**
+ * @author hyunseul
+ * @create date 2023-10-19 18:32:07
+ * @modify date 2023-10-27 11:37:25
+ * @desc [메인 페이지 템플릿 전체 css]
+ */
+
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "../../assets/css/MainNews.css";

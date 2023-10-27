@@ -2,25 +2,24 @@
  * @author wheesunglee
  * @create date 2023-09-19 08:19:20
  * @modify date 2023-10-22 13:29:10
+ * @author jeongyearim
+ * @create date 2023-09-26 17:33:07
+ * @modify date 2023-09-26 17:33:07
+ * @desc [주어진 중심 위도와 경도를 기준으로 3km 반경 내의 상품 리스트를 뽑아옵니다.]
+ * @author jeongyearim
+ * @create date 2023-09-26 17:33:07
+ * @modify date 2023-09-26 17:33:07
+ * @desc [주어진 중심 위도와 경도를 기준으로 3km 반경 내의 상품 리스트를 뽑아옵니다.]
  */
 /**
-* @author jeongyearim
-* @create date 2023-09-26 17:33:07
-* @modify date 2023-09-26 17:33:07
-* @desc [주어진 중심 위도와 경도를 기준으로 3km 반경 내의 상품 리스트를 뽑아옵니다.]
-*/
+ * @author jeongyearim
+ * @create date 2023-09-26 17:33:07
+ * @modify date 2023-09-26 17:33:07
+ * @desc [주어진 중심 위도와 경도를 기준으로 3km 반경 내의 상품 리스트를 뽑아옵니다.]
+ */
 package com.newus.traders.product.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.newus.traders.chat.dto.ChatDto;
+import com.newus.traders.chat.document.ChatDto;
 import com.newus.traders.chat.repository.ChatRepository;
 import com.newus.traders.exception.CustomException;
 import com.newus.traders.exception.ErrorCode;
@@ -33,8 +32,18 @@ import com.newus.traders.product.type.ProductStatus;
 import com.newus.traders.redis.service.RedisService;
 import com.newus.traders.user.entity.User;
 import com.newus.traders.user.repository.UserRepository;
-
+import com.newus.traders.user.service.CustomUserDetailsService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,11 +51,13 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final CustomUserDetailsService userDetailsService;
     private final RedisService redisService;
     private final ImageService imageService;
     private final ChatRepository chatRepository;
 
-    public User getUser(String username) {
+    public User getUser(String accessToken) {
+        String username = userDetailsService.getUserDetails(accessToken);
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
@@ -76,8 +87,8 @@ public class ProductService {
         return productDtoList;
     }
 
-    public List<ProductDto> getMyProducts(String username) {
-        User user = getUser(username);
+    public List<ProductDto> getMyProducts(String accessToken) {
+        User user = getUser(accessToken);
 
         List<Product> productList = productRepository.findBySeller(user);
 
@@ -124,9 +135,9 @@ public class ProductService {
     }
 
     @Transactional
-    public String registerProduct(String username, ProductForm productForm, List<MultipartFile> files) {
+    public String registerProduct(String accessToken, ProductForm productForm, List<MultipartFile> files) {
 
-        User user = getUser(username);
+        User user = getUser(accessToken);
 
         Product product = new Product(user, productForm);
 
@@ -145,10 +156,10 @@ public class ProductService {
     }
 
     @Transactional
-    public String updateProduct(String username, Long productId, ProductForm productForm,
-            List<MultipartFile> newFiles, List<Integer> removedFiles) {
+    public String updateProduct(String accessToken, Long productId, ProductForm productForm,
+                                List<MultipartFile> newFiles, List<Integer> removedFiles) {
 
-        User user = getUser(username);
+        User user = getUser(accessToken);
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
@@ -182,9 +193,9 @@ public class ProductService {
         return "물품 수정을 완료하였습니다.";
     }
 
-    public String deleteProduct(String username, Long productId) {
+    public String deleteProduct(String accessToken, Long productId) {
 
-        User user = getUser(username);
+        User user = getUser(accessToken);
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PRODUCT_NOT_FOUND));
@@ -211,11 +222,26 @@ public class ProductService {
         return "물품 삭제를 완료하였습니다.";
     }
 
+    @Value("${jwt.secret}")
+    String key;
+
     public void updateAfterTransaction(ProductDto product, Long clientInfo) {
-        
+
         purchaseProduct(product.getId());
 
-        String roomNum = "";
+        String productId = product.getId().toString();
+        String seller = product.getSeller();
+        User user = userRepository.findById(clientInfo)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        String buyer = user.getUsername();
+
+        String roomNum = Jwts.builder()
+                .claim("productId", productId)
+                .claim("seller", seller)
+                .claim("buyer", buyer)
+                .signWith(SignatureAlgorithm.HS256, key)
+                .compact();
+
         ChatDto chatDto = new ChatDto();
         chatDto.setText("거래완료");
         chatDto.setRoomNum(roomNum);

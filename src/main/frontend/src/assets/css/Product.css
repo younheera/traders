@@ -1,7 +1,7 @@
 /**
  * @author hyunseul
  * @create date 2023-10-23 22:28:08
- * @modify date 2023-10-25 13:15:09
+ * @modify date 2023-10-27 14:09:28
  */
 /**
  * @author wheesunglee
@@ -9,9 +9,7 @@
  * @modify date 2023-10-20 19:52:12
  */
 
- 
-
- .justify-content-center {
+.justify-content-center {
   justify-content: center;
 }
 .text-justify {
@@ -21,7 +19,6 @@
 .text-center {
   text-align: center;
 }
-
 
 .pd-l {
   padding-left: 0.25rem;
@@ -38,40 +35,38 @@
 
 .btn-2 {
   width: 100px;
-  height: 35px;;
-  border: 1px solid  #494949;
-  background-color: #efefef ;
+  height: 35px;
+  border: 1px solid #494949;
+  background-color: #efefef;
   border-radius: 3px;
   color: #494949;
   font-size: 10pt;
   font-weight: 700;
 }
 
-.btn-2:hover{
-  background-color:#198754;
+.btn-2:hover {
+  background-color: #198754;
   color: #fff;
   border-color: #198754;
-  
 }
 
-.text-right{
-    text-align: right;
-
+.text-right {
+  text-align: right;
 }
 
 .col-right-align {
   text-align: right;
   margin-top: 0.5rem;
   float: right;
-  margin-right: 10px;;
-  
+  margin-right: 50px;
 }
 
 .col-left-align {
   display: flex;
   text-align: left;
   margin-top: 0.5rem;
-  margin-left: 10px;
+  margin-left: 40px;
+
   color: #198754;
   font-size: 11pt;
 }
@@ -89,12 +84,11 @@
   padding-bottom: 1.5rem;
 }
 
-
 .category-btn {
-  border:1px solid #727272e5;
+  border: 1px solid #727272e5;
   color: #494949;
   background-color: #fff;
-  width: 200px;
+  width: 150px;
   height: 50px;
   padding: 10px 20px;
   cursor: pointer;
@@ -112,36 +106,34 @@
 
 .list-checkbox {
   position: relative;
-  top:4px;
+  top: 4px;
   display: flex;
   width: 20px;
   height: 20px;
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 
 .list-checkbox:checked {
-  background-color: #198754 !important; 
+  background-color: #198754 !important;
   border-color: #198754 !important;
-  color: #fff !important; 
+  color: #fff !important;
 }
-
 
 /* productList.css */
 
-#product-col-md-3{
+#product-col-md-3 {
   margin-right: auto;
-  padding:0px !important;
+  padding: 0px !important;
   position: relative;
   left: 10px;
 }
-.card{
+.card {
   width: 100% !important;
-  --bs-card-spacer-y:0px !important;
-  --bs-card-spacer-x:0px !important;
+  --bs-card-spacer-y: 0px !important;
+  --bs-card-spacer-x: 0px !important;
   border: none !important;
-  --bs-card-border:none !important;
-  --bs-card-border-radius:0px !important;
-
+  --bs-card-border: none !important;
+  --bs-card-border-radius: 0px !important;
 }
 
 .card-body {
@@ -153,8 +145,7 @@
   height: 285px;
 }
 
-
-.product-list-img{
+.product-list-img {
   width: 100%;
   height: 185px;
   object-fit: fill;
@@ -166,7 +157,7 @@
   box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
 }
 
-.badge{
+.badge {
   margin-right: 8px;
   margin-top: 10px;
   font-size: 9pt !important;
@@ -174,88 +165,86 @@
   font-weight: 700 !important;
 }
 
-.product-name{
+.product-name {
   font-size: 11pt;
-  color:#494949;
+  color: #494949;
 }
-.product-name,.product-price,.product-cotegory {
+.product-name,
+.product-price,
+.product-cotegory {
   text-align: left;
   margin-left: 10px;
   display: flex;
 }
 
-.product-price{
+.product-price {
   font-weight: 700;
   font-size: 14pt;
 }
 
 .product-addr {
   margin-top: 6px !important;
-  margin-left: 15px;
-  font-size: 9pt;
-  color:#999
+  margin-right: 5px;
+  font-size: 8pt;
+  color: #999;
 }
-.product-name-like,.product-addr{
+.product-name-like,
+.product-addr {
   float: right;
 }
 
-.product-name-icons,.likes,.product-addr{
+.product-name-icons,
+.likes,
+.product-addr {
   text-align: right;
   float: right;
-
 }
-.product-name-icons{
+.product-name-icons {
   font-size: 13pt;
   color: red;
   margin-right: 5px;
   margin-top: 3px;
 }
 
-.likes{
+.likes {
   font-size: 11pt;
-  color:#494949;
+  color: #494949;
 }
 
 /* productDetails(imgeView) */
-.product-detail-row-1{
+.product-detail-row-1 {
   padding-top: 30px;
 }
 
-.product-detail-col-1{
-  width: 450px;
-  height: 420px;
+.product-detail-col-1 {
   margin: auto;
-  margin-right: 80px;
+  width: 320px !important;
 }
 
-@media (min-width: 768px)
-{
-  .col-md-6  {
+@media (min-width: 768px) {
+  .col-md-6 {
     flex: 0 0 auto;
     width: 450px !important;
     height: 420px !important;
     display: block !important;
-  }   
+  }
 }
 
-.product-detail-col-2{
+.product-detail-col-2 {
   width: 500px !important;
-  
 }
 
-#pay-popup{
+#pay-popup {
   border-radius: 3px !important;
   margin-left: 10px;
   width: 80px !important;
   height: 35px;
   font-size: 12pt;
   padding: 0px;
-  
 }
 
 .vertical-line {
   border-left: 1px solid #999;
   height: 500px;
   margin: 0 30px;
-
 }

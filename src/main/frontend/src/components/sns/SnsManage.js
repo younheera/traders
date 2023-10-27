@@ -1,20 +1,27 @@
 /**
+ * @author hyunseul
+ * @create date 2023-10-24 19:13:49
+ * @modify date 2023-10-27 14:57:51
+ * @desc [페이지 전체 템플릿 css]
+ */
+/**
  * @author jeongyearim
  * @email [example@mail.com]
  * @create date 2023-10-20 11:17:23
- * @modify date 2023-10-25 18:17:14
+ * @modify date 2023-10-27 11:34:02
  * @desc [snsList와 snsDetails를 감싸고 있음]
  */
-import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import TokenRefresher from '../member/TokenRefresher';
-import SnsDetails from './SnsDetails';
+
+import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import TokenRefresher from "../util/TokenRefresher";
+import SnsDetails from "./SnsDetails";
 import SnsImagePreview from "./SnsImagePreview";
-import SnsList from './SnsList';
+import SnsList from "./SnsList";
 
 const SnsManage = ({ campaigns }) => {
   const [posts, setPosts] = useState([]);
@@ -145,7 +152,6 @@ const SnsManage = ({ campaigns }) => {
           <ButtonGroup aria-label="Basic example">
             <Button
               className="cancelButton-1"
-              variant="secondary"
               onClick={() => {
                 setSelectedTag(null);
                 setSelectedEntire("전체");
@@ -175,7 +181,7 @@ const SnsManage = ({ campaigns }) => {
             <button style={{ float: 'right' }} className="saveButton">글쓰기</button>
           </Link> */}
           <button
-            className="saveButton"
+            className="saveButton-3"
             onClick={() => setShowModal(true)} // 인증 버튼을 누르면 모달 열도록 설정
             style={{ float: "right" }}
           >

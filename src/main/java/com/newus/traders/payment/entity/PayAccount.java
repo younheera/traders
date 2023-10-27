@@ -6,13 +6,13 @@
 
 package com.newus.traders.payment.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 @Data
@@ -29,5 +29,5 @@ public class PayAccount {
     private String addr1;
     private String addr2;
 
-    private int payBalance = 0;
+    private int payBalance;
 }
