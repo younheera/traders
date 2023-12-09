@@ -46,7 +46,8 @@
 ## 🖥️ 핵심기능
 ### 📌 회원가입/로그인
 - Spring Security + JWT 토큰을 이용한 회원가입 / 로그인
-- SMTP를 이용 이메일 인증번호 발송
+- SMTP API를 이용 이메일 인증번호 발송
+- HS512 양방향(대칭키) 해싱 알고리즘을 이용한 토큰 암호화
 - react hook form 이용 유효성 검사
 - interceptors 이용 자동 토큰만료상태 검사 및 Refresh 토큰 재발급
 ### 📌 실시간 채팅
